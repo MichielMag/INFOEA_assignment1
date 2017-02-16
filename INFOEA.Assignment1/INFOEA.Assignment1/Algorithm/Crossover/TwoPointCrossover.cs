@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 using INFOEA.Assignment1.Genome;
 namespace INFOEA.Assignment1.Algorithm.Crossover
 {
-    class TwoPointCrossover<T> : ICrossover<T> where T:IGenome
+    class TwoPointCrossover<T> : AbstractCrossover<T> where T:IGenome
     {
-        public Tuple<T, T> DoCrossover(T ParentOne, T ParentTwo, ref Random random)
+        public TwoPointCrossover(Random random) : base(random)
+        {
+        }
+
+        public override Tuple<T, T> DoCrossover(T ParentOne, T ParentTwo)
         {
             int data_size = ParentOne.DataSize;
-            int index_one = random.Next(data_size);
-            int index_two = random.Next(index_one, data_size);
+            int index_one = random_source.Next(data_size);
+            int index_two = random_source.Next(index_one, data_size);
 
             string data_child_one = ParentOne.Data.Substring(0, index_one) +
                                     ParentTwo.Data.Substring(index_one, index_two - index_one) +

@@ -21,26 +21,15 @@ namespace INFOEA.Assignment1.Algorithm
         private List<T> population;
         private Random random;
         private Goal goal;
-
-        private bool stop_criteria = false;
-
-        public GeneticAlgorithm(int _population_size, int _genome_size, ICrossover<T> _crossover_provider, Goal _goal, int _seed = -1)
+        
+        public GeneticAlgorithm(int _population_size, int _genome_size, ICrossover<T> _crossover_provider, Goal _goal, Random _random)
         {
             population_size = _population_size;
             crossover_provider = _crossover_provider;
             goal = _goal;
             genome_size = _genome_size;
-            if (_seed > 0)
-            {
-                seed = _seed;
-                random = new Random(seed);
-            }
-            else
-            {
-                random = new Random();
-                seed = random.Next();
-                random = new Random(seed);
-            }
+
+            random = _random;
         }
 
         public void start()
@@ -85,7 +74,7 @@ namespace INFOEA.Assignment1.Algorithm
 
             for(int i = 0; i < population_size; i+=2)
             {
-                Tuple<T, T> children = crossover_provider.DoCrossover(population[i], population[i + 1], ref random);
+                Tuple<T, T> children = crossover_provider.DoCrossover(population[i], population[i + 1]);
                 population.Add(children.Item1);
                 population.Add(children.Item2);
             }

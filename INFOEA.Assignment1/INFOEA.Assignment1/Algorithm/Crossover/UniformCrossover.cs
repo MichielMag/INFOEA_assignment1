@@ -7,9 +7,13 @@ using INFOEA.Assignment1.Genome;
 
 namespace INFOEA.Assignment1.Algorithm.Crossover
 {
-    class UniformCrossover<T> : ICrossover<T>
+    class UniformCrossover<T> : AbstractCrossover<T>
     {
-        public Tuple<T, T> DoCrossover(T ParentOne, T ParentTwo, ref Random random)
+        public UniformCrossover(Random random) : base(random)
+        {
+        }
+
+        public override Tuple<T, T> DoCrossover(T ParentOne, T ParentTwo)
         {
             throw new NotImplementedException();
         }
