@@ -22,7 +22,7 @@ namespace INFOEA.Assignment1.Genome
                 int score = 0; 
                 for(int i = 0; i < data_size; ++i)
                 {
-                    score += data[i] == '1' ? i : 0;
+                    score += data[i] == '1' ? i + 1 : 0;
                 }
 
                 return score;

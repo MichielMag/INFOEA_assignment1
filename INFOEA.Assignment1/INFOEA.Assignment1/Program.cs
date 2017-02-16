@@ -15,7 +15,7 @@ namespace INFOEA.Assignment1
         {
             int string_length = 100;
             GeneticAlgorithm<UCOGenome> experiment_one_one = new GeneticAlgorithm<UCOGenome>(250, string_length, new TwoPointCrossover<UCOGenome>(), new Goal(100, 100));
-            GeneticAlgorithm<LCOGenome> experiment_two_one = new GeneticAlgorithm<LCOGenome>(250, string_length, new TwoPointCrossover<LCOGenome>(), new Goal(100, Program.linear_score(string_length)));
+            GeneticAlgorithm<LCOGenome> experiment_two_one = new GeneticAlgorithm<LCOGenome>(500, string_length, new TwoPointCrossover<LCOGenome>(), new Goal(100, Program.linear_score(string_length)));
             experiment_two_one.start();
         }
 
