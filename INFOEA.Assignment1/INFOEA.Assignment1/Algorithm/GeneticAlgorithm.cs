@@ -45,6 +45,7 @@ namespace INFOEA.Assignment1.Algorithm
 
         public void start()
         {
+            Console.WriteLine("Going to run algorithm. Max generations: {0}, Min fitness: {1}", goal.MaxGenerations, goal.MinFitness);
             generatePopulation();
 
             while (!goal.AchievedGoal(current_generation, population[0].Fitness))

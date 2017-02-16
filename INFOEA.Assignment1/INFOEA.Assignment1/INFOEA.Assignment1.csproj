@@ -50,6 +50,7 @@
     <Compile Include="Algorithm\Goal.cs" />
     <Compile Include="Genome\AbstractGenome.cs" />
     <Compile Include="Genome\IGenome.cs" />
+    <Compile Include="Genome\LCOGenome.cs" />
     <Compile Include="Genome\UCOGenome.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

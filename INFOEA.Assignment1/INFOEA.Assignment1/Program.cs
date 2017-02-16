@@ -13,8 +13,20 @@ namespace INFOEA.Assignment1
     {
         static void Main(string[] args)
         {
-            GeneticAlgorithm<UCOGenome> experiment_one = new GeneticAlgorithm<UCOGenome>(250, 100, new TwoPointCrossover<UCOGenome>(), new Goal(100, 100));
-            experiment_one.start();
+            int string_length = 100;
+            GeneticAlgorithm<UCOGenome> experiment_one_one = new GeneticAlgorithm<UCOGenome>(250, string_length, new TwoPointCrossover<UCOGenome>(), new Goal(100, 100));
+            GeneticAlgorithm<LCOGenome> experiment_two_one = new GeneticAlgorithm<LCOGenome>(250, string_length, new TwoPointCrossover<LCOGenome>(), new Goal(100, Program.linear_score(string_length)));
+            experiment_two_one.start();
+        }
+
+        static int linear_score(int length)
+        {
+            int score = 0;
+            for(int i = 1; i < length + 1; ++i)
+            {
+                score += i;
+            }
+            return score;
         }
     }
 }
