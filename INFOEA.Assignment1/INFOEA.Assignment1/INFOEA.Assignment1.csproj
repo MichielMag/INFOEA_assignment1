@@ -49,6 +49,7 @@
     <Compile Include="Algorithm\Crossover\ICrossover.cs" />
     <Compile Include="Algorithm\Goal.cs" />
     <Compile Include="Genome\AbstractGenome.cs" />
+    <Compile Include="Genome\DTTGenome.cs" />
     <Compile Include="Genome\IGenome.cs" />
     <Compile Include="Genome\LCOGenome.cs" />
     <Compile Include="Genome\UCOGenome.cs" />

@@ -48,7 +48,13 @@ namespace INFOEA.Assignment1.Genome
             return this.Fitness.CompareTo(other.Fitness);
         }
 
-        public abstract void Generate(ref Random random);
+        public void Generate(ref Random random)
+        {
+            for (int i = 0; i < data_size; ++i)
+            {
+                data += random.Next(2);
+            }
+        }
 
         public override string ToString()
         {

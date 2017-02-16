@@ -28,13 +28,5 @@ namespace INFOEA.Assignment1.Genome
                 return score;
             }
         }
-
-        public override void Generate(ref Random random)
-        {
-            for (int i = 0; i < data_size; ++i)
-            {
-                data += random.Next(2);
-            }
-        }
     }
 }
