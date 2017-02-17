@@ -53,6 +53,7 @@
     <Compile Include="Algorithm\GeneticAlgorithm.cs" />
     <Compile Include="Algorithm\Crossover\ICrossover.cs" />
     <Compile Include="Algorithm\Goal.cs" />
+    <Compile Include="Assignment.cs" />
     <Compile Include="Genome\AbstractGenome.cs" />
     <Compile Include="Genome\DTTGenome.cs" />
     <Compile Include="Genome\IGenome.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Genome\UCOGenome.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Results\Result.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

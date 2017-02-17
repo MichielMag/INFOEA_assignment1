@@ -21,5 +21,10 @@ namespace INFOEA.Assignment1.Algorithm
         {
             return generation >= MaxGenerations || fitness >= MinFitness;
         }
+
+        public bool AchievedFitnessGoal(int fitness)
+        {
+            return fitness >= MinFitness;
+        }
     }
 }

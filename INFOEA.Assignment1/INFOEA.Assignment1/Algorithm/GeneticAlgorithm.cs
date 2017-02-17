@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using INFOEA.Assignment1.Algorithm.Crossover;
 using INFOEA.Assignment1.Genome;
 using System.Threading;
+using INFOEA.Assignment1.Results;
 
 namespace INFOEA.Assignment1.Algorithm
 {
     class GeneticAlgorithm<T> where T:IGenome
     {
-        private int population_size;
         private int genome_size;
         private int current_generation;
 
@@ -22,9 +22,8 @@ namespace INFOEA.Assignment1.Algorithm
         private Random random;
         private Goal goal;
         
-        public GeneticAlgorithm(int _population_size, int _genome_size, ICrossover<T> _crossover_provider, Goal _goal, Random _random)
+        public GeneticAlgorithm(int _genome_size, ICrossover<T> _crossover_provider, Goal _goal, Random _random)
         {
-            population_size = _population_size;
             crossover_provider = _crossover_provider;
             goal = _goal;
             genome_size = _genome_size;
@@ -32,27 +31,44 @@ namespace INFOEA.Assignment1.Algorithm
             random = _random;
         }
 
-        public void start()
+        // TODO: Write results to InnerResult.
+        public InnerResult start(int population_size, bool silent = false)
         {
-            Console.WriteLine("Going to run algorithm. Max generations: {0}, Min fitness: {1}", goal.MaxGenerations, goal.MinFitness);
-            generatePopulation();
+            current_generation = 0;
+            population = new List<T>();
 
-            while (!goal.AchievedGoal(current_generation, population[0].Fitness))
+            Console.WriteLine("Going to run algorithm. Max generations: {0}, Min fitness: {1}", goal.MaxGenerations, goal.MinFitness);
+            generatePopulation(population_size);
+
+            do
             {
                 shufflePopulation();
-                procreatePopulation();
+                procreatePopulation(population_size);
                 sortPopulation();
-                selectPopulation();
-                printPopulation();
+                selectPopulation(population_size);
+
+                if(!silent)
+                    printPopulation();
 
                 current_generation++;
-            }
+            } while (!goal.AchievedGoal(current_generation, population[0].Fitness));
 
             Console.WriteLine(results());
-            Console.ReadLine();
+            //Console.ReadLine();
+
+            InnerResult res = new InnerResult();
+            res.FirstHitGeneration = current_generation;
+            res.Success = goal.AchievedFitnessGoal(population[0].Fitness);
+
+            // TODO:
+            res.ConvergenceGeneration = 0;
+            res.CPUTime = 0;
+            res.FunctionEvaluations = 0;
+
+            return res;
         }
 
-        private void generatePopulation()
+        private void generatePopulation(int population_size)
         {
             population = new List<T>();
 
@@ -69,7 +85,7 @@ namespace INFOEA.Assignment1.Algorithm
             population = population.OrderBy(genome => random.Next()).ToList();
         }
 
-        private void procreatePopulation()
+        private void procreatePopulation(int population_size)
         {
 
             for(int i = 0; i < population_size; i+=2)
@@ -85,7 +101,7 @@ namespace INFOEA.Assignment1.Algorithm
             population = population.OrderByDescending(x=>x.Fitness).ToList();
         }
 
-        private void selectPopulation()
+        private void selectPopulation(int population_size)
         {
             population = population.Take(population_size).ToList();
         }
