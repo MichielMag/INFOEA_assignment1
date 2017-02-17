@@ -40,6 +40,7 @@ namespace INFOEA.Assignment1.Algorithm
             Console.WriteLine("Going to run algorithm. Max generations: {0}, Min fitness: {1}", goal.MaxGenerations, goal.MinFitness);
             generatePopulation(population_size);
 
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             do
             {
                 shufflePopulation();
@@ -53,6 +54,8 @@ namespace INFOEA.Assignment1.Algorithm
                 current_generation++;
             } while (!goal.AchievedGoal(current_generation, population[0].Fitness));
 
+            stopwatch.Stop();
+
             Console.WriteLine(results());
             //Console.ReadLine();
 
@@ -62,7 +65,7 @@ namespace INFOEA.Assignment1.Algorithm
 
             // TODO:
             res.ConvergenceGeneration = 0;
-            res.CPUTime = 0;
+            res.CPUTime = stopwatch.ElapsedTicks;
             res.FunctionEvaluations = 0;
 
             return res;

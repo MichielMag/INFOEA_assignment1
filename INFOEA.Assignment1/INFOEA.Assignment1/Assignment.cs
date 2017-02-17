@@ -73,9 +73,21 @@ namespace INFOEA.Assignment1
                                                 new Goal(100, 100),
                                                 random);
 
+            GeneticAlgorithm<UCOGenome> experiment_one_two =
+                new GeneticAlgorithm<UCOGenome>(string_length,
+                                                new UniformCrossover<UCOGenome>(random),
+                                                new Goal(100, 100),
+                                                random);
+
             GeneticAlgorithm<LCOGenome> experiment_two_one =
                 new GeneticAlgorithm<LCOGenome>(string_length,
                                                 new TwoPointCrossover<LCOGenome>(random),
+                                                new Goal(100, linear_score(string_length)),
+                                                random);
+
+            GeneticAlgorithm<LCOGenome> experiment_two_two =
+                new GeneticAlgorithm<LCOGenome>(string_length,
+                                                new UniformCrossover<LCOGenome>(random),
                                                 new Goal(100, linear_score(string_length)),
                                                 random);
 
@@ -85,9 +97,18 @@ namespace INFOEA.Assignment1
                                                 new Goal(100, 100),
                                                 random);
 
+            GeneticAlgorithm<DTTGenome> experiment_three_two =
+                new GeneticAlgorithm<DTTGenome>(string_length,
+                                                new UniformCrossover<DTTGenome>(random),
+                                                new Goal(100, 100),
+                                                random);
+
             Results[1].TwoPointCrossoverResults = RunExperiment(experiment_one_one);
             Results[2].TwoPointCrossoverResults = RunExperiment(experiment_two_one);
             Results[3].TwoPointCrossoverResults = RunExperiment(experiment_three_one);
+            Results[1].UniformCrossoverResults = RunExperiment(experiment_one_two);
+            Results[2].UniformCrossoverResults = RunExperiment(experiment_two_two);
+            Results[3].UniformCrossoverResults = RunExperiment(experiment_three_two);
 
             writeResultsToFile();
         }
