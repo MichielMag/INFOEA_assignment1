@@ -19,6 +19,10 @@ namespace INFOEA.Assignment1.Algorithm
 
         private ICrossover<T> crossover_provider;
         private List<T> population;
+
+        private List<T> previous_population;
+        private T previous_last;
+
         private Random random;
         private Goal goal;
         
@@ -30,16 +34,20 @@ namespace INFOEA.Assignment1.Algorithm
 
             random = _random;
         }
-        
 
         // TODO: Write results to InnerResult.
         public InnerResult start(int population_size, bool silent = false)
         {
+            int last_index = population_size - 1;
+            int convergence_hit = -1;
             current_generation = 0;
+            int first_goal_hit = -1;
             population = new List<T>();
 
-            Console.WriteLine("Going to run algorithm. Max generations: {0}, Min fitness: {1}", goal.MaxGenerations, goal.MinFitness);
+            //Console.WriteLine("Going to run algorithm. Max generations: {0}, Min fitness: {1}", goal.MaxGenerations, goal.MinFitness);
             generatePopulation(population_size);
+
+            population[0].FunctionEvaluations = 0;
 
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             do
@@ -53,7 +61,25 @@ namespace INFOEA.Assignment1.Algorithm
                     printPopulation();
 
                 current_generation++;
-            } while (!goal.AchievedGoal(current_generation, population[0].Fitness));
+
+                if (first_goal_hit < 0 && population[0].Fitness >= goal.MinFitness)
+                    first_goal_hit = current_generation;
+
+                // No new genes entered the population (whatever the genome as, the last one should have shifted.
+                // Comparing pointers here
+                if ((IGenome)previous_last == (IGenome)population[last_index])
+                {
+                    convergence_hit = current_generation;
+                    break;
+                }
+
+                // Or if all genomes are the same, possibly costly operation.
+                if (converged(last_index))
+                {
+                    convergence_hit = current_generation;
+                    break;
+                }
+            } while (true);
 
             stopwatch.Stop();
 
@@ -61,15 +87,37 @@ namespace INFOEA.Assignment1.Algorithm
             //Console.ReadLine();
 
             InnerResult res = new InnerResult();
-            res.FirstHitGeneration = current_generation;
+            res.FirstHitGeneration = first_goal_hit;
             res.Success = goal.AchievedFitnessGoal(population[0].Fitness);
 
             // TODO:
-            res.ConvergenceGeneration = 0;
+            res.ConvergenceGeneration = convergence_hit;
             res.CPUTime = stopwatch.ElapsedTicks;
-            res.FunctionEvaluations = 0;
+            res.FunctionEvaluations = population[0].FunctionEvaluations;
 
             return res;
+        }
+        
+        private bool converged(int last_index)
+        {
+            // So, let's start by comparing the last with the first, and then go from there one
+            T last = population[last_index];
+
+            for(int i = 0; i < population.Count; ++i)
+            {
+                // First check fitness, a cheaper operation than comparing strings.
+                if (last.Fitness != population[i].Fitness)
+                    return false;
+
+                // Only if the fitnesses were equal, let's check the string.
+                if (!last.Data.Equals(population[i].Data))
+                     return false;
+
+                // If both were equal, we can't do much else but to continue searching.
+            }
+
+            // Can we do this any smarter?
+            return true;
         }
 
         private void generatePopulation(int population_size)
@@ -91,6 +139,10 @@ namespace INFOEA.Assignment1.Algorithm
 
         private void procreatePopulation(int population_size)
         {
+            // This MAY slow it down a lot, but then again, the lists aren't that big
+            // and we're only copying pointers... right?
+            previous_population = new List<T>(population);
+            previous_last = population.Last();
 
             for(int i = 0; i < population_size; i+=2)
             {
@@ -121,8 +173,8 @@ namespace INFOEA.Assignment1.Algorithm
 
         private string results()
         {
-            return String.Format("====================Results:====================\nSeed: {0}\nGenerations: {1}\nBest: {2}\n================================================",
-                seed, current_generation, population[0]);
+            return String.Format("Best: {0}",
+                population[0]);
         }
     }
 }

@@ -48,6 +48,10 @@ namespace INFOEA.Assignment1.Genome
             {
                 return function_evaluations;
             }
+            set
+            {
+                function_evaluations = value;
+            }
         }
 
         public int Fitness

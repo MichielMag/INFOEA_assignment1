@@ -111,7 +111,7 @@ namespace INFOEA.Assignment1.Results
         public bool Success { get; set; }
         public int FirstHitGeneration { get; set; }
         public int ConvergenceGeneration { get; set; }
-        public int FunctionEvaluations { get; set; }
+        public long FunctionEvaluations { get; set; }
         public long CPUTime { get; set; }
     }
 }

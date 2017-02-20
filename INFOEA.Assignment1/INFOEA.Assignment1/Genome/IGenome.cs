@@ -12,5 +12,6 @@ namespace INFOEA.Assignment1.Genome
         void Generate(ref Random random);
         string Data { get; }
         int DataSize { get; }
+        long FunctionEvaluations { get; set; }
     }
 }
