@@ -11,6 +11,10 @@ namespace INFOEA.Assignment1.Genome
         protected string data;
         protected int data_size;
 
+        protected int fitness = -1;
+
+        static long function_evaluations;
+
         public AbstractGenome(int _data_size)
         {
             data_size = _data_size;
@@ -38,10 +42,28 @@ namespace INFOEA.Assignment1.Genome
             }
         }
 
-        public abstract int Fitness
+        public long FunctionEvaluations
         {
-            get;
+            get
+            {
+                return function_evaluations;
+            }
         }
+
+        public int Fitness
+        {
+            get
+            {
+                if (fitness < 0)
+                {
+                    calculateFitness();
+                    function_evaluations++;
+                }
+                return fitness;
+            }
+        }
+
+        protected abstract void calculateFitness();
 
         public int CompareTo(IGenome other)
         {

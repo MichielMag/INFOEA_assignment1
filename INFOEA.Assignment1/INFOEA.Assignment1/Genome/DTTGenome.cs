@@ -15,37 +15,33 @@ namespace INFOEA.Assignment1.Genome
 
         public DTTGenome(string data) : base(data) { }
 
-        public override int Fitness
+        protected override void calculateFitness()
         {
-            get
+            int score = 0;
+
+            for (int i = 0; i < data_size; i += 4)
             {
-                int score = 0;
-
-                for(int i = 0; i < data_size; i += 4)
+                int ones = 0;
+                for (int j = 0; j < 4; ++j)
+                    ones += data[i + j] == '1' ? 1 : 0;
+                switch (ones)
                 {
-                    int ones = 0;
-                    for (int j = 0; j < 4; ++j)
-                        ones += data[i + j] == '1' ? 1 : 0;
-                    switch(ones)
-                    {
-                        case 0:
-                            score += 3;
-                            break;
-                        case 1:
-                            score += 2;
-                            break;
-                        case 2:
-                            score += 1;
-                            break;
-                        case 4:
-                            score += 4;
-                            break;
-                    }
+                    case 0:
+                        score += 3;
+                        break;
+                    case 1:
+                        score += 2;
+                        break;
+                    case 2:
+                        score += 1;
+                        break;
+                    case 4:
+                        score += 4;
+                        break;
                 }
-                
-
-                return score;
             }
+
+            fitness = score;
         }
 
         public override string ToString()

@@ -30,6 +30,7 @@ namespace INFOEA.Assignment1.Algorithm
 
             random = _random;
         }
+        
 
         // TODO: Write results to InnerResult.
         public InnerResult start(int population_size, bool silent = false)

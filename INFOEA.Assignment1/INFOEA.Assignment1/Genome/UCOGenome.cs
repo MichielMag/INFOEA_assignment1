@@ -15,12 +15,9 @@ namespace INFOEA.Assignment1.Genome
 
         public UCOGenome(string data) : base(data) { }
 
-        public override int Fitness
+        protected override void calculateFitness()
         {
-            get
-            {
-                return data.Count(c => c.Equals('1'));
-            }
+            fitness = data.Count(c => c.Equals('1'));
         }
     }
 }
