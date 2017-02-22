@@ -153,7 +153,7 @@ namespace INFOEA.Assignment1.Algorithm
             {
                 int j = rand.Next(consecutiveNums.Count());
                 output[i] = consecutiveNums[j];
-                consecutiveNums.Remove(consecutiveNums.ElementAt(j));
+                consecutiveNums.RemoveAt(j);
             }
 
             return output;
