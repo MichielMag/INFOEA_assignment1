@@ -103,12 +103,21 @@ namespace INFOEA.Assignment1.Algorithm
             // So, let's start by comparing the last with the first, and then go from there one
             T last = population[last_index];
 
-            for(int i = 0; i < population.Count; ++i)
+            for (int i = 0; i < population.Count; ++i)
             {
                 // First check fitness, a cheaper operation than comparing strings.
                 if (last.Fitness != population[i].Fitness)
                     return false;
+            }
 
+            for (int i = 0; i < population.Count; i++)
+            {
+                if (last.GetHashCode() != population[i].GetHashCode())
+                    return false;
+            }
+
+            for (int i = 0; i < population.Count; i++)
+            { 
                 // Only if the fitnesses were equal, let's check the string.
                 if (!last.Data.Equals(population[i].Data))
                      return false;

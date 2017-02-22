@@ -102,5 +102,39 @@ namespace INFOEA.Assignment1.Genome
         {
             return String.Format("{0}: {1}, {2}", Fitness, Name, Data);
         }
+
+        protected int hash = -1;
+
+        public override int GetHashCode()
+        {
+            if (this.hash > -1) return hash;
+            else
+            {
+                calculateHashCode();
+                return hash;
+            }
+        }
+
+        protected void calculateHashCode()
+        {
+            int M = 104729;
+            int q = 34061;
+            int a = 13;
+            int b = 17;
+
+            int h = 0;
+
+            for (int i = 0; i < data_size; i++)
+            {
+                if (data[i] == '1')
+                {
+                    int p = i * q + b;
+                    p = ((p * a) % M);
+                    h = ((h + p) % M);
+                }
+            }
+
+            this.hash = h;
+        }
     }
 }
