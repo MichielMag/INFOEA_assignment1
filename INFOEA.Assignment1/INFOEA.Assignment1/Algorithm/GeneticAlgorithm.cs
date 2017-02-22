@@ -10,7 +10,7 @@ using INFOEA.Assignment1.Results;
 
 namespace INFOEA.Assignment1.Algorithm
 {
-    class GeneticAlgorithm<T> where T:IGenome
+    class GeneticAlgorithm<T> where T : IGenome
     {
         private int genome_size;
         private int current_generation;
@@ -25,7 +25,7 @@ namespace INFOEA.Assignment1.Algorithm
 
         private Random random;
         private Goal goal;
-        
+
         public GeneticAlgorithm(int _genome_size, ICrossover<T> _crossover_provider, Goal _goal, Random _random)
         {
             crossover_provider = _crossover_provider;
@@ -57,7 +57,7 @@ namespace INFOEA.Assignment1.Algorithm
                 sortPopulation();
                 selectPopulation(population_size);
 
-                if(!silent)
+                if (!silent)
                     printPopulation();
 
                 current_generation++;
@@ -97,7 +97,7 @@ namespace INFOEA.Assignment1.Algorithm
 
             return res;
         }
-        
+
         private bool converged(int last_index)
         {
             // So, let's start by comparing the last with the first, and then go from there one
@@ -115,10 +115,10 @@ namespace INFOEA.Assignment1.Algorithm
 
 
             for (int i = 0; i < population.Count; i++)
-            { 
+            {
                 // Only if the fitnesses were equal, let's check the string.
                 if (!last.Data.Equals(population[i].Data))
-                     return false;
+                    return false;
 
                 // If both were equal, we can't do much else but to continue searching.
             }
@@ -134,11 +134,11 @@ namespace INFOEA.Assignment1.Algorithm
             int[] elementOrder = null;
             //there is probably a cleaner solution than this..
             if (typeof(T).ToString() == "INFOEA.Assignment1.Genome.DTRGenome" ||
-                typeof(T).ToString() == "INFOEA.Assignment1.Genome.NDTRGenome" )
+                typeof(T).ToString() == "INFOEA.Assignment1.Genome.NDTRGenome")
                 elementOrder = generateRandomOrder(genome_size); //you only want to call this function once per run!!
                                                                  //pointer to this is copied in crossover class
 
-            for(uint i = 0; i < population_size; ++i)
+            for (uint i = 0; i < population_size; ++i)
             {
                 T g = (T)Activator.CreateInstance(typeof(T), genome_size);
                 g.ElementOrder = elementOrder;
@@ -150,19 +150,19 @@ namespace INFOEA.Assignment1.Algorithm
         private Random rand = new Random(12345);
         private int[] generateRandomOrder(int size)
         {
-            int[] nums = new int[size];
-            for (int i = 0; i < size; i++)
-                nums[i] = i;
-
             int[] output = new int[size];
+            for (int i = 0; i < size; i++)
+                output[i] = i;
+
             for (int i = 0; i < size; i++)
             {
                 int j = rand.Next(size - i);
-                output[i] = nums[j];
-                nums[j] = nums[size - i - 1];
+                int x = output[i];
+                output[i] = output[j + i];
+                output[j + i] = x;
             }
 
-            return output;
+            return output; 
         }
 
         private void shufflePopulation()
