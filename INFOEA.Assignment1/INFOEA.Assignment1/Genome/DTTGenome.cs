@@ -14,16 +14,12 @@ namespace INFOEA.Assignment1.Genome
         public DTTGenome(int data_size) : base(data_size)
         {
             name = "DTT";
-            fitnessValues = new float[5] { 3, 2, 1, 0, 4 };
         }
 
         public DTTGenome(string data) : base(data)
         {
             name = "DTT";
-            fitnessValues = new float[5] { 3, 2, 1, 0, 4 };
         }
-
-        protected float[] fitnessValues;
 
         protected override void calculateFitness()
         {
@@ -35,7 +31,29 @@ namespace INFOEA.Assignment1.Genome
                 for (int j = 0; j < 4; ++j)
                     ones += data[i + j] == '1' ? 1 : 0;
 
-                score += fitnessValues[ones];
+                switch (ones)
+                {
+                    case 0:
+                        {
+                            score += 3;
+                            break;
+                        }
+                    case 1:
+                        {
+                            score += 2;
+                            break;
+                        }
+                    case 2:
+                        {
+                            score += 1;
+                            break;
+                        }
+                    case 4:
+                        {
+                            score += 4;
+                            break;
+                        }
+                }
             }
 
             fitness = score;
