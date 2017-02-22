@@ -11,13 +11,29 @@ namespace INFOEA.Assignment1.Genome
         protected string data;
         protected int data_size;
 
-        protected int fitness = -1;
+        protected string name;
+
+        protected int[] elementOrder; 
+
+        public int[] ElementOrder
+        {
+            get { return elementOrder;  }
+            set { elementOrder = value;  }
+        }
+
+        public string Name
+        {
+            get { return name; }
+        }
+
+        protected float fitness = -1;
 
         static long function_evaluations;
 
         public AbstractGenome(int _data_size)
         {
             data_size = _data_size;
+            elementOrder = new int[data_size];
         }
 
         public AbstractGenome(string _data)
@@ -54,7 +70,7 @@ namespace INFOEA.Assignment1.Genome
             }
         }
 
-        public int Fitness
+        public float Fitness
         {
             get
             {
@@ -84,7 +100,7 @@ namespace INFOEA.Assignment1.Genome
 
         public override string ToString()
         {
-            return String.Format("{0}: {1}", Fitness, Data);
+            return String.Format("{0}: {1}, {2}", Fitness, Name, Data);
         }
     }
 }

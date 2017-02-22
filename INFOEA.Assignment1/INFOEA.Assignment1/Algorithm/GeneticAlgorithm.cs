@@ -15,7 +15,7 @@ namespace INFOEA.Assignment1.Algorithm
         private int genome_size;
         private int current_generation;
 
-        private int seed;
+        //private int seed;
 
         private ICrossover<T> crossover_provider;
         private List<T> population;
@@ -124,12 +124,39 @@ namespace INFOEA.Assignment1.Algorithm
         {
             population = new List<T>();
 
+            int[] elementOrder = null;
+            //there is probably a cleaner solution than this..
+            if (typeof(T).ToString() == "INFOEA.Assignment1.Genome.DTRGenome" ||
+                typeof(T).ToString() == "INFOEA.Assignment1.Genome.NDTRGenome" )
+                elementOrder = generateRandomOrder(genome_size); //you only want to call this function once per run!!
+                                                                 //pointer to this is copied in crossover class
+
             for(uint i = 0; i < population_size; ++i)
             {
                 T g = (T)Activator.CreateInstance(typeof(T), genome_size);
+                g.ElementOrder = elementOrder;
                 g.Generate(ref random);
                 population.Add(g);
             }
+        }
+
+        private int[] generateRandomOrder(int size)
+        {
+            Random rand = new Random(12345);
+            int[] output = new int[size];
+            List<int> consecutiveNums = new List<int>();
+            for (int i = 0; i < size; i++)
+            {
+                consecutiveNums.Add(i);
+            }
+            for (int i = 0; i < size; i++)
+            {
+                int j = rand.Next(consecutiveNums.Count());
+                output[i] = consecutiveNums[j];
+                consecutiveNums.Remove(consecutiveNums.ElementAt(j));
+            }
+
+            return output;
         }
 
         private void shufflePopulation()

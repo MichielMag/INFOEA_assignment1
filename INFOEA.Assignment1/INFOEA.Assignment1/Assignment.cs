@@ -103,12 +103,55 @@ namespace INFOEA.Assignment1
                                                 new Goal(100, 100),
                                                 random);
 
+            GeneticAlgorithm<NDTTGenome> experiment_four_one =
+                new GeneticAlgorithm<NDTTGenome>(string_length,
+                                                new TwoPointCrossover<NDTTGenome>(random),
+                                                new Goal(100, 100),
+                                                random);
+
+            GeneticAlgorithm<NDTTGenome> experiment_four_two =
+                new GeneticAlgorithm<NDTTGenome>(string_length,
+                                                new UniformCrossover<NDTTGenome>(random),
+                                                new Goal(100, 100),
+                                                random);
+
+            GeneticAlgorithm<DTRGenome> experiment_five_one =
+                new GeneticAlgorithm<DTRGenome>(string_length,
+                                    new TwoPointCrossover<DTRGenome>(random),
+                                    new Goal(100, 100),
+                                    random);
+
+            GeneticAlgorithm<DTRGenome> experiment_five_two =
+                 new GeneticAlgorithm<DTRGenome>(string_length,
+                                                new UniformCrossover<DTRGenome>(random),
+                                                new Goal(100, 100),
+                                                random);
+
+            GeneticAlgorithm<NDTRGenome> experiment_six_one =
+    new GeneticAlgorithm<NDTRGenome>(string_length,
+                        new TwoPointCrossover<NDTRGenome>(random),
+                        new Goal(100, 100),
+                        random);
+
+            GeneticAlgorithm<NDTRGenome> experiment_six_two =
+                 new GeneticAlgorithm<NDTRGenome>(string_length,
+                                                new UniformCrossover<NDTRGenome>(random),
+                                                new Goal(100, 100),
+                                                random);
+
             Results[1].TwoPointCrossoverResults = RunExperiment(experiment_one_one);
             Results[2].TwoPointCrossoverResults = RunExperiment(experiment_two_one);
             Results[3].TwoPointCrossoverResults = RunExperiment(experiment_three_one);
+            Results[4].TwoPointCrossoverResults = RunExperiment(experiment_four_one);
+            Results[5].TwoPointCrossoverResults = RunExperiment(experiment_five_one);
+            Results[6].TwoPointCrossoverResults = RunExperiment(experiment_six_one);
+
             Results[1].UniformCrossoverResults = RunExperiment(experiment_one_two);
             Results[2].UniformCrossoverResults = RunExperiment(experiment_two_two);
             Results[3].UniformCrossoverResults = RunExperiment(experiment_three_two);
+            Results[4].UniformCrossoverResults = RunExperiment(experiment_four_two);
+            Results[5].UniformCrossoverResults = RunExperiment(experiment_five_two);
+            Results[6].UniformCrossoverResults = RunExperiment(experiment_six_two);
 
             writeResultsToFile();
         }

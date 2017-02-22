@@ -11,9 +11,11 @@ namespace INFOEA.Assignment1.Genome
      **/
     class UCOGenome : AbstractGenome
     {
-        public UCOGenome(int data_size) : base(data_size) { }
+        public UCOGenome(int data_size) : base(data_size) { name = "UCO"; }
 
-        public UCOGenome(string data) : base(data) { }
+        public UCOGenome(string data) : base(data) { name = "UCO"; }
+
+        
 
         protected override void calculateFitness()
         {

@@ -55,9 +55,12 @@
     <Compile Include="Algorithm\Goal.cs" />
     <Compile Include="Assignment.cs" />
     <Compile Include="Genome\AbstractGenome.cs" />
+    <Compile Include="Genome\DTRGenome.cs" />
     <Compile Include="Genome\DTTGenome.cs" />
     <Compile Include="Genome\IGenome.cs" />
     <Compile Include="Genome\LCOGenome.cs" />
+    <Compile Include="Genome\NDTRGenome.cs" />
+    <Compile Include="Genome\NDTTGenome.cs" />
     <Compile Include="Genome\UCOGenome.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

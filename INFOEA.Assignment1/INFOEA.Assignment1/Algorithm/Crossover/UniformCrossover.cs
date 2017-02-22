@@ -9,7 +9,7 @@ namespace INFOEA.Assignment1.Algorithm.Crossover
 {
     class UniformCrossover<T> : AbstractCrossover<T> where T:IGenome
     {
-        private const double flipping_chance = 0.1;
+        private const double flipping_chance = 0.5;
         public UniformCrossover(Random random) : base(random)
         {
         }
@@ -37,6 +37,9 @@ namespace INFOEA.Assignment1.Algorithm.Crossover
 
             T child_one = (T)Activator.CreateInstance(typeof(T), child_one_data);
             T child_two = (T)Activator.CreateInstance(typeof(T), child_two_data);
+
+            child_one.ElementOrder = ParentOne.ElementOrder;
+            child_two.ElementOrder = ParentTwo.ElementOrder;
 
             return new Tuple<T, T>(child_one, child_two);
         }

@@ -11,34 +11,31 @@ namespace INFOEA.Assignment1.Genome
      **/
     class DTTGenome : AbstractGenome
     {
-        public DTTGenome(int data_size) : base(data_size) { }
+        public DTTGenome(int data_size) : base(data_size)
+        {
+            name = "DTT";
+            fitnessValues = new float[5] { 3, 2, 1, 0, 4 };
+        }
 
-        public DTTGenome(string data) : base(data) { }
+        public DTTGenome(string data) : base(data)
+        {
+            name = "DTT";
+            fitnessValues = new float[5] { 3, 2, 1, 0, 4 };
+        }
+
+        protected float[] fitnessValues;
 
         protected override void calculateFitness()
         {
-            int score = 0;
+            float score = 0;
 
             for (int i = 0; i < data_size; i += 4)
             {
                 int ones = 0;
                 for (int j = 0; j < 4; ++j)
                     ones += data[i + j] == '1' ? 1 : 0;
-                switch (ones)
-                {
-                    case 0:
-                        score += 3;
-                        break;
-                    case 1:
-                        score += 2;
-                        break;
-                    case 2:
-                        score += 1;
-                        break;
-                    case 4:
-                        score += 4;
-                        break;
-                }
+
+                score += fitnessValues[ones];
             }
 
             fitness = score;
@@ -51,7 +48,7 @@ namespace INFOEA.Assignment1.Genome
             {
                 chopped += data.Substring(i, 4) + "|";
             }
-            return String.Format("{0}: {1}", Fitness, chopped);
+            return String.Format("{0}: {1}, {2}", Fitness, Name, chopped);
         }
     }
 }

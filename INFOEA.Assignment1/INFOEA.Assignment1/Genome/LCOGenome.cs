@@ -11,9 +11,9 @@ namespace INFOEA.Assignment1.Genome
      **/
     class LCOGenome : AbstractGenome
     {
-        public LCOGenome(int data_size) : base(data_size) { }
+        public LCOGenome(int data_size) : base(data_size) { name = "LCO"; }
 
-        public LCOGenome(string data) : base(data) { }
+        public LCOGenome(string data) : base(data) { name = "LCO"; }
 
         protected override void calculateFitness()
         {

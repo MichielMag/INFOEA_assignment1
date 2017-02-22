@@ -8,10 +8,11 @@ namespace INFOEA.Assignment1.Genome
 {
     interface IGenome : IComparable<IGenome>
     {
-        int Fitness { get; }
+        float Fitness { get; }
         void Generate(ref Random random);
         string Data { get; }
         int DataSize { get; }
         long FunctionEvaluations { get; set; }
+        int[] ElementOrder { get; set;  }
     }
 }
