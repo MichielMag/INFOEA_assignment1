@@ -140,9 +140,9 @@ namespace INFOEA.Assignment1.Algorithm
             }
         }
 
+        private Random rand = new Random(12345);
         private int[] generateRandomOrder(int size)
         {
-            Random rand = new Random(12345);
             int[] output = new int[size];
             List<int> consecutiveNums = new List<int>();
             for (int i = 0; i < size; i++)
