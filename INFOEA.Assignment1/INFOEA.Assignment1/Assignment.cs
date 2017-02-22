@@ -139,10 +139,10 @@ namespace INFOEA.Assignment1
                                                 new Goal(100, 100),
                                                 random);
 
-            //Results[1].TwoPointCrossoverResults = RunExperiment(experiment_one_one);
-            //Results[2].TwoPointCrossoverResults = RunExperiment(experiment_two_one);
-            //Results[3].TwoPointCrossoverResults = RunExperiment(experiment_three_one);
-            //Results[4].TwoPointCrossoverResults = RunExperiment(experiment_four_one);
+            Results[1].TwoPointCrossoverResults = RunExperiment(experiment_one_one);
+            Results[2].TwoPointCrossoverResults = RunExperiment(experiment_two_one);
+            Results[3].TwoPointCrossoverResults = RunExperiment(experiment_three_one);
+            Results[4].TwoPointCrossoverResults = RunExperiment(experiment_four_one);
             Results[5].TwoPointCrossoverResults = RunExperiment(experiment_five_one);
             Results[6].TwoPointCrossoverResults = RunExperiment(experiment_six_one);
 
