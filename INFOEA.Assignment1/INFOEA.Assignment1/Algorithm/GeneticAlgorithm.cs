@@ -150,17 +150,16 @@ namespace INFOEA.Assignment1.Algorithm
         private Random rand = new Random(12345);
         private int[] generateRandomOrder(int size)
         {
+            int[] nums = new int[size];
+            for (int i = 0; i < size; i++)
+                nums[i] = i;
+
             int[] output = new int[size];
-            List<int> consecutiveNums = new List<int>();
             for (int i = 0; i < size; i++)
             {
-                consecutiveNums.Add(i);
-            }
-            for (int i = 0; i < size; i++)
-            {
-                int j = rand.Next(consecutiveNums.Count());
-                output[i] = consecutiveNums[j];
-                consecutiveNums.RemoveAt(j);
+                int j = rand.Next(size - i);
+                output[i] = nums[j];
+                nums[j] = nums[size - i - 1];
             }
 
             return output;
