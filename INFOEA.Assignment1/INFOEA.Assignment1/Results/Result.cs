@@ -37,17 +37,15 @@ namespace INFOEA.Assignment1.Results
         {
             get
             {
-                return this.OrderBy(x => x.FirstHitGeneration)
-                    .ElementAt((int)Math.Ceiling((double)(this.Count) / 2.0))
-                    .FirstHitGeneration;
+                return this.Average(x => x.FirstHitGeneration);
             }
         }
         public double FirstHitGenerationStandardDeviation
         {
             get
             {
-                double avg = this.Average(x => x.FirstHitGeneration);
-                return Math.Sqrt(this.Sum(x => Math.Pow(x.FirstHitGeneration - avg, 2)));
+                double avg = this.FirstHitGenerationMean;
+                return Math.Sqrt(this.Sum(x => Math.Pow(x.FirstHitGeneration - avg, 2)) / this.Count);
             }
         }
 
@@ -55,17 +53,15 @@ namespace INFOEA.Assignment1.Results
         {
             get
             {
-                return this.OrderBy(x => x.ConvergenceGeneration)
-                    .ElementAt((int)Math.Ceiling((double)(this.Count) / 2.0))
-                    .ConvergenceGeneration;
+                return this.Average(x => x.ConvergenceGeneration);
             }
         }
         public double ConvergenceGenerationStandardDeviation
         {
             get
             {
-                double avg = this.Average(x => x.ConvergenceGeneration);
-                return Math.Sqrt(this.Sum(x => Math.Pow(x.ConvergenceGeneration - avg, 2)));
+                double avg = this.ConvergenceGenerationMean;
+                return Math.Sqrt(this.Sum(x => Math.Pow(x.ConvergenceGeneration - avg, 2)) / this.Count);
             }
         }
 
@@ -73,17 +69,15 @@ namespace INFOEA.Assignment1.Results
         {
             get
             {
-                return this.OrderBy(x => x.FunctionEvaluations)
-                    .ElementAt((int)Math.Ceiling((double)(this.Count) / 2.0))
-                    .FunctionEvaluations;
+                return this.Average(x => x.FunctionEvaluations);
             }
         }
         public double FunctionEvaluationsStandardDeviation
         {
             get
             {
-                double avg = this.Average(x => x.FunctionEvaluations);
-                return Math.Sqrt(this.Sum(x => Math.Pow(x.FunctionEvaluations - avg, 2)));
+                double avg = this.FunctionEvaluationsMean;
+                return Math.Sqrt(this.Sum(x => Math.Pow(x.FunctionEvaluations - avg, 2)) / this.Count);
             }
         }
 
@@ -91,17 +85,15 @@ namespace INFOEA.Assignment1.Results
         {
             get
             {
-                return this.OrderBy(x => x.CPUTime)
-                    .ElementAt((int)Math.Ceiling((double)(this.Count) / 2.0))
-                    .CPUTime;
+                return this.Average(x => x.CPUTime);
             }
         }
         public double CPUTimeStandardDeviation
         {
             get
             {
-                double avg = this.Average(x => x.CPUTime);
-                return Math.Sqrt(this.Sum(x => Math.Pow(x.CPUTime - avg, 2)));
+                double avg = this.CPUTimeMean;
+                return Math.Sqrt(this.Sum(x => Math.Pow(x.CPUTime - avg, 2)) / this.Count);
             }
         }
     }
