@@ -9,7 +9,7 @@ namespace INFOEA.Assignment1.Genome
     /**
      * Deceptive Trap Randomly linked Function Genome
      **/
-    class DTRGenome : AbstractGenome
+    class DTRGenome : RandomlyLinkedAbstractGenome
     {
         public DTRGenome(int data_size) : base(data_size)  { name = "DTR"; }
 

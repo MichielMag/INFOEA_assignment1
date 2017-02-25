@@ -10,7 +10,7 @@ namespace INFOEA.Assignment1.Genome
     * Non-Deceptive Trap Tightly Function Genome
     **/
 
-    class NDTTGenome : AbstractGenome
+    class NDTTGenome : TightlyLinkedAbstractGenome
     {
         public NDTTGenome(int data_size) : base(data_size)
         {

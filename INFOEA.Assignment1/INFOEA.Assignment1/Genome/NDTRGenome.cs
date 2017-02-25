@@ -9,7 +9,7 @@ namespace INFOEA.Assignment1.Genome
     /**
      * Non-Deceptive Trap Randomly linked Function Genome
      **/
-    class NDTRGenome : AbstractGenome
+    class NDTRGenome : RandomlyLinkedAbstractGenome
     {
         public NDTRGenome(int data_size) : base(data_size)
         {

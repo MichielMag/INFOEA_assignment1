@@ -38,9 +38,6 @@ namespace INFOEA.Assignment1.Algorithm.Crossover
             T child_one = (T)Activator.CreateInstance(typeof(T), child_one_data);
             T child_two = (T)Activator.CreateInstance(typeof(T), child_two_data);
 
-            child_one.ElementOrder = ParentOne.ElementOrder;
-            child_two.ElementOrder = ParentTwo.ElementOrder;
-
             return new Tuple<T, T>(child_one, child_two);
         }
     }

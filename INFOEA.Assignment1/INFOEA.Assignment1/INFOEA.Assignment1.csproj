@@ -61,6 +61,8 @@
     <Compile Include="Genome\LCOGenome.cs" />
     <Compile Include="Genome\NDTRGenome.cs" />
     <Compile Include="Genome\NDTTGenome.cs" />
+    <Compile Include="Genome\RandomlyLinkedAbstractGenome.cs" />
+    <Compile Include="Genome\TightlyLinkedAbstractGenome.cs" />
     <Compile Include="Genome\UCOGenome.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

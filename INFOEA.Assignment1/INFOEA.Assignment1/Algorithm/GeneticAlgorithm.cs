@@ -131,40 +131,14 @@ namespace INFOEA.Assignment1.Algorithm
         {
             population = new List<T>();
 
-            int[] elementOrder = null;
-            //there is probably a cleaner solution than this..
-            if (typeof(T).ToString() == "INFOEA.Assignment1.Genome.DTRGenome" ||
-                typeof(T).ToString() == "INFOEA.Assignment1.Genome.NDTRGenome")
-                elementOrder = generateRandomOrder(genome_size); //you only want to call this function once per run!!
-                                                                 //pointer to this is copied in crossover class
-
             for (uint i = 0; i < population_size; ++i)
             {
                 T g = (T)Activator.CreateInstance(typeof(T), genome_size);
-                g.ElementOrder = elementOrder;
                 g.Generate(ref random);
                 population.Add(g);
             }
         }
-
-        private Random rand = new Random(12345);
-        private int[] generateRandomOrder(int size)
-        {
-            int[] output = new int[size];
-            for (int i = 0; i < size; i++)
-                output[i] = i;
-
-            for (int i = 0; i < size; i++)
-            {
-                int j = rand.Next(size - i);
-                int x = output[i];
-                output[i] = output[j + i];
-                output[j + i] = x;
-            }
-
-            return output; 
-        }
-
+        
         private void shufflePopulation()
         {
             population = population.OrderBy(genome => random.Next()).ToList();

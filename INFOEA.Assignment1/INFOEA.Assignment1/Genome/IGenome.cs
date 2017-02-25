@@ -13,6 +13,5 @@ namespace INFOEA.Assignment1.Genome
         string Data { get; }
         int DataSize { get; }
         long FunctionEvaluations { get; set; }
-        int[] ElementOrder { get; set;  }
     }
 }

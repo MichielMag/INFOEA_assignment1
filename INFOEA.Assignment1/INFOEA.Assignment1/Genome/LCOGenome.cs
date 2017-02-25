@@ -9,7 +9,7 @@ namespace INFOEA.Assignment1.Genome
     /**
      * Lineary Counting Ones
      **/
-    class LCOGenome : AbstractGenome
+    class LCOGenome : TightlyLinkedAbstractGenome
     {
         public LCOGenome(int data_size) : base(data_size) { name = "LCO"; }
 

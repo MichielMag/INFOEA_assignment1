@@ -9,7 +9,7 @@ namespace INFOEA.Assignment1.Genome
     /**
      * Uniformly Counting Ones Genome
      **/
-    class UCOGenome : AbstractGenome
+    class UCOGenome : TightlyLinkedAbstractGenome
     {
         public UCOGenome(int data_size) : base(data_size) { name = "UCO"; }
 

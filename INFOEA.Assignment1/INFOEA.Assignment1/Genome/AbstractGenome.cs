@@ -10,16 +10,9 @@ namespace INFOEA.Assignment1.Genome
     {
         protected string data;
         protected int data_size;
+        protected int hash = -1;
 
         protected string name;
-
-        protected int[] elementOrder; 
-
-        public int[] ElementOrder
-        {
-            get { return elementOrder;  }
-            set { elementOrder = value;  }
-        }
 
         public string Name
         {
@@ -33,7 +26,6 @@ namespace INFOEA.Assignment1.Genome
         public AbstractGenome(int _data_size)
         {
             data_size = _data_size;
-            elementOrder = new int[data_size];
         }
 
         public AbstractGenome(string _data)
@@ -90,20 +82,14 @@ namespace INFOEA.Assignment1.Genome
             return this.Fitness.CompareTo(other.Fitness);
         }
 
-        public void Generate(ref Random random)
-        {
-            for (int i = 0; i < data_size; ++i)
-            {
-                data += random.Next(2);
-            }
-        }
+        public abstract void Generate(ref Random random);
 
         public override string ToString()
         {
             return String.Format("{0}: {1}, {2}", Fitness, Name, Data);
         }
 
-        protected int hash = -1;
+        
 
         public override int GetHashCode()
         {
