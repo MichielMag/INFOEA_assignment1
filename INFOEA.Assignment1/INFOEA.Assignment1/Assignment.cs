@@ -153,7 +153,7 @@ namespace INFOEA.Assignment1
             Results[5].UniformCrossoverResults = RunExperiment(experiment_five_two);
             Results[6].UniformCrossoverResults = RunExperiment(experiment_six_two);
 
-            writeResultsToFile();
+            writeResultsToFiles();
         }
 
         private ResultMap RunExperiment<T>(GeneticAlgorithm<T> alg, int runs = 25) where T:IGenome
@@ -172,13 +172,21 @@ namespace INFOEA.Assignment1
             return res_list;
         }
 
-        private void writeResultsToFile()
+        private void writeResultsToFiles()
         {
             string results = "Seed: " + seed + ";;;;;;\n";
+            Dictionary<string, string> experiment_results = new Dictionary<string, string>();
             foreach(KeyValuePair<int, string> experiment in ExperimentNames)
             {
+                string experiment_key = experiment.Key + " - " + experiment.Value;
+
+                experiment_results.Add(experiment_key, "");
+                experiment_results[experiment_key] += String.Format("{0}: {1};;;;;;\n", experiment.Key, experiment.Value);
+                experiment_results[experiment_key] += "Crossover;PopSize;Success;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time\n";
+
                 results += String.Format("{0}: {1};;;;;;\n", experiment.Key, experiment.Value);
                 results += "Crossover;PopSize;Successes;Of;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time\n";
+
                 Result result = Results[experiment.Key];
                 foreach (KeyValuePair<int, InnerResultList> kvp in result.TwoPointCrossoverResults)
                 {
@@ -195,11 +203,24 @@ namespace INFOEA.Assignment1
                         kvp.Value.CPUTimeMean,
                         kvp.Value.CPUTimeStandardDeviation
                     );
+
+                    foreach(InnerResult inner_result in kvp.Value)
+                    {
+                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6}\n",
+                            "2X",
+                            kvp.Key,
+                            inner_result.Success ? "1" : "0",
+                            inner_result.FirstHitGeneration,
+                            inner_result.ConvergenceGeneration,
+                            inner_result.FunctionEvaluations,
+                            inner_result.CPUTime
+                        );
+                    }
                 }
                 foreach (KeyValuePair<int, InnerResultList> kvp in result.UniformCrossoverResults)
                 {
                     results += String.Format("{0};{1};{2};25;{3} ({4});{5} ({6});{7} ({8});{9} ({10})\n",
-                         "UX",
+                        "UX",
                         kvp.Key,
                         kvp.Value.Successes,
                         kvp.Value.FirstHitGenerationMean,
@@ -211,12 +232,32 @@ namespace INFOEA.Assignment1
                         kvp.Value.CPUTimeMean,
                         kvp.Value.CPUTimeStandardDeviation
                     );
+
+                    foreach (InnerResult inner_result in kvp.Value)
+                    {
+                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6}\n",
+                            "UX",
+                            kvp.Key,
+                            inner_result.Success ? "1" : "0",
+                            inner_result.FirstHitGeneration,
+                            inner_result.ConvergenceGeneration,
+                            inner_result.FunctionEvaluations,
+                            inner_result.CPUTime
+                        );
+                    }
                 }
             }
 
             System.IO.StreamWriter file = new System.IO.StreamWriter(filename);
             file.WriteLine(results);
             file.Close();
+
+            foreach(KeyValuePair<string, string> kvp in experiment_results)
+            {
+                System.IO.StreamWriter f = new System.IO.StreamWriter(kvp.Key+".csv");
+                f.WriteLine(kvp.Value);
+                f.Close();
+            }
         }
 
         private int linear_score(int length)
