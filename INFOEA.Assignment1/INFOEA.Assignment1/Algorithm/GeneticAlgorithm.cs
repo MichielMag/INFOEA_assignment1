@@ -83,7 +83,7 @@ namespace INFOEA.Assignment1.Algorithm
 
             stopwatch.Stop();
 
-            Console.WriteLine(results());
+            Console.WriteLine(results(population_size));
             //Console.ReadLine();
 
             InnerResult res = new InnerResult();
@@ -178,9 +178,9 @@ namespace INFOEA.Assignment1.Algorithm
             }            
         }
 
-        private string results()
+        private string results(int population_size)
         {
-            return String.Format("Best: {0}",
+            return String.Format("[{0}|{1}] - {2}", crossover_provider.Name, population_size,
                 population[0]);
         }
     }

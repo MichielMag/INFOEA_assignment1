@@ -10,7 +10,7 @@ namespace INFOEA.Assignment1.Algorithm.Crossover
     class UniformCrossover<T> : AbstractCrossover<T> where T:IGenome
     {
         private const double flipping_chance = 0.5;
-        public UniformCrossover(Random random) : base(random)
+        public UniformCrossover(Random random) : base(random, "UX")
         {
         }
 

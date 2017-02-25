@@ -8,19 +8,18 @@ namespace INFOEA.Assignment1.Algorithm.Crossover
 {
     abstract class AbstractCrossover<T> : ICrossover<T>
     {
+        private string name;
+
         protected Random random_source;
 
-        public AbstractCrossover(Random random)
+        public string Name { get { return name; } }
+
+        public AbstractCrossover(Random random, string _name)
         {
             random_source = random;
+            name = _name;
         }
 
         public abstract Tuple<T, T> DoCrossover(T ParentOne, T ParentTwo);
-
-        protected int GenerateCrossoverSize()
-        {
-
-            return 0;
-        }
     }
 }

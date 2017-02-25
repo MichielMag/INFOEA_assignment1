@@ -8,7 +8,7 @@ namespace INFOEA.Assignment1.Algorithm.Crossover
 {
     class TwoPointCrossover<T> : AbstractCrossover<T> where T:IGenome
     {
-        public TwoPointCrossover(Random random) : base(random)
+        public TwoPointCrossover(Random random) : base(random, "2X")
         {
         }
 
