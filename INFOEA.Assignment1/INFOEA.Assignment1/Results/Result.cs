@@ -96,11 +96,28 @@ namespace INFOEA.Assignment1.Results
                 return Math.Sqrt(this.Sum(x => Math.Pow(x.CPUTime - avg, 2)) / this.Count);
             }
         }
+        public double BestScoreMean
+        {
+            get
+            {
+                return this.Average(x => x.BestScore);
+            }
+        }
+        public double BestScoreStandardDeviation
+        {
+            get
+            {
+                double avg = this.BestScoreMean;
+                return Math.Sqrt(this.Sum(x => Math.Pow(x.BestScore - avg, 2)) / this.Count);
+            }
+        }
+
     }
 
     class InnerResult
     {
         public bool Success { get; set; }
+        public float BestScore { get; set; }
         public int FirstHitGeneration { get; set; }
         public int ConvergenceGeneration { get; set; }
         public long FunctionEvaluations { get; set; }

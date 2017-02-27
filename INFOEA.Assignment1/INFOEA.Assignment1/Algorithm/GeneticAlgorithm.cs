@@ -94,6 +94,7 @@ namespace INFOEA.Assignment1.Algorithm
             res.ConvergenceGeneration = convergence_hit;
             res.CPUTime = stopwatch.ElapsedTicks;
             res.FunctionEvaluations = population[0].FunctionEvaluations;
+            res.BestScore = population[0].Fitness;
 
             return res;
         }

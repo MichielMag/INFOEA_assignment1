@@ -182,15 +182,15 @@ namespace INFOEA.Assignment1
 
                 experiment_results.Add(experiment_key, "");
                 experiment_results[experiment_key] += String.Format("{0}: {1};;;;;;\n", experiment.Key, experiment.Value);
-                experiment_results[experiment_key] += "Crossover;PopSize;Success;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time\n";
+                experiment_results[experiment_key] += "Crossover;PopSize;Success;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time;Best Score;\n";
 
                 results += String.Format("{0}: {1};;;;;;\n", experiment.Key, experiment.Value);
-                results += "Crossover;PopSize;Successes;Of;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time\n";
+                results += "Crossover;PopSize;Successes;Of;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time;Best Score\n";
 
                 Result result = Results[experiment.Key];
                 foreach (KeyValuePair<int, InnerResultList> kvp in result.TwoPointCrossoverResults)
                 {
-                    results += String.Format("{0};{1};{2};25;{3} ({4});{5} ({6});{7} ({8});{9} ({10})\n",
+                    results += String.Format("{0};{1};{2};25;{3} ({4});{5} ({6});{7} ({8});{9} ({10});{11} ({12})\n",
                         "2X",
                         kvp.Key,
                         kvp.Value.Successes,
@@ -201,25 +201,28 @@ namespace INFOEA.Assignment1
                         kvp.Value.FunctionEvaluationsMean,
                         kvp.Value.FunctionEvaluationsStandardDeviation,
                         kvp.Value.CPUTimeMean,
-                        kvp.Value.CPUTimeStandardDeviation
+                        kvp.Value.CPUTimeStandardDeviation,
+                        kvp.Value.BestScoreMean,
+                        kvp.Value.BestScoreStandardDeviation
                     );
 
                     foreach(InnerResult inner_result in kvp.Value)
                     {
-                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6}\n",
+                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6};{7}\n",
                             "2X",
                             kvp.Key,
                             inner_result.Success ? "1" : "0",
                             inner_result.FirstHitGeneration,
                             inner_result.ConvergenceGeneration,
                             inner_result.FunctionEvaluations,
-                            inner_result.CPUTime
+                            inner_result.CPUTime,
+                            inner_result.BestScore
                         );
                     }
                 }
                 foreach (KeyValuePair<int, InnerResultList> kvp in result.UniformCrossoverResults)
                 {
-                    results += String.Format("{0};{1};{2};25;{3} ({4});{5} ({6});{7} ({8});{9} ({10})\n",
+                    results += String.Format("{0};{1};{2};25;{3} ({4});{5} ({6});{7} ({8});{9} ({10});{11} ({12})\n",
                         "UX",
                         kvp.Key,
                         kvp.Value.Successes,
@@ -230,19 +233,22 @@ namespace INFOEA.Assignment1
                         kvp.Value.FunctionEvaluationsMean,
                         kvp.Value.FunctionEvaluationsStandardDeviation,
                         kvp.Value.CPUTimeMean,
-                        kvp.Value.CPUTimeStandardDeviation
+                        kvp.Value.CPUTimeStandardDeviation,
+                        kvp.Value.BestScoreMean,
+                        kvp.Value.BestScoreStandardDeviation
                     );
 
                     foreach (InnerResult inner_result in kvp.Value)
                     {
-                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6}\n",
+                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6};{7}\n",
                             "UX",
                             kvp.Key,
                             inner_result.Success ? "1" : "0",
                             inner_result.FirstHitGeneration,
                             inner_result.ConvergenceGeneration,
                             inner_result.FunctionEvaluations,
-                            inner_result.CPUTime
+                            inner_result.CPUTime,
+                            inner_result.BestScore
                         );
                     }
                 }
