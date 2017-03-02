@@ -17,6 +17,8 @@ namespace INFOEA.Assignment1.Algorithm
 
         //private int seed;
 
+        private T best_result;
+
         private ICrossover<T> crossover_provider;
         private List<T> population;
 
@@ -96,8 +98,13 @@ namespace INFOEA.Assignment1.Algorithm
             res.FunctionEvaluations = population[0].FunctionEvaluations;
             res.BestScore = population[0].Fitness;
 
+            if (best_result == null || population[0].Fitness > best_result.Fitness)
+                best_result = population[0];
+
             return res;
         }
+
+        public T BestResult { get { return best_result; } }
 
         private bool converged(int last_index)
         {
