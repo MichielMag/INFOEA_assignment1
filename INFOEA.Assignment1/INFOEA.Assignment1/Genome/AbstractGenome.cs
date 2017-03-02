@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace INFOEA.Assignment1.Genome
 {
-    abstract class AbstractGenome : IGenome
+    public abstract class AbstractGenome : IGenome
     {
         protected string data;
         protected int data_size;

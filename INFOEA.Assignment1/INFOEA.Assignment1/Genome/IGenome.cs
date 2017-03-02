@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace INFOEA.Assignment1.Genome
 {
-    interface IGenome : IComparable<IGenome>
+    public interface IGenome : IComparable<IGenome>
     {
         float Fitness { get; }
         void Generate(ref Random random);

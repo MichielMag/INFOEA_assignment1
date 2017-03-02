@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace INFOEA.Assignment1.Genome
 {
-    abstract class TightlyLinkedAbstractGenome : AbstractGenome
+    public abstract class TightlyLinkedAbstractGenome : AbstractGenome
     {
         public TightlyLinkedAbstractGenome(string _data) : base(_data)
         {
