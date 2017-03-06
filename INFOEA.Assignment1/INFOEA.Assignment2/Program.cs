@@ -10,6 +10,10 @@ namespace INFOEA.Assignment2
     {
         static void Main(string[] args)
         {
+            Graph.Graph graph = new Graph.Graph("Graph500.txt");
+            Random r = new Random();
+            graph.Generate(ref r);
+            graph.ToImage(3000, 3000);
         }
     }
 }

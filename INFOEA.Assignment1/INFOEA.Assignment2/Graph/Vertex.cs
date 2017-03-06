@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace INFOEA.Assignment2.Graph
@@ -29,7 +30,8 @@ namespace INFOEA.Assignment2.Graph
 
         public static Vertex Parse(string vertex_string)
         {
-            string[] pieces = vertex_string.Split(' ');
+            string v_string = Regex.Replace(vertex_string, @"\s+", " ");
+            string[] pieces = v_string.Trim().Split(' ');
             int id = int.Parse(pieces[0]);
             string[] coordinates = pieces[1].Substring(1, pieces[1].Length - 2).Split(',');
             double x = double.Parse(coordinates[0], CultureInfo.InvariantCulture);
