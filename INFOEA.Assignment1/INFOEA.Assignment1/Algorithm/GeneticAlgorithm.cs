@@ -21,8 +21,7 @@ namespace INFOEA.Assignment1.Algorithm
 
         private ICrossover<T> crossover_provider;
         private List<T> population;
-
-        private List<T> previous_population;
+        
         private T previous_last;
 
         private Random random;
@@ -86,17 +85,16 @@ namespace INFOEA.Assignment1.Algorithm
             stopwatch.Stop();
 
             Console.WriteLine(results(population_size));
-            //Console.ReadLine();
 
             InnerResult res = new InnerResult();
             res.FirstHitGeneration = first_goal_hit;
             res.Success = goal.AchievedFitnessGoal(population[0].Fitness);
-
-            // TODO:
+            
             res.ConvergenceGeneration = convergence_hit;
             res.CPUTime = stopwatch.ElapsedTicks;
             res.FunctionEvaluations = population[0].FunctionEvaluations;
             res.BestScore = population[0].Fitness;
+            res.BestSolution = population[0].ToString();
 
             if (best_result == null || population[0].Fitness > best_result.Fitness)
                 best_result = population[0];
@@ -154,9 +152,6 @@ namespace INFOEA.Assignment1.Algorithm
 
         private void procreatePopulation(int population_size)
         {
-            // This MAY slow it down a lot, but then again, the lists aren't that big
-            // and we're only copying pointers... right?
-            previous_population = new List<T>(population);
             previous_last = population.Last();
 
             for(int i = 0; i < population_size; i+=2)

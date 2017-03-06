@@ -122,5 +122,6 @@ namespace INFOEA.Assignment1.Results
         public int ConvergenceGeneration { get; set; }
         public long FunctionEvaluations { get; set; }
         public long CPUTime { get; set; }
+        public string BestSolution { get; set; }
     }
 }

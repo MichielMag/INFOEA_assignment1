@@ -182,7 +182,7 @@ namespace INFOEA.Assignment1
 
                 experiment_results.Add(experiment_key, "");
                 experiment_results[experiment_key] += String.Format("{0}: {1};;;;;;\n", experiment.Key, experiment.Value);
-                experiment_results[experiment_key] += "Crossover;PopSize;Success;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time;Best Score;\n";
+                experiment_results[experiment_key] += "Crossover;PopSize;Success;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time;Best Score;Best Solution;\n";
 
                 results += String.Format("{0}: {1};;;;;;\n", experiment.Key, experiment.Value);
                 results += "Crossover;PopSize;Successes;Of;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time;Best Score\n";
@@ -208,7 +208,7 @@ namespace INFOEA.Assignment1
 
                     foreach(InnerResult inner_result in kvp.Value)
                     {
-                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6};{7}\n",
+                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}\n",
                             "2X",
                             kvp.Key,
                             inner_result.Success ? "1" : "0",
@@ -216,7 +216,8 @@ namespace INFOEA.Assignment1
                             inner_result.ConvergenceGeneration,
                             inner_result.FunctionEvaluations,
                             inner_result.CPUTime,
-                            inner_result.BestScore
+                            inner_result.BestScore,
+                            inner_result.BestSolution
                         );
                     }
                 }
@@ -240,7 +241,7 @@ namespace INFOEA.Assignment1
 
                     foreach (InnerResult inner_result in kvp.Value)
                     {
-                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6};{7}\n",
+                        experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}\n",
                             "UX",
                             kvp.Key,
                             inner_result.Success ? "1" : "0",
@@ -248,7 +249,8 @@ namespace INFOEA.Assignment1
                             inner_result.ConvergenceGeneration,
                             inner_result.FunctionEvaluations,
                             inner_result.CPUTime,
-                            inner_result.BestScore
+                            inner_result.BestScore,
+                            inner_result.BestSolution
                         );
                     }
                 }
