@@ -17,6 +17,7 @@ namespace INFOEA.Assignment1
         private int string_length = 100;
 
         private const string filename = "results.csv";
+        private const string tex_filename = "results-latex.txt";
 
         /*
          * Experiments: 1: Uniformly Scaled Counting Ones Function
@@ -175,6 +176,7 @@ namespace INFOEA.Assignment1
         private void writeResultsToFiles()
         {
             string results = "Seed: " + seed + ";;;;;;\n";
+            string tex_results = "";
             Dictionary<string, string> experiment_results = new Dictionary<string, string>();
             foreach(KeyValuePair<int, string> experiment in ExperimentNames)
             {
@@ -186,6 +188,9 @@ namespace INFOEA.Assignment1
 
                 results += String.Format("{0}: {1};;;;;;\n", experiment.Key, experiment.Value);
                 results += "Crossover;PopSize;Successes;Of;Gen.(First Hit);Gen.(Convergence);Fct Evals;CPU Time;Best Score\n";
+
+                tex_results += "\\begin{table}[]\n\\centering\n\\caption{" + experiment.Key + ": " + experiment.Value + "}\n\\label{" + experiment.Key + ": " + experiment.Value + "}\n\\begin{tabular}{lllllllll}\n";
+                tex_results += "Crossover & PopSize & Successes & Of & Gen.(First Hit) & Gen.(Convergence) & Fct Evals & CPU Time & Best Score\\\\\n";
 
                 Result result = Results[experiment.Key];
                 foreach (KeyValuePair<int, InnerResultList> kvp in result.TwoPointCrossoverResults)
@@ -206,7 +211,23 @@ namespace INFOEA.Assignment1
                         kvp.Value.BestScoreStandardDeviation
                     );
 
-                    foreach(InnerResult inner_result in kvp.Value)
+                    tex_results += String.Format("{0} & {1} & {2} & 25 & {3} ({4}) & {5} ({6}) & {7} ({8}) & {9} ({10}) & {11} ({12})\\\\\n",
+                        "2X",
+                        kvp.Key,
+                        kvp.Value.Successes,
+                        kvp.Value.FirstHitGenerationMean,
+                        kvp.Value.FirstHitGenerationStandardDeviation,
+                        kvp.Value.ConvergenceGenerationMean,
+                        kvp.Value.ConvergenceGenerationStandardDeviation,
+                        kvp.Value.FunctionEvaluationsMean,
+                        kvp.Value.FunctionEvaluationsStandardDeviation,
+                        kvp.Value.CPUTimeMean,
+                        kvp.Value.CPUTimeStandardDeviation,
+                        kvp.Value.BestScoreMean,
+                        kvp.Value.BestScoreStandardDeviation
+                    );
+
+                    foreach (InnerResult inner_result in kvp.Value)
                     {
                         experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}\n",
                             "2X",
@@ -239,6 +260,21 @@ namespace INFOEA.Assignment1
                         kvp.Value.BestScoreStandardDeviation
                     );
 
+                    tex_results += String.Format("{0} & {1} & {2} & 25 & {3} ({4}) & {5} ({6}) & {7} ({8}) & {9} ({10}) & {11} ({12})\\\\\n",
+                        "UX",
+                        kvp.Key,
+                        kvp.Value.Successes,
+                        kvp.Value.FirstHitGenerationMean,
+                        kvp.Value.FirstHitGenerationStandardDeviation,
+                        kvp.Value.ConvergenceGenerationMean,
+                        kvp.Value.ConvergenceGenerationStandardDeviation,
+                        kvp.Value.FunctionEvaluationsMean,
+                        kvp.Value.FunctionEvaluationsStandardDeviation,
+                        kvp.Value.CPUTimeMean,
+                        kvp.Value.CPUTimeStandardDeviation,
+                        kvp.Value.BestScoreMean,
+                        kvp.Value.BestScoreStandardDeviation
+                    );
                     foreach (InnerResult inner_result in kvp.Value)
                     {
                         experiment_results[experiment_key] += String.Format("{0};{1};{2};{3};{4};{5};{6};{7};{8}\n",
@@ -254,13 +290,19 @@ namespace INFOEA.Assignment1
                         );
                     }
                 }
+                tex_results = tex_results.Substring(0, tex_results.Length - 3) + "\n";
+                tex_results += "\\end{tabular}\n\\end{table}\n";
             }
 
             System.IO.StreamWriter file = new System.IO.StreamWriter(filename);
             file.WriteLine(results);
             file.Close();
 
-            foreach(KeyValuePair<string, string> kvp in experiment_results)
+            file = new System.IO.StreamWriter(tex_filename);
+            file.WriteLine(tex_results);
+            file.Close();
+
+            foreach (KeyValuePair<string, string> kvp in experiment_results)
             {
                 System.IO.StreamWriter f = new System.IO.StreamWriter(kvp.Key+".csv");
                 f.WriteLine(kvp.Value);
