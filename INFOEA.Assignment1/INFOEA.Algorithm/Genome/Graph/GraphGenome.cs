@@ -10,7 +10,7 @@ using System.Drawing.Drawing2D;
 
 namespace INFOEA.Algorithm.Genome.Graph
 {
-    public class GraphGenome : TightlyLinkedAbstractGenome
+    public class GraphGenome : AbstractGenome
     {
         private static Vertex[] vertices;
         private static bool[][] connections;
@@ -19,7 +19,7 @@ namespace INFOEA.Algorithm.Genome.Graph
         {
             vertices = ReadFromFile(path_to_graph_file);
             connections = MakeConnections(vertices);
-            data_size = vertices.Length;
+            data_size = vertices.Length - 1;
         }
         public GraphGenome(string data) : base(data)
         {
@@ -157,6 +157,33 @@ namespace INFOEA.Algorithm.Genome.Graph
                 pb.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
                 bmp.Save("graph.bmp");
             }
+        }
+
+        public override void Generate(ref Random random)
+        {
+            for (int i = 0; i < data_size; ++i)
+            {
+                data += random.Next(2);
+            }
+
+            int zero_count = data.Count(x => x == '0');
+
+            // Make the bipartition solution valid
+            while(zero_count != data_size / 2)
+            {
+                int random_pos = random.Next(data_size);
+                if(zero_count > data_size / 2 && data[random_pos] == '0')
+                {
+                    data = data.Substring(0, random_pos) + '1' + data.Substring(random_pos + 1, data_size - random_pos - 1);
+                    zero_count--;
+                }
+                else if (zero_count < data_size && data[random_pos] == '1')
+                {
+                    data = data.Substring(0, random_pos) + '0' + data.Substring(random_pos + 1, data_size - random_pos - 1);
+                    zero_count++;
+                }
+            }
+            Console.WriteLine("Generated: {0}", data);
         }
     }
 }
