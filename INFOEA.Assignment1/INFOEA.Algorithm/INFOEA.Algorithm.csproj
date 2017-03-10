@@ -63,6 +63,9 @@
     <Compile Include="Genome\RandomlyLinkedAbstractGenome.cs" />
     <Compile Include="Genome\TightlyLinkedAbstractGenome.cs" />
     <Compile Include="Genome\UCOGenome.cs" />
+    <Compile Include="Neighborhood\AbstractNeighborhood.cs" />
+    <Compile Include="Neighborhood\INeighborhood.cs" />
+    <Compile Include="Neighborhood\SwapNeighborhood.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\Result.cs" />
   </ItemGroup>
