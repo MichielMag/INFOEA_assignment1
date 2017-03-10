@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment1.Genome
+namespace INFOEA.Algorithm.Genome
 {
     public abstract class AbstractGenome : IGenome
     {

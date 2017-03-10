@@ -4,22 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment1.Genome
+namespace INFOEA.Algorithm.Genome
 {
     /**
-    * Non-Deceptive Trap Tightly Function Genome
-    **/
-
-    class NDTTGenome : TightlyLinkedAbstractGenome
+     * Non-Deceptive Trap Randomly linked Function Genome
+     **/
+    public class NDTRGenome : RandomlyLinkedAbstractGenome
     {
-        public NDTTGenome(int data_size) : base(data_size)
+        public NDTRGenome(int data_size) : base(data_size)
         {
-            name = "NDTT";
+            name = "NDTR";
         }
 
-        public NDTTGenome(string data) : base(data)
+        public NDTRGenome(string data) : base(data)
         {
-            name = "NDTT";
+            name = "NDTR";
         }
 
         protected override void calculateFitness()
@@ -30,7 +29,7 @@ namespace INFOEA.Assignment1.Genome
             {
                 int ones = 0;
                 for (int j = 0; j < 4; ++j)
-                    ones += data[i + j] == '1' ? 1 : 0;
+                    ones += data[elementOrder[i + j]] == '1' ? 1 : 0;
 
                 switch (ones)
                 {
@@ -62,13 +61,7 @@ namespace INFOEA.Assignment1.Genome
 
         public override string ToString()
         {
-            string chopped = "|";
-            for (int i = 0; i < data_size; i += 4)
-            {
-                chopped += data.Substring(i, 4) + "|";
-            }
-            return String.Format("{0}: {1}, {2}", Fitness, Name, chopped);
+            return String.Format("{0}: {1}, {2}", Fitness, Name, Data);
         }
-
     }
 }

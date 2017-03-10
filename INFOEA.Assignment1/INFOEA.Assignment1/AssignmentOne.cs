@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using INFOEA.Assignment1.Results;
-using INFOEA.Assignment1.Algorithm;
-using INFOEA.Assignment1.Genome;
-using INFOEA.Assignment1.Algorithm.Crossover;
-using INFOEA.Assignment1.Algorithm.Comparer;
+using INFOEA.Algorithm.Results;
+using INFOEA.Algorithm.Algorithm;
+using INFOEA.Algorithm.Genome;
+using INFOEA.Algorithm.Crossover;
+using INFOEA.Algorithm.Comparer;
 
 namespace INFOEA.Assignment1
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment2.Algorithm
+namespace INFOEA.Algorithm.Algorithm
 {
     class LocalSearch<T>
     {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using INFOEA.Assignment1.Algorithm.Crossover;
-using INFOEA.Assignment1.Genome;
+using INFOEA.Algorithm.Crossover;
+using INFOEA.Algorithm.Genome;
 using System.Threading;
-using INFOEA.Assignment1.Results;
+using INFOEA.Algorithm.Results;
 
-namespace INFOEA.Assignment1.Algorithm
+namespace INFOEA.Algorithm.Algorithm
 {
     public class GeneticAlgorithm<T> where T : IGenome
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using INFOEA.Assignment1.Genome;
+using INFOEA.Algorithm.Genome;
 
-namespace INFOEA.Assignment1.Algorithm.Crossover
+namespace INFOEA.Algorithm.Crossover
 {
     public class UniformCrossover<T> : AbstractCrossover<T> where T:IGenome
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment1.Algorithm.Crossover
+namespace INFOEA.Algorithm.Crossover
 {
     public abstract class AbstractCrossover<T> : ICrossover<T>
     {

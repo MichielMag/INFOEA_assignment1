@@ -49,34 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm\Comparer\DefaultComparer.cs" />
-    <Compile Include="Algorithm\Comparer\GraphComparer.cs" />
-    <Compile Include="Algorithm\Crossover\AbstractCrossover.cs" />
-    <Compile Include="Algorithm\Crossover\TwoPointCrossover.cs" />
-    <Compile Include="Algorithm\Crossover\UniformCrossover.cs" />
-    <Compile Include="Algorithm\GeneticAlgorithm.cs" />
-    <Compile Include="Algorithm\Crossover\ICrossover.cs" />
-    <Compile Include="Algorithm\Goal.cs" />
     <Compile Include="AssignmentOne.cs" />
-    <Compile Include="Genome\AbstractGenome.cs" />
-    <Compile Include="Genome\DTRGenome.cs" />
-    <Compile Include="Genome\DTTGenome.cs" />
-    <Compile Include="Genome\IGenome.cs" />
-    <Compile Include="Genome\LCOGenome.cs" />
-    <Compile Include="Genome\NDTRGenome.cs" />
-    <Compile Include="Genome\NDTTGenome.cs" />
-    <Compile Include="Genome\RandomlyLinkedAbstractGenome.cs" />
-    <Compile Include="Genome\TightlyLinkedAbstractGenome.cs" />
-    <Compile Include="Genome\UCOGenome.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Results\Result.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\INFOEA.Algorithm\INFOEA.Algorithm.csproj">
+      <Project>{63c0eab8-9eb8-463d-8daa-3cbe4b2c1cf5}</Project>
+      <Name>INFOEA.Algorithm</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

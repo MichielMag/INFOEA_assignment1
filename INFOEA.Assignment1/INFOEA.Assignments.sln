@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INFOEA.Assignment1", "INFOE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INFOEA.Assignment2", "INFOEA.Assignment2\INFOEA.Assignment2.csproj", "{029C7D6E-C229-4CFE-9583-D2F4A68C99E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INFOEA.Algorithm", "INFOEA.Algorithm\INFOEA.Algorithm.csproj", "{63C0EAB8-9EB8-463D-8DAA-3CBE4B2C1CF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{029C7D6E-C229-4CFE-9583-D2F4A68C99E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{029C7D6E-C229-4CFE-9583-D2F4A68C99E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{029C7D6E-C229-4CFE-9583-D2F4A68C99E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C0EAB8-9EB8-463D-8DAA-3CBE4B2C1CF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C0EAB8-9EB8-463D-8DAA-3CBE4B2C1CF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C0EAB8-9EB8-463D-8DAA-3CBE4B2C1CF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C0EAB8-9EB8-463D-8DAA-3CBE4B2C1CF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

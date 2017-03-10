@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment1.Genome
+namespace INFOEA.Algorithm.Genome
 {
     /**
      * Deceptive Trap Tightly Function Genome
      **/
-    class DTTGenome : TightlyLinkedAbstractGenome
+    public class DTTGenome : TightlyLinkedAbstractGenome
     {
         public DTTGenome(int data_size) : base(data_size)
         {

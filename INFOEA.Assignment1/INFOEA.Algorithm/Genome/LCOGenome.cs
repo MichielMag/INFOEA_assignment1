@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment1.Genome
+namespace INFOEA.Algorithm.Genome
 {
     /**
      * Lineary Counting Ones
      **/
-    class LCOGenome : TightlyLinkedAbstractGenome
+    public class LCOGenome : TightlyLinkedAbstractGenome
     {
         public LCOGenome(int data_size) : base(data_size) { name = "LCO"; }
 

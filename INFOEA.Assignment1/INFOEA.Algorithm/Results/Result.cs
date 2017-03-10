@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment1.Results
+namespace INFOEA.Algorithm.Results
 {
 
     public class Result

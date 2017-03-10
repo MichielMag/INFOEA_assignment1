@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{029C7D6E-C229-4CFE-9583-D2F4A68C99E6}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{63C0EAB8-9EB8-463D-8DAA-3CBE4B2C1CF5}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>INFOEA.Assignment2</RootNamespace>
-    <AssemblyName>INFOEA.Assignment2</AssemblyName>
+    <RootNamespace>INFOEA.Algorithm</RootNamespace>
+    <AssemblyName>INFOEA.Algorithm</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -45,19 +42,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Algorithm\GeneticAlgorithm.cs" />
+    <Compile Include="Algorithm\Goal.cs" />
+    <Compile Include="Algorithm\LocalSearch.cs" />
+    <Compile Include="Comparer\DefaultComparer.cs" />
+    <Compile Include="Comparer\GraphComparer.cs" />
+    <Compile Include="Crossover\AbstractCrossover.cs" />
+    <Compile Include="Crossover\ICrossover.cs" />
+    <Compile Include="Crossover\TwoPointCrossover.cs" />
+    <Compile Include="Crossover\UniformCrossover.cs" />
+    <Compile Include="Genome\AbstractGenome.cs" />
+    <Compile Include="Genome\DTRGenome.cs" />
+    <Compile Include="Genome\DTTGenome.cs" />
+    <Compile Include="Genome\Graph\GraphGenome.cs" />
+    <Compile Include="Genome\Graph\Vertex.cs" />
+    <Compile Include="Genome\IGenome.cs" />
+    <Compile Include="Genome\LCOGenome.cs" />
+    <Compile Include="Genome\NDTRGenome.cs" />
+    <Compile Include="Genome\NDTTGenome.cs" />
+    <Compile Include="Genome\RandomlyLinkedAbstractGenome.cs" />
+    <Compile Include="Genome\TightlyLinkedAbstractGenome.cs" />
+    <Compile Include="Genome\UCOGenome.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <Compile Include="Results\Result.cs" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\INFOEA.Algorithm\INFOEA.Algorithm.csproj">
-      <Project>{63c0eab8-9eb8-463d-8daa-3cbe4b2c1cf5}</Project>
-      <Name>INFOEA.Algorithm</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

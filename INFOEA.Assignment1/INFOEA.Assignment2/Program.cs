@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using INFOEA.Assignment1.Algorithm.Crossover;
-using INFOEA.Assignment1.Algorithm;
-using INFOEA.Assignment1.Algorithm.Comparer;
-
+using INFOEA.Algorithm.Crossover;
+using INFOEA.Algorithm;
+using INFOEA.Algorithm.Comparer;
+using INFOEA.Algorithm.Genome.Graph;
+using INFOEA.Algorithm.Algorithm;
 
 namespace INFOEA.Assignment2
 {
@@ -15,14 +16,14 @@ namespace INFOEA.Assignment2
     {
         static void Main(string[] args)
         {
-            Graph.Graph graph = new Graph.Graph(500);
+            GraphGenome graph = new GraphGenome(500);
             graph.CreateGraph("Graph500.txt");
             Random r = new Random();
             graph.Generate(ref r);
 
-            GeneticAlgorithm<Graph.Graph> alg = new GeneticAlgorithm<Graph.Graph>(500, 
-                new UniformCrossover<Graph.Graph>(r), 
-                new GraphComparer<Graph.Graph>(),
+            GeneticAlgorithm<GraphGenome> alg = new GeneticAlgorithm<GraphGenome>(500, 
+                new UniformCrossover<GraphGenome>(r), 
+                new GraphComparer<GraphGenome>(),
                 new Goal(999999, 999999), 
                 r);
             alg.start(100, false);

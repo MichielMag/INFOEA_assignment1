@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using INFOEA.Assignment1.Genome;
+using INFOEA.Algorithm.Genome;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace INFOEA.Assignment2.Graph
+namespace INFOEA.Algorithm.Genome.Graph
 {
-    class Graph : TightlyLinkedAbstractGenome
+    public class GraphGenome : TightlyLinkedAbstractGenome
     {
         private static Vertex[] vertices;
         private static bool[][] connections;
@@ -21,15 +21,15 @@ namespace INFOEA.Assignment2.Graph
             connections = MakeConnections(vertices);
             data_size = vertices.Length;
         }
-        public Graph(string data) : base(data)
+        public GraphGenome(string data) : base(data)
         {
         }
 
-        public Graph(int genome_size) : base(genome_size)
+        public GraphGenome(int genome_size) : base(genome_size)
         {
         }
 
-        public Graph(Vertex[] _vertices) : base (_vertices.Length)
+        public GraphGenome(Vertex[] _vertices) : base (_vertices.Length)
         {
             vertices = _vertices;
             connections = MakeConnections(vertices);

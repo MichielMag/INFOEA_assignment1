@@ -6,13 +6,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment2.Graph
+namespace INFOEA.Algorithm.Genome.Graph
 {
-    enum Partition
+    public enum Partition
     {
         ONE, TWO
     }
-    class Vertex
+    public class Vertex
     {
         public int Id { get; private set; }
         public double X { get; private set; }

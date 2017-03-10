@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using INFOEA.Assignment1.Genome;
-namespace INFOEA.Assignment1.Algorithm.Crossover
+using INFOEA.Algorithm.Genome;
+
+namespace INFOEA.Algorithm.Crossover
 {
     public class TwoPointCrossover<T> : AbstractCrossover<T> where T:IGenome
     {

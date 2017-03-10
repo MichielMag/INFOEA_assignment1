@@ -1,11 +1,11 @@
-﻿using INFOEA.Assignment1.Genome;
+﻿using INFOEA.Algorithm.Genome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment1.Algorithm.Comparer
+namespace INFOEA.Algorithm.Comparer
 {
     public class GraphComparer<T> : IComparer<T> where T : IGenome
     {

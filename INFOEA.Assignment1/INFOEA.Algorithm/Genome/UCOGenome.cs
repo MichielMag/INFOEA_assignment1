@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace INFOEA.Assignment1.Genome
+namespace INFOEA.Algorithm.Genome
 {
     /**
      * Uniformly Counting Ones Genome
      **/
-    class UCOGenome : TightlyLinkedAbstractGenome
+    public class UCOGenome : TightlyLinkedAbstractGenome
     {
         public UCOGenome(int data_size) : base(data_size) { name = "UCO"; }
 
