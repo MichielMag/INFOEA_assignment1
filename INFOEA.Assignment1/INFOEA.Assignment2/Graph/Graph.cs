@@ -15,11 +15,18 @@ namespace INFOEA.Assignment2.Graph
         private static Vertex[] vertices;
         private static bool[][] connections;
         
-        public Graph(string path_to_graph_file) : base(0)
+        public void CreateGraph(string path_to_graph_file)
         {
             vertices = ReadFromFile(path_to_graph_file);
             connections = MakeConnections(vertices);
             data_size = vertices.Length;
+        }
+        public Graph(string data) : base(data)
+        {
+        }
+
+        public Graph(int genome_size) : base(genome_size)
+        {
         }
 
         public Graph(Vertex[] _vertices) : base (_vertices.Length)
@@ -67,7 +74,7 @@ namespace INFOEA.Assignment2.Graph
             // Wow, dure functie. kan dit slimmer? Ik had al iets met een bool[][] met connecties, maar dat is eigenlijk ook niks..
             fitness = 0;
             Dictionary<int, List<int>> counted = new Dictionary<int, List<int>>();
-            for(int i = 0; i < data_size; ++i)
+            for(int i = 1; i < data_size; ++i)
             {
                 char c = data[i];
                 Vertex v = vertices[i];
@@ -77,7 +84,7 @@ namespace INFOEA.Assignment2.Graph
                     // Already plussed the score for this connection.
                     if (counted.ContainsKey(other) && counted[other].Contains(i))
                         continue;
-                    else if (data[other] != c) // If they are not in the same partition
+                    else if (data[other-1] != c) // If they are not in the same partition
                     {
                         fitness++;
                         counted[i].Add(other);

@@ -7,10 +7,11 @@ using INFOEA.Assignment1.Results;
 using INFOEA.Assignment1.Algorithm;
 using INFOEA.Assignment1.Genome;
 using INFOEA.Assignment1.Algorithm.Crossover;
+using INFOEA.Assignment1.Algorithm.Comparer;
 
 namespace INFOEA.Assignment1
 {
-    class Assignment
+    class AssignmentOne
     {
         private Random random;
         private int seed;
@@ -33,7 +34,7 @@ namespace INFOEA.Assignment1
         private Dictionary<int, string> ExperimentNames;
         private List<int> PopulationSizes;
         
-        public Assignment(int _seed = -1)
+        public AssignmentOne(int _seed = -1)
         {
             if(_seed < 0)
             {
@@ -71,72 +72,84 @@ namespace INFOEA.Assignment1
             GeneticAlgorithm<UCOGenome> experiment_one_one =
                 new GeneticAlgorithm<UCOGenome>(string_length,
                                                 new TwoPointCrossover<UCOGenome>(random),
+                                                new DefaultComparer<UCOGenome>(),
                                                 new Goal(100, 100),
                                                 random);
 
             GeneticAlgorithm<UCOGenome> experiment_one_two =
                 new GeneticAlgorithm<UCOGenome>(string_length,
                                                 new UniformCrossover<UCOGenome>(random),
+                                                new DefaultComparer<UCOGenome>(),
                                                 new Goal(100, 100),
                                                 random);
 
             GeneticAlgorithm<LCOGenome> experiment_two_one =
                 new GeneticAlgorithm<LCOGenome>(string_length,
                                                 new TwoPointCrossover<LCOGenome>(random),
+                                                new DefaultComparer<LCOGenome>(),
                                                 new Goal(100, linear_score(string_length)),
                                                 random);
 
             GeneticAlgorithm<LCOGenome> experiment_two_two =
                 new GeneticAlgorithm<LCOGenome>(string_length,
                                                 new UniformCrossover<LCOGenome>(random),
+                                                new DefaultComparer<LCOGenome>(),
                                                 new Goal(100, linear_score(string_length)),
                                                 random);
 
             GeneticAlgorithm<DTTGenome> experiment_three_one =
                 new GeneticAlgorithm<DTTGenome>(string_length,
                                                 new TwoPointCrossover<DTTGenome>(random),
+                                                new DefaultComparer<DTTGenome>(),
                                                 new Goal(100, 100),
                                                 random);
 
             GeneticAlgorithm<DTTGenome> experiment_three_two =
                 new GeneticAlgorithm<DTTGenome>(string_length,
                                                 new UniformCrossover<DTTGenome>(random),
+                                                new DefaultComparer<DTTGenome>(),
                                                 new Goal(100, 100),
                                                 random);
 
             GeneticAlgorithm<NDTTGenome> experiment_four_one =
                 new GeneticAlgorithm<NDTTGenome>(string_length,
                                                 new TwoPointCrossover<NDTTGenome>(random),
+                                                new DefaultComparer<NDTTGenome>(),
                                                 new Goal(100, 100),
                                                 random);
 
             GeneticAlgorithm<NDTTGenome> experiment_four_two =
                 new GeneticAlgorithm<NDTTGenome>(string_length,
                                                 new UniformCrossover<NDTTGenome>(random),
+                                                new DefaultComparer<NDTTGenome>(),
                                                 new Goal(100, 100),
                                                 random);
 
             GeneticAlgorithm<DTRGenome> experiment_five_one =
                 new GeneticAlgorithm<DTRGenome>(string_length,
                                     new TwoPointCrossover<DTRGenome>(random),
+                                    new DefaultComparer<DTRGenome>(),
                                     new Goal(100, 100),
                                     random);
 
             GeneticAlgorithm<DTRGenome> experiment_five_two =
                  new GeneticAlgorithm<DTRGenome>(string_length,
                                                 new UniformCrossover<DTRGenome>(random),
+                                                new DefaultComparer<DTRGenome>(),
                                                 new Goal(100, 100),
                                                 random);
 
             GeneticAlgorithm<NDTRGenome> experiment_six_one =
     new GeneticAlgorithm<NDTRGenome>(string_length,
                         new TwoPointCrossover<NDTRGenome>(random),
+                        new DefaultComparer<NDTRGenome>(),
                         new Goal(100, 100),
                         random);
 
             GeneticAlgorithm<NDTRGenome> experiment_six_two =
                  new GeneticAlgorithm<NDTRGenome>(string_length,
                                                 new UniformCrossover<NDTRGenome>(random),
+                                                new DefaultComparer<NDTRGenome>(),
                                                 new Goal(100, 100),
                                                 random);
 

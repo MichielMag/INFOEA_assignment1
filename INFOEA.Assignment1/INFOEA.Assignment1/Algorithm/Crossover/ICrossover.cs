@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace INFOEA.Assignment1.Algorithm.Crossover
 {
-    interface ICrossover<T>
+    public interface ICrossover<T>
     {
         Tuple<T, T> DoCrossover(T ParentOne, T ParentTwo);
 

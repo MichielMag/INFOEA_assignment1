@@ -30,16 +30,8 @@ namespace INFOEA.Assignment1
                 }
             }
 
-            Assignment assignment = new Assignment(seed);
-            assignment.RunExperiments();
-
-            int string_length = 100;
-
-
-
-
-
-            
+            AssignmentOne assignment = new AssignmentOne(seed);
+            assignment.RunExperiments();            
             //experiment_three_one.start();
         }
     }

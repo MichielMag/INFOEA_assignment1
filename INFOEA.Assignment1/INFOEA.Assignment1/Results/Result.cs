@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace INFOEA.Assignment1.Results
 {
 
-    class Result
+    public class Result
     {
         public Result()
         {
@@ -19,12 +19,12 @@ namespace INFOEA.Assignment1.Results
     }
 
     // <PopulationSize, TestResults>
-    class ResultMap : Dictionary<int, InnerResultList>
+    public class ResultMap : Dictionary<int, InnerResultList>
     {
 
     }
 
-    class InnerResultList : List<InnerResult>
+    public class InnerResultList : List<InnerResult>
     {
         public int Successes
         {
@@ -114,7 +114,7 @@ namespace INFOEA.Assignment1.Results
 
     }
 
-    class InnerResult
+    public class InnerResult
     {
         public bool Success { get; set; }
         public float BestScore { get; set; }

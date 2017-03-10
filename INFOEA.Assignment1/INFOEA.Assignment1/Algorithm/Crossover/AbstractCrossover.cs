@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace INFOEA.Assignment1.Algorithm.Crossover
 {
-    abstract class AbstractCrossover<T> : ICrossover<T>
+    public abstract class AbstractCrossover<T> : ICrossover<T>
     {
         private string name;
 

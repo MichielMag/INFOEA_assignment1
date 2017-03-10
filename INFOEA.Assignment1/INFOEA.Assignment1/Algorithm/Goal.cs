@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace INFOEA.Assignment1.Algorithm
 {
-    class Goal
+    public class Goal
     {
         public int MaxGenerations { get; private set; }
         public float MinFitness { get; private set; }

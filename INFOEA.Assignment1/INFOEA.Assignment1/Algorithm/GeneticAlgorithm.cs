@@ -10,7 +10,7 @@ using INFOEA.Assignment1.Results;
 
 namespace INFOEA.Assignment1.Algorithm
 {
-    class GeneticAlgorithm<T> where T : IGenome
+    public class GeneticAlgorithm<T> where T : IGenome
     {
         private int genome_size;
         private int current_generation;
@@ -20,6 +20,8 @@ namespace INFOEA.Assignment1.Algorithm
         private T best_result;
 
         private ICrossover<T> crossover_provider;
+        private IComparer<T> genome_comparer;
+
         private List<T> population;
         
         private T previous_last;
@@ -27,9 +29,10 @@ namespace INFOEA.Assignment1.Algorithm
         private Random random;
         private Goal goal;
 
-        public GeneticAlgorithm(int _genome_size, ICrossover<T> _crossover_provider, Goal _goal, Random _random)
+        public GeneticAlgorithm(int _genome_size, ICrossover<T> _crossover_provider, IComparer<T> _genome_comparer, Goal _goal, Random _random)
         {
             crossover_provider = _crossover_provider;
+            genome_comparer = _genome_comparer;
             goal = _goal;
             genome_size = _genome_size;
 
@@ -164,7 +167,7 @@ namespace INFOEA.Assignment1.Algorithm
 
         private void sortPopulation()
         {
-            population = population.OrderByDescending(x=>x.Fitness).ToList();
+            population = population.OrderByDescending(x=>x, genome_comparer).ToList();
         }
 
         private void selectPopulation(int population_size)
