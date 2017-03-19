@@ -12,38 +12,40 @@ namespace INFOEA.Algorithm.Genome.Graph
 {
     public class GraphGenome : AbstractGenome
     {
-        private static Vertex[] vertices;
+        private static Dictionary<int, Vertex> vertices;
         private static bool[][] connections;
+        private GraphGenome parent = null;
+        private int[] parent_changes = null;
         
         public void CreateGraph(string path_to_graph_file)
         {
             vertices = ReadFromFile(path_to_graph_file);
-            connections = MakeConnections(vertices);
-            data_size = vertices.Length - 1;
+            //connections = MakeConnections(vertices);
+            data_size = vertices.Count;
         }
-        public GraphGenome(string data) : base(data)
+        public GraphGenome(string data, GraphGenome _parent = null, int[] changes = null) : base(data)
         {
+            parent = _parent;
+            parent_changes = changes;
         }
 
         public GraphGenome(int genome_size) : base(genome_size)
         {
         }
 
-        public GraphGenome(Vertex[] _vertices) : base (_vertices.Length)
+        public GraphGenome(Dictionary<int, Vertex> _vertices) : base (_vertices.Count)
         {
             vertices = _vertices;
-            connections = MakeConnections(vertices);
+            //connections = MakeConnections(vertices);
         }
 
-        private bool[][] MakeConnections(Vertex[] _vertices)
+        // Oude functie, kan waarschijnlijk wel gewoon weg, of is 't ergens handig voor?
+        private bool[][] MakeConnections(Dictionary<int, Vertex> _vertices)
         {
-            int n = _vertices.Length;
+            int n = 0;//_vertices.Length;
             bool[][] cons = new bool[n+1][];
-            foreach(Vertex v in _vertices)
+           /* foreach(KeyValuePair)
             {
-                if (v == null)
-                    continue;
-
                 int id = v.Id;
                 cons[id] = new bool[n+1];
                 foreach(int con in v.Connections)
@@ -51,19 +53,20 @@ namespace INFOEA.Algorithm.Genome.Graph
                     cons[id][con] = true;
                 }
             }
-
+            */
             return cons;
         }
 
-        private Vertex[] ReadFromFile(string path)
+        private Dictionary<int, Vertex> ReadFromFile(string path)
         {
             string[] lines = System.IO.File.ReadAllLines(path);
             int n = lines.Length+1;
 
-            Vertex[] vs = new Vertex[n];
-            for(int i = 1; i < n; ++i)
+            Dictionary<int, Vertex> vs = new Dictionary<int, Vertex>();
+            foreach(string line in lines)
             {
-                vs[i] = Vertex.Parse(lines[i-1]);
+                Vertex v = Vertex.Parse(line);
+                vs.Add(v.Id, v);
             }
 
             return vs;
@@ -71,24 +74,52 @@ namespace INFOEA.Algorithm.Genome.Graph
 
         protected override void calculateFitness()
         {
-            // Wow, dure functie. kan dit slimmer? Ik had al iets met een bool[][] met connecties, maar dat is eigenlijk ook niks..
+            if (parent == null || parent_changes == null)
+                calculateCompleteFitness();
+            else
+                calculateComparedFitness();
+        }
+
+        public void recalculate()
+        {
+            calculateCompleteFitness();
+        }
+
+        private void calculateCompleteFitness()
+        {
             fitness = 0;
             Dictionary<int, List<int>> counted = new Dictionary<int, List<int>>();
-            for(int i = 1; i < data_size; ++i)
+            for (int i = 1; i < data_size+1; ++i)
             {
-                char c = data[i];
+                char c = data[i - 1];
                 Vertex v = vertices[i];
                 counted.Add(i, new List<int>());
-                foreach(int other in v.Connections)
+                foreach (int other in v.Connections)
                 {
                     // Already plussed the score for this connection.
                     if (counted.ContainsKey(other) && counted[other].Contains(i))
                         continue;
-                    else if (data[other-1] != c) // If they are not in the same partition
+                    else if (data[other - 1] != c) // If they are not in the same partition
                     {
                         fitness++;
                         counted[i].Add(other);
                     }
+                }
+            }
+        }
+
+        private void calculateComparedFitness()
+        {
+            fitness = parent.Fitness;
+            foreach(int v in parent_changes)
+            {
+                char c = data[v - 1];
+                foreach (int other in vertices[v].Connections)
+                {
+                    if (data[other - 1] == c)
+                        fitness--;
+                    else
+                        fitness++;
                 }
             }
         }
@@ -103,10 +134,9 @@ namespace INFOEA.Algorithm.Genome.Graph
             Bitmap bm = new Bitmap(width, height);
             Graphics gfx = Graphics.FromImage(bm);
             Size point_size = new Size(point_size_width, point_size_height);
-            foreach(Vertex v in vertices) // Lines
+            foreach(KeyValuePair<int, Vertex> vertex in vertices) // lines
             {
-                if (v == null)
-                    continue;
+                Vertex v = vertex.Value;
 
                 int s_conx = (int)((width - point_size_width) * v.X);
                 int s_cony = (int)((height - point_size_height) * v.Y);
@@ -132,10 +162,10 @@ namespace INFOEA.Algorithm.Genome.Graph
                     gfx.DrawLine(pen, s_point, t_point);
                 }
             }
-            foreach(Vertex v in vertices)
+            foreach (KeyValuePair<int, Vertex> vertex in vertices) // nodes
             {
-                if (v == null)
-                    continue;
+                Vertex v = vertex.Value;
+
 
                 int x = (int)((width - point_size_width) * v.X - point_size_width / 2);
                 int y = (int)((height - point_size_height) * v.Y - point_size_height / 2);

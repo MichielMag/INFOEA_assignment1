@@ -34,7 +34,7 @@ namespace INFOEA.Algorithm.Neighborhood
                 data[pos_one] = data[pos_two];
                 data[pos_two] = old_one;
 
-                yield return (T)Activator.CreateInstance(typeof(T), new string(data));
+                yield return (T)Activator.CreateInstance(typeof(T), new string(data), solution, new int[2] { pos_one + 1, pos_two + 1}); // PLus 1 omdat het om ID's gaat ipv posities in string...
             }
         }
     }
