@@ -128,11 +128,10 @@ namespace INFOEA.Algorithm.Genome.Graph
         {
             int point_size_width = (int)(width * 0.004);
             int point_size_height = (int)(height * 0.004);
-            PictureBox pb = new PictureBox();
-            pb.Size = new Size(width, height);
 
             Bitmap bm = new Bitmap(width, height);
             Graphics gfx = Graphics.FromImage(bm);
+            gfx.Clear(Color.White);
             Size point_size = new Size(point_size_width, point_size_height);
             foreach(KeyValuePair<int, Vertex> vertex in vertices) // lines
             {
@@ -180,13 +179,7 @@ namespace INFOEA.Algorithm.Genome.Graph
                 gfx.FillRectangle(brush, new Rectangle(v_point, point_size));
             }
 
-            pb.Image = bm;
-
-            using (Bitmap bmp = new Bitmap(pb.Width, pb.Height))
-            {
-                pb.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
-                bmp.Save("graph.bmp");
-            }
+             bm.Save("graph.bmp");
         }
 
         public override void Generate(ref Random random)
