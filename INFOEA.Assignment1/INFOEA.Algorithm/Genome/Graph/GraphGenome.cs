@@ -110,16 +110,28 @@ namespace INFOEA.Algorithm.Genome.Graph
 
         private void calculateComparedFitness()
         {
+            // Wellicht is dit bijhouden van de welke we al hebben geteld een beetje duur,
+            // maar ik weet even geen andere oplossing.
             fitness = parent.Fitness;
-            foreach(int v in parent_changes)
+
+            Dictionary<int, List<int>> counted = new Dictionary<int, List<int>>();
+
+            foreach (int v in parent_changes)
             {
                 char c = data[v - 1];
+                counted.Add(v, new List<int>());
                 foreach (int other in vertices[v].Connections)
                 {
+                    // Already plussed the score for this connection.
+                    if (counted.ContainsKey(other) && counted[other].Contains(v))
+                        continue;
                     if (data[other - 1] == c)
                         fitness--;
                     else
                         fitness++;
+
+
+                    counted[v].Add(other);
                 }
             }
         }
