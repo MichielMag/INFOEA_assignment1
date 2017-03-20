@@ -38,7 +38,7 @@ namespace INFOEA.Assignment2
             for(int i = 0; i < ExperimentAmount; ++i)
             {
                 List<long> ticks = new List<long>();
-                for (int j = 0; j < OptimaAmount; j+=2)
+                for (int j = 0; j < OptimaAmount; j++)
                 {
                     graph = new GraphGenome(500);
                     graph.Generate(ref random);
@@ -46,7 +46,6 @@ namespace INFOEA.Assignment2
                     GraphGenome inner_optimum = local_search.Search(graph);
                     sw.Stop();
                     ticks.Add(sw.ElapsedMilliseconds);
-                    long remaining = (OptimaAmount - j) * sw.ElapsedMilliseconds;
                     Console.WriteLine("Found {0} in {1} ticks or {2}ms. ({3}/{4})", inner_optimum.Fitness, sw.ElapsedTicks, sw.ElapsedMilliseconds, j, OptimaAmount);
 
                     if (optimum == null || optimum.Fitness >= inner_optimum.Fitness)

@@ -12,7 +12,7 @@ namespace INFOEA.Algorithm.Genome.Graph
 {
     public class GraphGenome : AbstractGenome
     {
-        private static Dictionary<int, Vertex> vertices;
+        public static Dictionary<int, Vertex> vertices;
         private static bool[][] connections;
         private GraphGenome parent = null;
         private int[] parent_changes = null;
@@ -27,6 +27,11 @@ namespace INFOEA.Algorithm.Genome.Graph
         {
             parent = _parent;
             parent_changes = changes;
+        }
+
+        public GraphGenome(string data, float new_fitness) :base(data)
+        {
+            fitness = new_fitness;
         }
 
         public GraphGenome(int genome_size) : base(genome_size)
