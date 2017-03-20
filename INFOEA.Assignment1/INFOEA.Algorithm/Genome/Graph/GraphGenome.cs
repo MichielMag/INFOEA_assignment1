@@ -218,7 +218,6 @@ namespace INFOEA.Algorithm.Genome.Graph
                     zero_count++;
                 }
             }
-            Console.WriteLine("Generated: {0}", data);
         }
     }
 }
