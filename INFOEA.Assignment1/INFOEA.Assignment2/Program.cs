@@ -24,7 +24,7 @@ namespace INFOEA.Assignment2
         static void Main(string[] args)
         {
             AssignmentTwo assignment = new AssignmentTwo();
-            assignment.start(new Random());
+            assignment.start();
             Console.ReadLine();
 
             GraphGenome graph = new GraphGenome(500);
