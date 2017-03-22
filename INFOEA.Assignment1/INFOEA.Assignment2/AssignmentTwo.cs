@@ -85,8 +85,6 @@ namespace INFOEA.Assignment2
             //we moeten nog iets met ExperimentAmount doen...
             //for(int i = 0; i < ExperimentAmount; ++i)
 
-            List<long> ticks = new List<long>();
-
             for (int j = 0; j < threads.Length; j++)
             {
                 int k = j;
