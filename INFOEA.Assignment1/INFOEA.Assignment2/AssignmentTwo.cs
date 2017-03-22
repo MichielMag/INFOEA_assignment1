@@ -82,24 +82,24 @@ namespace INFOEA.Assignment2
 
         private void MultiStartLocalSearch()
         {
-            for(int i = 0; i < ExperimentAmount; ++i)
+            //we moeten nog iets met ExperimentAmount doen...
+            //for(int i = 0; i < ExperimentAmount; ++i)
+
+            List<long> ticks = new List<long>();
+
+            for (int j = 0; j < threads.Length; j++)
             {
-                List<long> ticks = new List<long>();
-
-                for (int j = 0; j < threads.Length; j++)
-                {
-                    int k = j;
-                    int seed = k;
-                    int amount = OptimaAmount / threads.Length;
-                    Thread T = new Thread(() => searchThread(k, amount, seed));
-                    threads[j] = T;
-                }
-
+                int k = j;
+                int seed = k;
+                int amount = OptimaAmount / threads.Length;
+                Thread T = new Thread(() => searchThread(k, amount, seed));
+                threads[j] = T;
             }
+
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            foreach(Thread T in threads)
+            foreach (Thread T in threads)
                 T.Start();
             while (this.threadsAreRunning()) ;
             sw.Stop();
@@ -112,7 +112,7 @@ namespace INFOEA.Assignment2
             }
 
             List<long> results = new List<long>();
-            foreach(List<long> L in elapsedMilisecondsThreads)
+            foreach (List<long> L in elapsedMilisecondsThreads)
             {
                 results.AddRange(L);
             }
