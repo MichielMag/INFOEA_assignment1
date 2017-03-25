@@ -7,6 +7,8 @@ using INFOEA.Algorithm.Crossover;
 using INFOEA.Algorithm.Genome;
 using System.Threading;
 using INFOEA.Algorithm.Results;
+using INFOEA.Algorithm.Selector;
+using INFOEA.Algorithm.Procreation;
 
 namespace INFOEA.Algorithm.Algorithm
 {
@@ -14,13 +16,14 @@ namespace INFOEA.Algorithm.Algorithm
     {
         private int genome_size;
         private int current_generation;
+        private string name;
 
         //private int seed;
 
         private T best_result;
-
-        private ICrossover<T> crossover_provider;
-        private IComparer<T> genome_comparer;
+        
+        private ISelector<T> selector;
+        private IProcreator<T> procreator;
 
         private List<T> population;
         
@@ -29,13 +32,13 @@ namespace INFOEA.Algorithm.Algorithm
         private Random random;
         private Goal goal;
 
-        public GeneticAlgorithm(int _genome_size, ICrossover<T> _crossover_provider, IComparer<T> _genome_comparer, Goal _goal, Random _random)
+        public GeneticAlgorithm(int _genome_size, IProcreator<T> _procreator, ISelector<T> _selector, Goal _goal, Random _random, string _name)
         {
-            crossover_provider = _crossover_provider;
-            genome_comparer = _genome_comparer;
+            procreator = _procreator;
+            selector = _selector;
             goal = _goal;
             genome_size = _genome_size;
-
+            name = _name;
             random = _random;
         }
 
@@ -58,8 +61,11 @@ namespace INFOEA.Algorithm.Algorithm
             {
                 shufflePopulation();
                 procreatePopulation(population_size);
-                sortPopulation();
-                selectPopulation(population_size);
+
+                //sortPopulation();
+                //selectPopulation(population_size);
+
+                population = selector.DoSelection(population, population_size).ToList();
 
                 if (!silent)
                     printPopulation();
@@ -157,22 +163,7 @@ namespace INFOEA.Algorithm.Algorithm
         {
             previous_last = population.Last();
 
-            for(int i = 0; i < population_size; i+=2)
-            {
-                Tuple<T, T> children = crossover_provider.DoCrossover(population[i], population[i + 1]);
-                population.Add(children.Item1);
-                population.Add(children.Item2);
-            }
-        }
-
-        private void sortPopulation()
-        {
-            population = population.OrderByDescending(x=>x, genome_comparer).ToList();
-        }
-
-        private void selectPopulation(int population_size)
-        {
-            population = population.Take(population_size).ToList();
+            population = procreator.Procreate(population);
         }
 
         private void printPopulation()
@@ -186,7 +177,7 @@ namespace INFOEA.Algorithm.Algorithm
 
         private string results(int population_size)
         {
-            return String.Format("[{0}|{1}] - {2}", crossover_provider.Name, population_size,
+            return String.Format("[{0}|{1}] - {2}", name, population_size,
                 population[0]);
         }
     }

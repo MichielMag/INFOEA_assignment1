@@ -69,8 +69,13 @@
     <Compile Include="Neighborhood\AbstractNeighborhood.cs" />
     <Compile Include="Neighborhood\INeighborhood.cs" />
     <Compile Include="Neighborhood\SwapNeighborhood.cs" />
+    <Compile Include="Procreation\AbstractProcreator.cs" />
+    <Compile Include="Procreation\DefaultProcreator.cs" />
+    <Compile Include="Procreation\IProcreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\Result.cs" />
+    <Compile Include="Selector\DefaultSelector.cs" />
+    <Compile Include="Selector\ISelector.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
