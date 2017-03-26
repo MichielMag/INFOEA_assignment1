@@ -10,6 +10,7 @@ using INFOEA.Algorithm.Crossover;
 using INFOEA.Algorithm.Comparer;
 using INFOEA.Algorithm.Selector;
 using INFOEA.Algorithm.Procreation;
+using INFOEA.Algorithm.PopulationGeneration;
 
 namespace INFOEA.Assignment1
 {
@@ -75,6 +76,7 @@ namespace INFOEA.Assignment1
                 new GeneticAlgorithm<UCOGenome>(string_length,
                                                 new DefaultProcreator<UCOGenome>(new TwoPointCrossover<UCOGenome>(random)),
                                                 new DefaultSelector<UCOGenome>(new DefaultComparer<UCOGenome>()),
+                                                new DefaultPopulationGenerator<UCOGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "2X");
 
@@ -82,6 +84,7 @@ namespace INFOEA.Assignment1
                 new GeneticAlgorithm<UCOGenome>(string_length,
                                                 new DefaultProcreator<UCOGenome>(new UniformCrossover<UCOGenome>(random)),
                                                 new DefaultSelector<UCOGenome>(new DefaultComparer<UCOGenome>()),
+                                                new DefaultPopulationGenerator<UCOGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "UX");
 
@@ -89,6 +92,7 @@ namespace INFOEA.Assignment1
                 new GeneticAlgorithm<LCOGenome>(string_length,
                                                 new DefaultProcreator<LCOGenome>(new TwoPointCrossover<LCOGenome>(random)),
                                                 new DefaultSelector<LCOGenome>(new DefaultComparer<LCOGenome>()),
+                                                new DefaultPopulationGenerator<LCOGenome>(random),
                                                 new Goal(100, linear_score(string_length)),
                                                 random, "2X");
 
@@ -96,6 +100,7 @@ namespace INFOEA.Assignment1
                 new GeneticAlgorithm<LCOGenome>(string_length,
                                                 new DefaultProcreator<LCOGenome>(new UniformCrossover<LCOGenome>(random)),
                                                 new DefaultSelector<LCOGenome>(new DefaultComparer<LCOGenome>()),
+                                                new DefaultPopulationGenerator<LCOGenome>(random),
                                                 new Goal(100, linear_score(string_length)),
                                                 random, "UX");
 
@@ -103,6 +108,7 @@ namespace INFOEA.Assignment1
                 new GeneticAlgorithm<DTTGenome>(string_length,
                                                 new DefaultProcreator<DTTGenome>(new TwoPointCrossover<DTTGenome>(random)),
                                                 new DefaultSelector<DTTGenome>(new DefaultComparer<DTTGenome>()),
+                                                new DefaultPopulationGenerator<DTTGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "2X");
 
@@ -110,6 +116,7 @@ namespace INFOEA.Assignment1
                 new GeneticAlgorithm<DTTGenome>(string_length,
                                                 new DefaultProcreator<DTTGenome>(new UniformCrossover<DTTGenome>(random)),
                                                 new DefaultSelector<DTTGenome>(new DefaultComparer<DTTGenome>()),
+                                                new DefaultPopulationGenerator<DTTGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "UX");
 
@@ -117,6 +124,7 @@ namespace INFOEA.Assignment1
                 new GeneticAlgorithm<NDTTGenome>(string_length,
                                                 new DefaultProcreator<NDTTGenome>(new TwoPointCrossover<NDTTGenome>(random)),
                                                 new DefaultSelector<NDTTGenome>(new DefaultComparer<NDTTGenome>()),
+                                                new DefaultPopulationGenerator<NDTTGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "2X");
 
@@ -124,6 +132,7 @@ namespace INFOEA.Assignment1
                 new GeneticAlgorithm<NDTTGenome>(string_length,
                                                 new DefaultProcreator<NDTTGenome>(new UniformCrossover<NDTTGenome>(random)),
                                                 new DefaultSelector<NDTTGenome>(new DefaultComparer<NDTTGenome>()),
+                                                new DefaultPopulationGenerator<NDTTGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "UX");
 
@@ -131,6 +140,7 @@ namespace INFOEA.Assignment1
                 new GeneticAlgorithm<DTRGenome>(string_length,
                                                 new DefaultProcreator<DTRGenome>(new TwoPointCrossover<DTRGenome>(random)),
                                                 new DefaultSelector<DTRGenome>(new DefaultComparer<DTRGenome>()),
+                                                new DefaultPopulationGenerator<DTRGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "2X");
 
@@ -138,6 +148,7 @@ namespace INFOEA.Assignment1
                  new GeneticAlgorithm<DTRGenome>(string_length,
                                                 new DefaultProcreator<DTRGenome>(new UniformCrossover<DTRGenome>(random)),
                                                 new DefaultSelector<DTRGenome>(new DefaultComparer<DTRGenome>()),
+                                                new DefaultPopulationGenerator<DTRGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "UX");
 
@@ -145,6 +156,7 @@ namespace INFOEA.Assignment1
     new GeneticAlgorithm<NDTRGenome>(string_length,
                                                 new DefaultProcreator<NDTRGenome>(new TwoPointCrossover<NDTRGenome>(random)),
                                                 new DefaultSelector<NDTRGenome>(new DefaultComparer<NDTRGenome>()),
+                                                new DefaultPopulationGenerator<NDTRGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "2X");
 
@@ -152,6 +164,7 @@ namespace INFOEA.Assignment1
                  new GeneticAlgorithm<NDTRGenome>(string_length,
                                                 new DefaultProcreator<NDTRGenome>(new UniformCrossover<NDTRGenome>(random)),
                                                 new DefaultSelector<NDTRGenome>(new DefaultComparer<NDTRGenome>()),
+                                                new DefaultPopulationGenerator<NDTRGenome>(random),
                                                 new Goal(100, 100),
                                                 random, "UX");
 

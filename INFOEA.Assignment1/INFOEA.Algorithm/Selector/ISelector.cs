@@ -9,6 +9,6 @@ namespace INFOEA.Algorithm.Selector
 {
     public interface ISelector<T> where T:IGenome
     {
-        IEnumerable<T> DoSelection(IEnumerable<T> population, int population_size);
+        List<T> DoSelection(List<T> population, int population_size);
     }
 }

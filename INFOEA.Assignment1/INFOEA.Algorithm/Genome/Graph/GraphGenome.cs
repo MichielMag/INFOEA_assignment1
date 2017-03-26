@@ -28,6 +28,7 @@ namespace INFOEA.Algorithm.Genome.Graph
             parent = _parent;
             parent_changes = changes;
         }
+        public GraphGenome(string data) : base(data) { }
 
         public GraphGenome(string data, float new_fitness) :base(data)
         {

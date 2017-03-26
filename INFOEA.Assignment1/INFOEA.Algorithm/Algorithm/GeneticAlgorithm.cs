@@ -9,6 +9,7 @@ using System.Threading;
 using INFOEA.Algorithm.Results;
 using INFOEA.Algorithm.Selector;
 using INFOEA.Algorithm.Procreation;
+using INFOEA.Algorithm.PopulationGeneration;
 
 namespace INFOEA.Algorithm.Algorithm
 {
@@ -24,6 +25,7 @@ namespace INFOEA.Algorithm.Algorithm
         
         private ISelector<T> selector;
         private IProcreator<T> procreator;
+        private IPopulationGenerator<T> generator;
 
         private List<T> population;
         
@@ -32,10 +34,11 @@ namespace INFOEA.Algorithm.Algorithm
         private Random random;
         private Goal goal;
 
-        public GeneticAlgorithm(int _genome_size, IProcreator<T> _procreator, ISelector<T> _selector, Goal _goal, Random _random, string _name)
+        public GeneticAlgorithm(int _genome_size, IProcreator<T> _procreator, ISelector<T> _selector, IPopulationGenerator<T> _generator, Goal _goal, Random _random, string _name)
         {
             procreator = _procreator;
             selector = _selector;
+            generator = _generator;
             goal = _goal;
             genome_size = _genome_size;
             name = _name;
@@ -52,7 +55,7 @@ namespace INFOEA.Algorithm.Algorithm
             population = new List<T>();
 
             //Console.WriteLine("Going to run algorithm. Max generations: {0}, Min fitness: {1}", goal.MaxGenerations, goal.MinFitness);
-            generatePopulation(population_size);
+            population = generator.Generate(population_size, genome_size);
 
             population[0].FunctionEvaluations = 0;
 

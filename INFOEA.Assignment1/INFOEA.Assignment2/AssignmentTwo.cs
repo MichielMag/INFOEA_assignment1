@@ -1,9 +1,14 @@
 ﻿using INFOEA.Algorithm.Algorithm;
 using INFOEA.Algorithm.Comparer;
+using INFOEA.Algorithm.Crossover;
 using INFOEA.Algorithm.Genome;
 using INFOEA.Algorithm.Genome.Graph;
 using INFOEA.Algorithm.Mutation;
 using INFOEA.Algorithm.Neighborhood;
+using INFOEA.Algorithm.PopulationGeneration;
+using INFOEA.Algorithm.Procreation;
+using INFOEA.Algorithm.Results;
+using INFOEA.Algorithm.Selector;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -176,6 +181,35 @@ namespace INFOEA.Assignment2
             optimum.ToImage(3000, 3000);
         }
 
+        private void GeneticLocalSearch()
+        {
+            GraphGenome graph = new GraphGenome(500);
+            graph.CreateGraph("Graph500.txt");
+
+            LocalSearch<GraphGenome> local_search =
+                new LocalSearch<GraphGenome>(500,
+                        new SwapNeighborhood<GraphGenome>(main_random_source),
+                        new GraphComparer<GraphGenome>(), main_random_source);
+
+            LocalSearchProcreator<GraphGenome> lsp = new LocalSearchProcreator<GraphGenome>(
+                new UniformSymmetricCrossover<GraphGenome>(main_random_source), 
+                local_search, 
+                main_random_source);
+
+            GeneticAlgorithm<GraphGenome> ga = new GeneticAlgorithm<GraphGenome>(
+                500, 
+                lsp, 
+                new DefaultSelector<GraphGenome>(
+                    new GraphComparer<GraphGenome>()), 
+                new LocalSearchPopulationGenerator<GraphGenome>(main_random_source, local_search),
+                new Goal(100, 0), 
+                main_random_source, 
+                "GLS");
+
+            InnerResult ir = ga.start(40);
+            Console.ReadLine();
+        }
+
         public void start(int seed = -1)
         {
             if (seed > 0)
@@ -184,7 +218,8 @@ namespace INFOEA.Assignment2
                 main_random_source = new Random();
 
             //MultiStartLocalSearch();
-            IteratedLocalSearch(false);
+            //IteratedLocalSearch(false);
+            GeneticLocalSearch();
         }
 
     }

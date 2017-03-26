@@ -50,6 +50,7 @@
     <Compile Include="Crossover\AbstractCrossover.cs" />
     <Compile Include="Crossover\ICrossover.cs" />
     <Compile Include="Crossover\TwoPointCrossover.cs" />
+    <Compile Include="Crossover\UniformSymmetricCrossover.cs" />
     <Compile Include="Crossover\UniformCrossover.cs" />
     <Compile Include="Genome\AbstractGenome.cs" />
     <Compile Include="Genome\DTRGenome.cs" />
@@ -69,11 +70,17 @@
     <Compile Include="Neighborhood\AbstractNeighborhood.cs" />
     <Compile Include="Neighborhood\INeighborhood.cs" />
     <Compile Include="Neighborhood\SwapNeighborhood.cs" />
+    <Compile Include="PopulationGeneration\AbstractPopulationGenerator.cs" />
+    <Compile Include="PopulationGeneration\DefaultPopulationGenerator.cs" />
+    <Compile Include="PopulationGeneration\IPopulationGenerator.cs" />
+    <Compile Include="PopulationGeneration\LocalSearchPopulationGenerator.cs" />
     <Compile Include="Procreation\AbstractProcreator.cs" />
     <Compile Include="Procreation\DefaultProcreator.cs" />
     <Compile Include="Procreation\IProcreator.cs" />
+    <Compile Include="Procreation\LocalSearchProcreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\Result.cs" />
+    <Compile Include="Selector\AbstractSelector.cs" />
     <Compile Include="Selector\DefaultSelector.cs" />
     <Compile Include="Selector\ISelector.cs" />
   </ItemGroup>
