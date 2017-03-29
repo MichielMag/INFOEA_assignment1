@@ -130,7 +130,7 @@ namespace INFOEA.Assignment2
             optimum.ToImage(3000, 3000);
         }
 
-        private void IteratedLocalSearch(bool silent = true)
+        private void IteratedLocalSearch(bool silent = false)
         {
             LocalSearch<GraphGenome> local_search =
                 new LocalSearch<GraphGenome>(500,
@@ -153,12 +153,10 @@ namespace INFOEA.Assignment2
                     {
                         graph = new GraphGenome(500);
                         graph.Generate(ref main_random_source);
-                        graph.recalculate();
                     }
                     else
                     {
                         graph = pertubation.Mutate(optimum);
-                        graph.recalculate();
                     }
 
                     Stopwatch sw = Stopwatch.StartNew();
@@ -172,6 +170,8 @@ namespace INFOEA.Assignment2
 
                     if (optimum == null || optimum.Fitness >= inner_optimum.Fitness)
                         optimum = inner_optimum;
+
+                    optimum.FunctionEvaluations = 0;
                 }
             }
             //Console.WriteLine("Best solution found: {0} in an average of {1} ms", optimum.Fitness, cpu_ticks.Average());
@@ -206,7 +206,8 @@ namespace INFOEA.Assignment2
                 main_random_source, 
                 "GLS");
 
-            InnerResult ir = ga.start(40);
+            //InnerResult ir = ga.start(40);
+            IteratedLocalSearch();
             Console.ReadLine();
         }
 

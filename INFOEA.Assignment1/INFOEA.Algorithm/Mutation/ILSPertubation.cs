@@ -1,4 +1,5 @@
 ﻿using INFOEA.Algorithm.Genome;
+using INFOEA.Algorithm.Genome.Graph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,33 +29,34 @@ namespace INFOEA.Algorithm.Mutation
             char[] data = solution.Data.ToCharArray();
             List<int> positions = new List<int>();
 
-            for(int i = 0; i < amount; ++i)
+            for (int i = 0; i < amount; ++i)
             {
-                int vertice_one = random_source.Next(1, data_size + 1);
-                int vertice_two = random_source.Next(1, data_size + 1);
+                int vertex_one = random_source.Next(1, data_size + 1);
+                int vertex_two = random_source.Next(1, data_size + 1);
 
-                char one = solution.Data[vertice_one - 1];
+                char one = solution.Data[vertex_one - 1];
 
                 // Should not take that long. 50/50 chance.
-                while (one == solution.Data[vertice_two - 1])
-                    vertice_two = random_source.Next(1, data_size + 1);
+                while (one == solution.Data[vertex_one - 1])
+                    vertex_one = random_source.Next(1, data_size + 1);
 
-                char two = solution.Data[vertice_two - 1];
+                char two = solution.Data[vertex_two - 1];
 
-                if (positions.Contains(vertice_one) || positions.Contains(vertice_two))
+                if (positions.Contains(vertex_one) || positions.Contains(vertex_two))
                 {
                     i--;
                     continue;
                 }
 
-                data[vertice_one - 1] = two;
-                data[vertice_two - 1] = one;
+                data[vertex_one - 1] = two;
+                data[vertex_two - 1] = one;
 
-                positions.Add(vertice_one);
-                positions.Add(vertice_two);
+                positions.Add(vertex_one);
+                positions.Add(vertex_two);
+
             }
 
-            return (T)Activator.CreateInstance(typeof(T), new string(data), solution, positions.ToArray());
+            return (T)Activator.CreateInstance(typeof(T), new string(data));//, solution, positions.ToArray());
         }
     }
 }

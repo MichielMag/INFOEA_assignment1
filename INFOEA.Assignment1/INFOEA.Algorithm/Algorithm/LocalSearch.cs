@@ -27,10 +27,15 @@ namespace INFOEA.Algorithm.Algorithm
         {
             if(!silent)
                 Console.WriteLine("Starting Search, current optimum is {0}", solution.Fitness);
+
             foreach(T t in neighborhood.Neighbors(solution))
             {
                 if (comparer.Compare(t, solution) > 0)
-                    return Search(t);
+                {
+                    //if (t.FunctionEvaluations < 100)
+                        return Search(t);
+                    //else return t;
+                }
             }
             if(!silent)
                 Console.WriteLine("Reached local optimum with score of {0}", solution.Fitness);

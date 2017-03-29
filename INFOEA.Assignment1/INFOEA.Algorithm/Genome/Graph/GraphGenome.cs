@@ -13,9 +13,6 @@ namespace INFOEA.Algorithm.Genome.Graph
     public class GraphGenome : AbstractGenome
     {
         public static Dictionary<int, Vertex> vertices;
-        private static bool[][] connections;
-        private GraphGenome parent = null;
-        private int[] parent_changes = null;
         
         public void CreateGraph(string path_to_graph_file)
         {
@@ -23,13 +20,11 @@ namespace INFOEA.Algorithm.Genome.Graph
             //connections = MakeConnections(vertices);
             data_size = vertices.Count;
         }
-        public GraphGenome(string data, GraphGenome _parent = null, int[] changes = null) : base(data)
+        public GraphGenome(string data ) : base(data)
         {
-            parent = _parent;
-            parent_changes = changes;
         }
-        public GraphGenome(string data) : base(data) { }
 
+        
         public GraphGenome(string data, float new_fitness) :base(data)
         {
             fitness = new_fitness;
@@ -45,23 +40,6 @@ namespace INFOEA.Algorithm.Genome.Graph
             //connections = MakeConnections(vertices);
         }
 
-        // Oude functie, kan waarschijnlijk wel gewoon weg, of is 't ergens handig voor?
-        private bool[][] MakeConnections(Dictionary<int, Vertex> _vertices)
-        {
-            int n = 0;//_vertices.Length;
-            bool[][] cons = new bool[n+1][];
-           /* foreach(KeyValuePair)
-            {
-                int id = v.Id;
-                cons[id] = new bool[n+1];
-                foreach(int con in v.Connections)
-                {
-                    cons[id][con] = true;
-                }
-            }
-            */
-            return cons;
-        }
 
         private Dictionary<int, Vertex> ReadFromFile(string path)
         {
@@ -80,22 +58,9 @@ namespace INFOEA.Algorithm.Genome.Graph
 
         protected override void calculateFitness()
         {
-            if (parent == null || parent_changes == null)
-                calculateCompleteFitness();
-            else
-                calculateComparedFitness();
-        }
-
-        public void recalculate()
-        {
-            calculateCompleteFitness();
-        }
-
-        private void calculateCompleteFitness()
-        {
             fitness = 0;
             Dictionary<int, List<int>> counted = new Dictionary<int, List<int>>();
-            for (int i = 1; i < data_size+1; ++i)
+            for (int i = 1; i < data_size + 1; ++i)
             {
                 char c = data[i - 1];
                 Vertex v = vertices[i];
@@ -114,34 +79,7 @@ namespace INFOEA.Algorithm.Genome.Graph
             }
         }
 
-        private void calculateComparedFitness()
-        {
-            // Wellicht is dit bijhouden van de welke we al hebben geteld een beetje duur,
-            // maar ik weet even geen andere oplossing.
-            fitness = parent.Fitness;
-
-            Dictionary<int, List<int>> counted = new Dictionary<int, List<int>>();
-
-            foreach (int v in parent_changes)
-            {
-                char c = data[v - 1];
-                counted.Add(v, new List<int>());
-                foreach (int other in vertices[v].Connections)
-                {
-                    // Already plussed the score for this connection.
-                    if (counted.ContainsKey(other) && counted[other].Contains(v))
-                        continue;
-                    if (data[other - 1] == c)
-                        fitness--;
-                    else
-                        fitness++;
-
-
-                    counted[v].Add(other);
-                }
-            }
-        }
-
+        
         public void ToImage(int width = 1000, int height = 1000)
         {
             int point_size_width = (int)(width * 0.004);
