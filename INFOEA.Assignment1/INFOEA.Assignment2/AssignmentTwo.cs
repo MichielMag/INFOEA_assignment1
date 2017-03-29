@@ -206,8 +206,8 @@ namespace INFOEA.Assignment2
                 main_random_source, 
                 "GLS");
 
-            //InnerResult ir = ga.start(40);
-            IteratedLocalSearch();
+            InnerResult ir = ga.start(500);
+            //IteratedLocalSearch();
             Console.ReadLine();
         }
 

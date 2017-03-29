@@ -68,6 +68,7 @@
     <Compile Include="Mutation\ILSPertubation.cs" />
     <Compile Include="Mutation\IMutation.cs" />
     <Compile Include="Neighborhood\AbstractNeighborhood.cs" />
+    <Compile Include="Neighborhood\FiducciaMatheysesNeighborhood.cs" />
     <Compile Include="Neighborhood\INeighborhood.cs" />
     <Compile Include="Neighborhood\SwapNeighborhood.cs" />
     <Compile Include="PopulationGeneration\AbstractPopulationGenerator.cs" />
