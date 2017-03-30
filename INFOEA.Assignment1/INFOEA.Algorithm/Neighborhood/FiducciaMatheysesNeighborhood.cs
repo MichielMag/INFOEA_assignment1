@@ -51,7 +51,7 @@ namespace INFOEA.Algorithm.Neighborhood
         ///     Array A (resp. B) stores at position i a list of all vertices in subset A (resp. B) with gain Wv = i. 
         /// 4. Both arrays have an associated pointer that keeps track of the index with maximal value k 
         /// 5. Initially all vertices of the graph are marked free.
-        /// 6. If |A| > |B|(resp. |A| < |B|) then move the vertex v from A (resp. B) that has the highest gain Wv to the subset B (resp. A). 
+        //  6. If |A| > |B|(resp. |A| < |B|) then move the vertex v from A (resp. B) that has the highest gain Wv to the subset B (resp. A). 
         ///     Mark the vertex v ﬁxed. Fixed vertices are removed from the arrays A and B. 
         ///     Update the positions in the arrays A and B of the free nodes that are connected to the moved vertex. 
         /// 7. Continue moving vertices until there are no free nodes left. The resulting partitioning is the same as the one we started with. 
@@ -60,6 +60,33 @@ namespace INFOEA.Algorithm.Neighborhood
         /// </summary>
         /// <param name="solution"></param>
         /// <returns></returns>
+        /// 
+
+        /*
+         * ----------source:
+         * https://pdfs.semanticscholar.org/a487/b518d172c43471c8d3236a1855d9b36a2a6a.pdf
+         * ------------------
+         * 
+        The Fiduccia-Mattheyses (FM) heuristic for bipartitioning circuit hyper- graphs [20] 
+        is an iterative improvement algorithm. Its neighborhood structure is induced by single-vertex, partition-to-partition moves. 
+        FM starts with a possibly random solution and changes the solution by a sequence of moves which are organized as passes.
+        At the beginning of a pass, all ver- tices are free to move (unlocked), and each possible move is labeled with the immediate 
+        change in total cost  it would cause;  this is called  the  gain of the move (positive gains reduce solution cost, while 
+        negative gains in- crease it). Iteratively, a move with highest gain is selected and executed, and the moving vertex is locked,
+        i.e., is not allowed to move again during that pass. Since moving a vertex can change gains of adjacent vertices, after a move
+        is executed all a ected gains are updated. Selection and execution of a best-gain move, followed by gain update, are repeated
+        until every vertex is locked. Then, the best solution seen during the pass is adopted as the starting solution of the next pass. 
+        The algorithm terminates when a pass fails to improve solution quality.
+        The FM algorithm can be easily seen to have three main operations: (1) the
+        computation of initial gain values at the beginning of a pass; (2) the retrieval of the best-gain (feasible) move; 
+        and (3) the update of all a ected gain values after a move is made. The contribution of Fiduccia and Mattheyses lies 
+        in observing that circuit hypergraphs are sparse, so that any move gain is bounded between two and negative two times the
+        maximal vertex degree in the hypergraph (times the maximal edge weight, if edge weights are used). This allows hashing of 
+        moves by their gains: all a ected gains can be updated in linear time, yielding overall linear complexity per pass. In [20], 
+        all moves with the same gain are stored in a linked list representing a \gain bucket".
+
+         */
+
         public override IEnumerable<T> Neighbors(T solution)
         {
             // Lijst A en B. A bevat alle scores van verplaatsen van 0 -> 1
