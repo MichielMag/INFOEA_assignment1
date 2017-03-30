@@ -70,20 +70,23 @@ namespace INFOEA.Algorithm.Neighborhood
         The Fiduccia-Mattheyses (FM) heuristic for bipartitioning circuit hyper- graphs [20] 
         is an iterative improvement algorithm. Its neighborhood structure is induced by single-vertex, partition-to-partition moves. 
         FM starts with a possibly random solution and changes the solution by a sequence of moves which are organized as passes.
-        At the beginning of a pass, all ver- tices are free to move (unlocked), and each possible move is labeled with the immediate 
+        At the beginning of a pass, all vertices are free to move (unlocked), and each possible move is labeled with the immediate 
         change in total cost  it would cause;  this is called  the  gain of the move (positive gains reduce solution cost, while 
-        negative gains in- crease it). Iteratively, a move with highest gain is selected and executed, and the moving vertex is locked,
+        negative gains increase it). Iteratively, a move with highest gain is selected and executed, and the moving vertex is locked,
         i.e., is not allowed to move again during that pass. Since moving a vertex can change gains of adjacent vertices, after a move
-        is executed all a ected gains are updated. Selection and execution of a best-gain move, followed by gain update, are repeated
+        is executed all affected gains are updated. Selection and execution of a best-gain move, followed by gain update, are repeated
         until every vertex is locked. Then, the best solution seen during the pass is adopted as the starting solution of the next pass. 
         The algorithm terminates when a pass fails to improve solution quality.
-        The FM algorithm can be easily seen to have three main operations: (1) the
-        computation of initial gain values at the beginning of a pass; (2) the retrieval of the best-gain (feasible) move; 
-        and (3) the update of all a ected gain values after a move is made. The contribution of Fiduccia and Mattheyses lies 
-        in observing that circuit hypergraphs are sparse, so that any move gain is bounded between two and negative two times the
-        maximal vertex degree in the hypergraph (times the maximal edge weight, if edge weights are used). This allows hashing of 
-        moves by their gains: all a ected gains can be updated in linear time, yielding overall linear complexity per pass. In [20], 
-        all moves with the same gain are stored in a linked list representing a \gain bucket".
+
+        The FM algorithm can be easily seen to have three main operations:
+        (1) the computation of initial gain values at the beginning of a pass; 
+        (2) the retrieval of the best-gain (feasible) move; and 
+        (3) the update of all a ected gain values after a move is made.
+        
+        The contribution of Fiduccia and Mattheyses lies in observing that circuit hypergraphs are sparse, so that any move gain is 
+        bounded between two and negative two times the maximal vertex degree in the hypergraph (times the maximal edge weight, if 
+        edge weights are used). This allows hashing of  moves by their gains: all a ected gains can be updated in linear time,
+        yielding overall linear complexity per pass. In [20], all moves with the same gain are stored in a linked list representing a \gain bucket".
 
          */
 
