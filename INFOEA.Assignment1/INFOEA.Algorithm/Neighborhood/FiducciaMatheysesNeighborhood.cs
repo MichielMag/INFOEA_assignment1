@@ -1,5 +1,6 @@
 ﻿using INFOEA.Algorithm.Genome;
 using INFOEA.Algorithm.Genome.Graph;
+using INFOEA.Algorithm.Neighborhood.Fiduccia;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +20,7 @@ namespace INFOEA.Algorithm.Neighborhood
     /// <typeparam name="T"></typeparam>
     public class FiducciaMatheysesNeighborhood<T> : AbstractNeighborhood<T> where T:IGenome
     {
-        private class VertexSwap
-        {
-            public VertexSwap(int _id, char _swap_to)
-            {
-                id = _id;
-                swap_to = _swap_to;
-            }
-            public char swap_to;
-            public int id;
-            public bool free = true;
-        }
+        
         private int degree;
 
         public FiducciaMatheysesNeighborhood(Random random, int _degree) : base(random, "FM")
@@ -73,18 +64,8 @@ namespace INFOEA.Algorithm.Neighborhood
         {
             // Lijst A en B. A bevat alle scores van verplaatsen van 0 -> 1
             // B bevat alle scores van verplaatsen 1 -> 0 
-            Dictionary<int, List<VertexSwap>> A = new Dictionary<int, List<VertexSwap>>(), 
-                                              B = new Dictionary<int, List<VertexSwap>>();
-
-            // We moeten ook de positie bijhouden van de swap zodat we deze later makkelijk kunnen verplaatsen
-            Dictionary<int, int> positions = new Dictionary<int, int>();
-
-            // Lijsten vullen van [-degree, +degree]
-            for(int i = -1 * degree; i < degree; ++i)
-            {
-                A.Add(i, new List<VertexSwap>());
-                B.Add(i, new List<VertexSwap>());
-            }
+            FiducciaBucket bucketA = new FiducciaBucket(degree);
+            FiducciaBucket bucketB = new FiducciaBucket(degree);
 
             float fitness = solution.Fitness;
             int n = solution.DataSize;
@@ -97,7 +78,7 @@ namespace INFOEA.Algorithm.Neighborhood
                 int id = i + 1;
                 char value = data[i];
                 int gain = 0;
-                int[] neighbors = GraphGenome.vertices[i + 1].Connections;
+                int[] neighbors = GraphGenome.vertices[id].Connections;
 
                 foreach(int neighbor in neighbors)
                 {
@@ -110,88 +91,75 @@ namespace INFOEA.Algorithm.Neighborhood
                 // Als die tussen onze degree zit
                 if (gain >= -1 * degree && gain <= degree)
                 {
-                    VertexSwap swap;
                     if (value == '0')
-                    {
-                        swap = new VertexSwap(id, '1');
-                        A[gain].Add(swap);
-                    }
+                        bucketA.AddSwap(gain, id, '1');
                     else
-                    {
-                        swap = new VertexSwap(id, '0');
-                        B[gain].Add(swap);
-                    }
-
-                    // Eerst in goede array, daarna in de positions.
-                    positions.Add(id, gain);
+                        bucketB.AddSwap(gain, id, '0');
                 }
             }
 
-            // Dus, welke array gaan we vanuit verplaatsen? (Welke lijst heeft de meeste items?)
-            Dictionary<int, List<VertexSwap>> replacement_list = A.Sum(x => x.Value.Count) > B.Sum(x => x.Value.Count) ? A : B;
-            Dictionary<int, List<VertexSwap>> other = replacement_list == A ? B : A;
-
-            foreach (KeyValuePair<int, List<VertexSwap>> kvp in replacement_list)
+            while(true)
             {
-                // Van beste gain (oftewel, grootste min getal) naar slechtste (grootste plus getal)
-                // (want zo is deze dictionary hierboven geinitialiseerd)
-                for(int i = 0; i < kvp.Value.Count; ++i)
+                VertexSwap swapA = bucketA.GetNext();
+                VertexSwap swapB = bucketB.GetNext();
+
+                // Als we de graph niet meer gebalanceerd kunnen houden...
+                if (swapA == null || swapB == null)
+                    break;
+
+                // Eerst voor A
+                data[swapA.id - 1] = swapA.swap_to; // data swap doen
+                fitness += swapA.gain;              // fitness aanpassen
+
+                // Nu moeten we de positie (gain) van al zijn buren updaten...
+                // gelukkig weten we wat voor gain deze buren zullen hebben :)
+                int[] neighbors = GraphGenome.vertices[swapA.id].Connections;
+
+                // Alle gains van alle neighbours updaten
+                foreach (int neighbor in neighbors)
                 {
-                    VertexSwap vs = kvp.Value[i];
-                    if(vs.free)
+                    char n_value = data[neighbor - 1];
+                    try
                     {
-                        data[vs.id - 1] = vs.swap_to; // data swap doen
-                        fitness += kvp.Key;           // fitness aanpassen
-                        vs.free = false;              // swap is niet meer free maar fixed
+                        if (n_value == '0')
+                            bucketA.EditSwap(neighbor, swapA.swap_to);
+                        else
+                            bucketB.EditSwap(neighbor, swapA.swap_to);
+                    }
+                    catch (ArgumentOutOfRangeException ex)
+                    {
+                        // Kon niet toevoegen, maar laten we dat maar gewoon negeren :)
+                    }
+                }
 
-                        // Nu moeten we de positie (gain) van al zijn buren updaten...
-                        // gelukkig weten we wat voor gain deze buren zullen hebben :)
-                        int[] neighbors = GraphGenome.vertices[vs.id].Connections;
+                // Zelfde riedeltje voor B
+                data[swapB.id - 1] = swapB.swap_to; // data swap doen
+                fitness += swapB.gain;              // fitness aanpassen
 
-                        foreach (int neighbor in neighbors)
-                        {
-                            if(positions.ContainsKey(neighbor))
-                            {
-                                int gain = positions[neighbor];
-                                int new_gain = gain;
+                // Nu moeten we de positie (gain) van al zijn buren updaten...
+                // gelukkig weten we wat voor gain deze buren zullen hebben :)
+                neighbors = GraphGenome.vertices[swapB.id].Connections;
 
-                                // Het zoeken naar zo'n vertexswap is veel te costly. Hoewel het vrij kleine lijsten
-                                // zullen zijn...
-                                if (data[neighbor - 1] == vs.swap_to)
-                                {
-                                    VertexSwap swap = other[gain].FirstOrDefault(x => x != null && x.id == neighbor);
-
-                                    if (swap == null)
-                                        continue;
-
-                                    other[gain].Remove(swap);
-                                    if (gain - 1 >= -1 * degree)
-                                        other[gain - 1].Add(swap);
-                                    new_gain--;
-                                }
-                                else
-                                {
-                                    VertexSwap swap = replacement_list[gain].FirstOrDefault(x => x != null && x.id == neighbor);
-
-                                    if (swap == null)
-                                        continue; 
-
-                                    replacement_list[gain].Remove(swap);
-                                    if (gain + 1 <=  degree)
-                                        other[gain + 1].Add(swap);
-
-                                    new_gain++;
-                                }
-                                positions[neighbor] = new_gain;
-                            }
-                        }
+                foreach (int neighbor in neighbors)
+                {
+                    char n_value = data[neighbor - 1];
+                    try
+                    {
+                        if (n_value == '0')
+                            bucketA.EditSwap(neighbor, swapB.swap_to);
+                        else
+                            bucketB.EditSwap(neighbor, swapB.swap_to);
+                    }
+                    catch (ArgumentOutOfRangeException ex)
+                    {
+                        // Kon niet toevoegen, maar laten we dat maar gewoon negeren :)
                     }
                 }
             }
 
             // Maar wat moeten we nou returnen? Beschrijvingen lijken erop te wijzen dat we het meerdere keren moeten uitvoeren...
             // Maar wanneer? Hoevaak? Dan kunnen we dat gebruiken om een yield return te doen. Voor nu even deze.
-            yield return (T)Activator.CreateInstance(typeof(T), new string(data), fitness);
+            yield return (T)Activator.CreateInstance(typeof(T), new string(data));
         }
     }
 }

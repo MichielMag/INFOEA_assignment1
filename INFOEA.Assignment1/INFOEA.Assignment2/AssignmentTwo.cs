@@ -134,7 +134,7 @@ namespace INFOEA.Assignment2
         {
             LocalSearch<GraphGenome> local_search =
                 new LocalSearch<GraphGenome>(500,
-                        new SwapNeighborhood<GraphGenome>(main_random_source),
+                        new FiducciaMatheysesNeighborhood<GraphGenome>(main_random_source, 7),
                         new GraphComparer<GraphGenome>(), main_random_source);
             IMutation<GraphGenome> pertubation = new ILSPertubation<GraphGenome>(main_random_source);
 
@@ -219,8 +219,8 @@ namespace INFOEA.Assignment2
                 main_random_source = new Random();
 
             //MultiStartLocalSearch();
-            //IteratedLocalSearch(false);
-            GeneticLocalSearch();
+            IteratedLocalSearch(false);
+            //GeneticLocalSearch();
         }
 
     }
