@@ -206,7 +206,7 @@ namespace INFOEA.Assignment2
                 main_random_source, 
                 "GLS");
 
-            InnerResult ir = ga.start(500);
+            InnerResult ir = ga.start(100);
             //IteratedLocalSearch();
             GraphGenome optimum = new GraphGenome(ir.BestSolution, ir.BestScore);
             optimum.ToImage(3000, 3000);

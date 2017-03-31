@@ -110,7 +110,7 @@ namespace INFOEA.Algorithm.Algorithm
             res.CPUTime = stopwatch.ElapsedTicks;
             res.FunctionEvaluations = population[0].FunctionEvaluations;
             res.BestScore = population[0].Fitness;
-            res.BestSolution = population[0].ToString();
+            res.BestSolution = population[0].Data;
 
             if (best_result == null || population[0].Fitness > best_result.Fitness)
                 best_result = population[0];
