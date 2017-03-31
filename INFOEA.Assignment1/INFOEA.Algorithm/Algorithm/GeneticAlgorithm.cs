@@ -74,6 +74,9 @@ namespace INFOEA.Algorithm.Algorithm
                 if (!silent)
                     printPopulation();
 
+                //Dit moet nog even netter worden gemaakt eigenlijk met Goal enzo...:
+                if (population[0].Fitness == 2) break;
+
                 current_generation++;
 
                 if (first_goal_hit < 0 && population[0].Fitness >= goal.MinFitness)

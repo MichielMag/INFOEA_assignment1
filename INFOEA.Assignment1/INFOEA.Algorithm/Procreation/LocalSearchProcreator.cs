@@ -22,6 +22,22 @@ namespace INFOEA.Algorithm.Procreation
 
         public override List<T> Procreate(List<T> population)
         {
+            for (int i = 0; i < population.Count - 1; i += 2)
+            {
+                T parent_one = population[i];
+                T parent_two = population[i + 1];
+
+                // We verwachten maar 1 kind.
+                T child = crossover_provider.DoCrossover(parent_one, parent_two).Item1;
+                child = local_search.Search(child);
+                if (!child.Data.Equals(parent_one.Data) && !child.Data.Equals(parent_two.Data))
+                    population.Add(child);
+            }
+            return population;
+        }
+        /*
+        public override List<T> Procreate(List<T> population)
+        {
             int parent_one = random.Next(population.Count);
             int parent_two = parent_one;
 
@@ -36,6 +52,6 @@ namespace INFOEA.Algorithm.Procreation
             if(!child.Data.Equals(population[parent_one].Data) && !child.Data.Equals(population[parent_two].Data))
                 population.Add(child);
             return population;
-        }
+        } */
     }
 }
