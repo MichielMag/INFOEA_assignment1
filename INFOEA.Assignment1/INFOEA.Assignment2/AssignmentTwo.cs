@@ -208,6 +208,8 @@ namespace INFOEA.Assignment2
 
             InnerResult ir = ga.start(500);
             //IteratedLocalSearch();
+            GraphGenome optimum = new GraphGenome(ir.BestSolution, ir.BestScore);
+            optimum.ToImage(3000, 3000);
             Console.ReadLine();
         }
 
