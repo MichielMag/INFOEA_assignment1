@@ -22,7 +22,8 @@ namespace INFOEA.Algorithm.Procreation
 
         public override List<T> Procreate(List<T> population)
         {
-            for (int i = 0; i < population.Count - 1; i += 2)
+            int max = population.Count;
+            for (int i = 0; i < max - 1; i += 2)
             {
                 T parent_one = population[i];
                 T parent_two = population[i + 1];
