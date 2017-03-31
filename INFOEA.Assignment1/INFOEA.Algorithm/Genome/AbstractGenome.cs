@@ -86,7 +86,7 @@ namespace INFOEA.Algorithm.Genome
 
         public override string ToString()
         {
-            return String.Format("{0}: {1}, {2}", Fitness, Name, Data);
+            return String.Format("{0}: {1}", Fitness, Name); //, {2}", Fitness, Name, Data);
         }
 
         

@@ -55,11 +55,12 @@ namespace INFOEA.Algorithm.Algorithm
             population = new List<T>();
 
             //Console.WriteLine("Going to run algorithm. Max generations: {0}, Min fitness: {1}", goal.MaxGenerations, goal.MinFitness);
+
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             population = generator.Generate(population_size, genome_size);
 
             population[0].FunctionEvaluations = 0;
 
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             do
             {
                 shufflePopulation();

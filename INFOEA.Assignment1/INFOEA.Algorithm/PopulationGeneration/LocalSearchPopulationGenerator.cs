@@ -20,7 +20,7 @@ namespace INFOEA.Algorithm.PopulationGeneration
         public override List<T> Generate(int population_size, int genome_size)
         {
             List<T> population = new List<T>();
-
+            
             for (uint i = 0; i < population_size; ++i)
             {
                 T g = (T)Activator.CreateInstance(typeof(T), genome_size);

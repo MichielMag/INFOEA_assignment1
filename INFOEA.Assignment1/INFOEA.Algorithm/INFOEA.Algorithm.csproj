@@ -56,7 +56,7 @@
     <Compile Include="Genome\DTRGenome.cs" />
     <Compile Include="Genome\DTTGenome.cs" />
     <Compile Include="Genome\Graph\GraphGenome.cs" />
-    <Compile Include="Genome\Graph\Vertex.cs" />
+    <Compile Include="Genome\Vertex.cs" />
     <Compile Include="Genome\IGenome.cs" />
     <Compile Include="Genome\LCOGenome.cs" />
     <Compile Include="Genome\NDTRGenome.cs" />

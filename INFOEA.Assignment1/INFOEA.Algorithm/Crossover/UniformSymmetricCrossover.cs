@@ -16,8 +16,76 @@ namespace INFOEA.Algorithm.Crossover
         {
         }
 
+        private int computeHammingDistance(T ParentOne, T ParentTwo)
+        {
+            int val = 0;
+            for (int i = 0; i < ParentOne.DataSize; i++)
+            {
+                if (ParentOne.Data[i] != ParentTwo.Data[i]) val++;
+            }
+            return val;
+        }
+
+        private T invertBits(T Parent)
+        {
+            string new_data = "";
+            foreach(char c in Parent.Data)
+                new_data += (c == '1') ? "0" : "1";
+            return (T)Activator.CreateInstance(typeof(T), new_data);
+        }
+
+        private T generateChild(T ParentOne, T ParentTwo)
+        {
+            int data_size = ParentOne.DataSize;
+            char[] child_data = new char[data_size];
+            Dictionary<char, int> counted = new Dictionary<char, int>();
+            counted.Add('0', 0);
+            counted.Add('1', 0);
+
+            for (int i = 0; i < data_size; i++)
+            {
+                char c = ParentOne.Data[i];
+                if (c == ParentTwo.Data[i])
+                {
+                    child_data[i] = c;
+                    counted[c]++;
+                }
+            }
+
+            for (int i = 0; i < data_size; i++)
+            {
+                if (ParentOne.Data[i] != ParentTwo.Data[i]) 
+                {
+                    char c = random_source.Next(2).ToString()[0];
+                    if (counted[c] > data_size / 2 - 1)
+                        c = (c == '1') ? '0' : '1';
+                    child_data[i] = c;
+                    counted[c]++;
+                }
+            }
+
+            return (T)Activator.CreateInstance(typeof(T), new string(child_data));
+        }
+
         public override Tuple<T, T> DoCrossover(T ParentOne, T ParentTwo)
         {
+            T child;
+            int data_size = ParentOne.DataSize;
+            int hammingDistance = computeHammingDistance(ParentOne, ParentTwo);
+            if (hammingDistance > data_size / 2)
+            {
+                T ParentTwoInverted = invertBits(ParentTwo);
+                child = this.generateChild(ParentOne, ParentTwoInverted);
+            }
+            else
+                child = this.generateChild(ParentOne, ParentTwo);
+
+            return new Tuple<T, T>(child, child);
+
+            /*
+            int hammingDistance = this.computeHammingDistance(ParentOne, ParentTwo);
+
+
             int data_size = ParentOne.DataSize;
             
             string child_data = "";
@@ -57,7 +125,8 @@ namespace INFOEA.Algorithm.Crossover
             // In C++ hadden we met templates ook wel aantallen kunnen meegeven om te returnen
             // In C# kan ik me alleen maar bedenken om een lijst te returnen, maar dat is ook weer zo..
             // Dus dan maar zo.
-            return new Tuple<T, T>(child_one, child_one);
-        }
+            return new Tuple<T, T>(child_one, child_one); 
+            */
+        } 
     }
 }

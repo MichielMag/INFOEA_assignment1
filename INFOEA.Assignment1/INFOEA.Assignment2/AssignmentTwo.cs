@@ -219,8 +219,8 @@ namespace INFOEA.Assignment2
                 main_random_source = new Random();
 
             //MultiStartLocalSearch();
-            IteratedLocalSearch(false);
-            //GeneticLocalSearch();
+            //IteratedLocalSearch(false);
+            GeneticLocalSearch();
         }
 
     }
