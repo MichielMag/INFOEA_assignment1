@@ -33,7 +33,7 @@ namespace INFOEA.Algorithm.Procreation
             // We verwachten maar 1 kind.
             T child = crossover_provider.DoCrossover(population[parent_one], population[parent_two]).Item1;
             child = local_search.Search(child);
-            if(child.Data.Equals(population[parent_one].Data) && !child.Data.Equals(population[parent_two].Data))
+            if(!child.Data.Equals(population[parent_one].Data) && !child.Data.Equals(population[parent_two].Data))
                 population.Add(child);
             return population;
         }
