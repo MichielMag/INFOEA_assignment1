@@ -1,4 +1,5 @@
-﻿using System;
+﻿using INFOEA.Algorithm.Genome.Graph;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,11 @@ namespace INFOEA.Algorithm.Neighborhood.Fiduccia
 {
     class VertexSwap
     {
-        public VertexSwap(int _id, char _swap_to, int gain)
+        public VertexSwap(int _id, char _swap_to, int _gain)
         {
             id = _id;
             swap_to = _swap_to;
+            gain = _gain;
         }
         public char swap_to;
         public int id;
@@ -51,26 +53,40 @@ namespace INFOEA.Algorithm.Neighborhood.Fiduccia
             return to_return;
         }
 
-        public void EditSwap(int id, char new_neighbor)
+        public void EditSwap(int id, int neighbor_id, char neighbor_value, ref char[] data)
         {
             if (!positions.ContainsKey(id))
                 throw new ArgumentOutOfRangeException("This id is not in the list of positions");
 
             int old_gain = positions[id];
-            int new_gain = old_gain;
+            int new_gain = 0;
             VertexSwap swap = swaps[old_gain].FirstOrDefault(x => x.id == id);
 
-            // Swap to is het tegenovergestelde van wat hij eigenlijk is.
-            // dus wanneer deze equal zijn "Ik ga naar 0, dan is mijn gain x, 
-            // maar ik heb een nieuwe neighbor die is al 0 ipv 1 wat hij eerst was, 
-            // dat betekent dat mijn gain 1 minder wordt"
-            if (swap.swap_to == new_neighbor)
-                new_gain--;
-            else
-                new_gain++;
+             /* Alle neighbors weer langs. Het kan namelijk een groter verschil geven dan gewoon 1
+             *  gain-- of gain++:
+             *  
+             *  ( ) -- (x) -- ( ) <- wanneer we (x) naar ( ) veranderen, hebben we een gain van -2
+             *  ( ) -- (x) -- (x) <- maar wanneer 1 van zijn buren is veranderd naar (x), is de gain wanneer 
+             *                       we de middelste (x) veranderen naar ( ) ineens 0. 
+             *                       (plus 1 voor de rechter, min 1 voor de linker)
+             */ 
+            int[] neighbors = GraphGenome.vertices[swap.id].Connections;
+            foreach(int neighbor in neighbors)
+            {
+                char n_value = neighbor == neighbor_id ? neighbor_value : data[neighbor - 1];
+
+                if (n_value == swap.swap_to)
+                    new_gain--;
+                else
+                    new_gain++;
+            }
 
             if (!swaps.ContainsKey(new_gain))
                 throw new ArgumentOutOfRangeException("You can't add this new gain");
+
+            // Niks hoeft te veranderen.
+            if (new_gain == old_gain)
+                return;
 
             swap.gain = new_gain;
 
@@ -80,7 +96,7 @@ namespace INFOEA.Algorithm.Neighborhood.Fiduccia
             positions[id] = new_gain;
         }
 
-        public void EditSwap(int id, int new_gain)
+        /*public void EditSwap(int id, int new_gain)
         {
             if (!swaps.ContainsKey(new_gain))
                 throw new ArgumentOutOfRangeException("You can't add this new gain");
@@ -100,22 +116,24 @@ namespace INFOEA.Algorithm.Neighborhood.Fiduccia
             swaps[new_gain].Add(swap);
 
             positions[id] = new_gain;
-        }
+        }*/
 
         public VertexSwap GetNext()
         {
-            foreach(KeyValuePair<int, List<VertexSwap>> kvp in swaps)
+            int count = swaps.Keys.Count;
+            List<int> keys = swaps.Keys.ToList();
+            for(int i = 0; i < count; ++i)
             {
-                if (kvp.Key > 0)
-                    return null;
-                foreach (VertexSwap swap in kvp.Value)
-                {
-                    if (swap.free)
-                    {
-                        swap.free = false;
-                        return swap;
-                    }
-                }
+                int key = keys[i];
+
+                if (swaps[key].Count == 0)
+                    continue;
+
+                VertexSwap swap = swaps[key][0];
+                swaps[key].Remove(swap);
+                positions.Remove(swap.id);
+
+                return swap;
             }
             return null;
         }

@@ -90,6 +90,11 @@ namespace INFOEA.Algorithm.Neighborhood
 
          */
 
+        public T FiducciaPass(T solution)
+        {
+
+            return (T)Activator.CreateInstance(typeof(T),"");
+        }
         public override IEnumerable<T> Neighbors(T solution)
         {
             // Lijst A en B. A bevat alle scores van verplaatsen van 0 -> 1
@@ -97,8 +102,13 @@ namespace INFOEA.Algorithm.Neighborhood
             FiducciaBucket bucketA = new FiducciaBucket(degree);
             FiducciaBucket bucketB = new FiducciaBucket(degree);
 
-            float fitness = solution.Fitness;
             int n = solution.DataSize;
+
+            float start_fitness = solution.Fitness;
+            float current_fitness = solution.Fitness;
+            float best_fitness = solution.Fitness;
+            
+            char[] best_data = new char[n];
             char[] data = solution.Data.ToArray();
 
             // Nu alle vertices af gaan, en (plus of min) gain berekenen
@@ -130,6 +140,7 @@ namespace INFOEA.Algorithm.Neighborhood
 
             while(true)
             {
+                // Pak de beste 2 moves
                 VertexSwap swapA = bucketA.GetNext();
                 VertexSwap swapB = bucketB.GetNext();
 
@@ -139,7 +150,7 @@ namespace INFOEA.Algorithm.Neighborhood
 
                 // Eerst voor A
                 data[swapA.id - 1] = swapA.swap_to; // data swap doen
-                fitness += swapA.gain;              // fitness aanpassen
+                current_fitness += swapA.gain;              // fitness aanpassen
 
                 // Nu moeten we de positie (gain) van al zijn buren updaten...
                 // gelukkig weten we wat voor gain deze buren zullen hebben :)
@@ -148,13 +159,32 @@ namespace INFOEA.Algorithm.Neighborhood
                 // Alle gains van alle neighbours updaten
                 foreach (int neighbor in neighbors)
                 {
+                    // swapB is uit de bucket gehaald, dus kan niet op de manier hieronder worden geupdatet.
+                    // Daarom even zo.
+                    if (neighbor == swapB.id)
+                    {
+                        int new_gain = 0;
+                        int[] b_neighbors = GraphGenome.vertices[swapB.id].Connections;
+                        foreach (int b_neighbor in b_neighbors)
+                        {
+                            char b_neighbor_value = data[b_neighbor - 1];
+
+                            if (b_neighbor_value == swapB.swap_to)
+                                new_gain--;
+                            else
+                                new_gain++;
+                        }
+                        swapB.gain = new_gain;
+                    }
+
+                    // De value om te checken in welke bucket deze neighbor zich eventueel bevind
                     char n_value = data[neighbor - 1];
                     try
                     {
                         if (n_value == '0')
-                            bucketA.EditSwap(neighbor, swapA.swap_to);
+                            bucketA.EditSwap(neighbor, swapA.id, swapA.swap_to, ref data);
                         else
-                            bucketB.EditSwap(neighbor, swapA.swap_to);
+                            bucketB.EditSwap(neighbor, swapA.id, swapA.swap_to, ref data);
                     }
                     catch (ArgumentOutOfRangeException ex)
                     {
@@ -164,7 +194,7 @@ namespace INFOEA.Algorithm.Neighborhood
 
                 // Zelfde riedeltje voor B
                 data[swapB.id - 1] = swapB.swap_to; // data swap doen
-                fitness += swapB.gain;              // fitness aanpassen
+                current_fitness += swapB.gain;              // fitness aanpassen
 
                 // Nu moeten we de positie (gain) van al zijn buren updaten...
                 // gelukkig weten we wat voor gain deze buren zullen hebben :)
@@ -176,20 +206,29 @@ namespace INFOEA.Algorithm.Neighborhood
                     try
                     {
                         if (n_value == '0')
-                            bucketA.EditSwap(neighbor, swapB.swap_to);
+                            bucketA.EditSwap(neighbor, swapB.id, swapB.swap_to, ref data);
                         else
-                            bucketB.EditSwap(neighbor, swapB.swap_to);
+                            bucketB.EditSwap(neighbor, swapB.id, swapB.swap_to, ref data);
                     }
                     catch (ArgumentOutOfRangeException ex)
                     {
                         // Kon niet toevoegen, maar laten we dat maar gewoon negeren :)
                     }
                 }
-            }
 
+                if(current_fitness < best_fitness)
+                {
+                    best_fitness = current_fitness;
+                    data.CopyTo(best_data, 0);
+                }
+            }
+            if (best_fitness < start_fitness)
+                yield return (T)Activator.CreateInstance(typeof(T), new string(best_data), best_fitness);
+            else
+                yield return solution;
             // Maar wat moeten we nou returnen? Beschrijvingen lijken erop te wijzen dat we het meerdere keren moeten uitvoeren...
             // Maar wanneer? Hoevaak? Dan kunnen we dat gebruiken om een yield return te doen. Voor nu even deze.
-            yield return (T)Activator.CreateInstance(typeof(T), new string(data));
+
         }
     }
 }
