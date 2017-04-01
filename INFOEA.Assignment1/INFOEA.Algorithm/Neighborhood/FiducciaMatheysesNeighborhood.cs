@@ -123,9 +123,9 @@ namespace INFOEA.Algorithm.Neighborhood
                 foreach(int neighbor in neighbors)
                 {
                     if (data[neighbor - 1] == value)
-                        gain--;
-                    else
                         gain++;
+                    else
+                        gain--;
                 }
 
                 // Als die tussen onze degree zit
@@ -138,6 +138,8 @@ namespace INFOEA.Algorithm.Neighborhood
                 }
             }
 
+            Console.WriteLine("Processing solution of {0}", start_fitness);
+
             while(true)
             {
                 // Pak de beste 2 moves
@@ -145,13 +147,14 @@ namespace INFOEA.Algorithm.Neighborhood
                 VertexSwap swapB = bucketB.GetNext();
 
                 // Als we de graph niet meer gebalanceerd kunnen houden...
-                if (swapA == null || swapB == null)
+                if ((swapA == null || swapB == null) || swapA.gain + swapB.gain > 0)
                     break;
 
                 // Eerst voor A
                 data[swapA.id - 1] = swapA.swap_to; // data swap doen
                 current_fitness += swapA.gain;              // fitness aanpassen
 
+                //T genome = (T)Activator.CreateInstance(typeof(T), new string(data));
                 // Nu moeten we de positie (gain) van al zijn buren updaten...
                 // gelukkig weten we wat voor gain deze buren zullen hebben :)
                 int[] neighbors = GraphGenome.vertices[swapA.id].Connections;
@@ -195,6 +198,8 @@ namespace INFOEA.Algorithm.Neighborhood
                 // Zelfde riedeltje voor B
                 data[swapB.id - 1] = swapB.swap_to; // data swap doen
                 current_fitness += swapB.gain;              // fitness aanpassen
+
+                //genome = (T)Activator.CreateInstance(typeof(T), new string(data));
 
                 // Nu moeten we de positie (gain) van al zijn buren updaten...
                 // gelukkig weten we wat voor gain deze buren zullen hebben :)

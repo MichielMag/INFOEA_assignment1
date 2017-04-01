@@ -122,5 +122,10 @@ namespace INFOEA.Algorithm.Genome
 
             this.hash = h;
         }
+
+        public void Recalculate()
+        {
+            calculateFitness();
+        }
     }
 }

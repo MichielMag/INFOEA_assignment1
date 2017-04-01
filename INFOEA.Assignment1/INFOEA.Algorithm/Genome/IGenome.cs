@@ -13,5 +13,7 @@ namespace INFOEA.Algorithm.Genome
         string Data { get; }
         int DataSize { get; }
         long FunctionEvaluations { get; set; }
+
+        void Recalculate();
     }
 }
