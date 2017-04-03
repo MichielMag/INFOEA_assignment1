@@ -92,18 +92,17 @@ namespace INFOEA.Algorithm.Neighborhood
                 char value = data[i];
                 int idx = i + 1;
                 int gain = calculateGain(idx, currentSolution);
+                gains[i] = gain;
 
                 if (value == '0')
                 {
                     sizeA++;
                     A[gain].Add(idx);
-                    gains[i] = gain;
                 }
                 else
                 {
                     sizeB++;
                     B[gain].Add(idx);
-                    gains[i] = gain;
                 }
             }
 
