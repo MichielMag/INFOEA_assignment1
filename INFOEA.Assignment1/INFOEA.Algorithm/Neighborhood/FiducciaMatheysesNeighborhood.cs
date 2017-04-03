@@ -157,13 +157,9 @@ namespace INFOEA.Algorithm.Neighborhood
                     {
                         char val = currentSolution[other - 1];
                         if (val == '1')
-                        {
                             this.updateGains(ref gains, ref A, currentSolution, other);
-                        }
                         else
-                        {
                             this.updateGains(ref gains, ref B, currentSolution, other);
-                        }
                     }
                     currentFitness -= maxGain;
                 }
@@ -177,14 +173,14 @@ namespace INFOEA.Algorithm.Neighborhood
             return (T)Activator.CreateInstance(typeof(T), new string(bestSolution));
         }
 
-        private void updateGains(ref int[] G, ref Dictionary<int, List<int>> L, char[] data, int idx)
+        private void updateGains(ref int[] IdxToGain, ref Dictionary<int, List<int>> GainToList, char[] Data, int Idx)
         {
-            int g = G[idx - 1];
-            L[g].Remove(idx);
-            char otherVal = data[idx - 1];
-            g = calculateGain(idx, data);
-            G[idx - 1] = g;
-            L[g].Add(idx);
+            int g = IdxToGain[Idx - 1];
+            GainToList[g].Remove(Idx);
+            char otherVal = Data[Idx - 1];
+            g = calculateGain(Idx, Data);
+            IdxToGain[Idx - 1] = g;
+            GainToList[g].Add(Idx);
         }
 
         private int getMaxGain(Dictionary<int, List<int>> dictionary)
