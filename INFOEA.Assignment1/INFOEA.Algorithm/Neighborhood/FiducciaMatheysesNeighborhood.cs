@@ -130,9 +130,9 @@ namespace INFOEA.Algorithm.Neighborhood
                     {
                         char val = currentSolution[other - 1];
                         if (val == '0')
-                            this.updateGains(ref gains, ref A, currentSolution, other, idx);
+                            this.updateGains(ref gains, ref A, currentSolution, other);
                         else
-                            this.updateGains(ref gains, ref B, currentSolution, other, idx);
+                            this.updateGains(ref gains, ref B, currentSolution, other);
                     }
                     currentFitness -= maxGain;
                 }
@@ -156,9 +156,9 @@ namespace INFOEA.Algorithm.Neighborhood
                     {
                         char val = currentSolution[other - 1];
                         if (val == '0')
-                            this.updateGains(ref gains, ref A, currentSolution, other, idx);
+                            this.updateGains(ref gains, ref A, currentSolution, other);
                         else
-                            this.updateGains(ref gains, ref B, currentSolution, other, idx);
+                            this.updateGains(ref gains, ref B, currentSolution, other);
                     }
                     currentFitness -= maxGain;
                 }
@@ -172,7 +172,7 @@ namespace INFOEA.Algorithm.Neighborhood
             return (T)Activator.CreateInstance(typeof(T), new string(bestSolution), bestFitness);
         }
 
-        private void updateGains(ref int[] IdxToGain, ref Dictionary<int, List<int>> GainToList, char[] Data, int IdxOther, int IdxSelf)
+        private void updateGains(ref int[] IdxToGain, ref Dictionary<int, List<int>> GainToList, char[] Data, int IdxOther)
         {
             int g = IdxToGain[IdxOther - 1];
             GainToList[g].Remove(IdxOther);
@@ -185,9 +185,7 @@ namespace INFOEA.Algorithm.Neighborhood
         {
             int i = maxDegree;
             while (i > -maxDegree && dictionary[i].Count == 0)
-            {
                 i--;
-            }
             return i;
         }
 

@@ -22,7 +22,7 @@ namespace INFOEA.Assignment2
 {
     class AssignmentTwo
     {
-        public int OptimaAmount { get; set; } = 1000;
+        public int OptimaAmount { get; set; } = 2500;
         public int ExperimentAmount { get; set; } = 1;
 
         //private Random[] random;
