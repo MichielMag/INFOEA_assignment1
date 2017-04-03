@@ -169,7 +169,7 @@ namespace INFOEA.Algorithm.Neighborhood
                     bestFitness = currentFitness;
                 }
             }
-            return (T)Activator.CreateInstance(typeof(T), new string(bestSolution));
+            return (T)Activator.CreateInstance(typeof(T), new string(bestSolution), bestFitness);
         }
 
         private void updateGains(ref int[] IdxToGain, ref Dictionary<int, List<int>> GainToList, char[] Data, int Idx)
