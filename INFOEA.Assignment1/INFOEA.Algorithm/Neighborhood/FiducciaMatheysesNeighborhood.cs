@@ -177,7 +177,6 @@ namespace INFOEA.Algorithm.Neighborhood
         {
             int g = IdxToGain[Idx - 1];
             GainToList[g].Remove(Idx);
-            char otherVal = Data[Idx - 1];
             g = calculateGain(Idx, Data);
             IdxToGain[Idx - 1] = g;
             GainToList[g].Add(Idx);
