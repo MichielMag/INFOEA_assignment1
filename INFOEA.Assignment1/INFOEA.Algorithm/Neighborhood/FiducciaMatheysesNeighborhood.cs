@@ -107,20 +107,20 @@ namespace INFOEA.Algorithm.Neighborhood
             float start_fitness = solution.Fitness;
             float current_fitness = solution.Fitness;
             float best_fitness = solution.Fitness;
-            
+
             char[] best_data = new char[n];
             char[] data = solution.Data.ToArray();
 
             // Nu alle vertices af gaan, en (plus of min) gain berekenen
             // en in betreffende lijst plaatsen.
-            for(int i = 0; i < n; ++i)
+            for (int i = 0; i < n; ++i)
             {
                 int id = i + 1;
                 char value = data[i];
                 int gain = 0;
                 int[] neighbors = GraphGenome.vertices[id].Connections;
 
-                foreach(int neighbor in neighbors)
+                foreach (int neighbor in neighbors)
                 {
                     if (data[neighbor - 1] == value)
                         gain++;
@@ -140,7 +140,7 @@ namespace INFOEA.Algorithm.Neighborhood
 
             Console.WriteLine("Processing solution of {0}", start_fitness);
 
-            while(true)
+            while (true)
             {
                 // Pak de beste 2 moves
                 VertexSwap swapA = bucketA.GetNext();
@@ -221,14 +221,16 @@ namespace INFOEA.Algorithm.Neighborhood
                     }
                 }
 
-                if(current_fitness < best_fitness)
+                if (current_fitness < best_fitness)
                 {
                     best_fitness = current_fitness;
                     data.CopyTo(best_data, 0);
                 }
             }
-            if (best_fitness < start_fitness)
+            if (best_fitness < start_fitness) { 
+                T genome = (T)Activator.CreateInstance(typeof(T), new string(data));
                 yield return (T)Activator.CreateInstance(typeof(T), new string(best_data), best_fitness);
+            }
             else
                 yield return solution;
             // Maar wat moeten we nou returnen? Beschrijvingen lijken erop te wijzen dat we het meerdere keren moeten uitvoeren...

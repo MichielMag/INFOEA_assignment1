@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using INFOEA.Algorithm.Crossover;
 using INFOEA.Algorithm.Algorithm;
+using INFOEA.Algoritmh.Results;
+using System.Diagnostics;
+using INFOEA.Algorithm.Genome.Graph;
 
 namespace INFOEA.Algorithm.Procreation
 {
@@ -13,11 +16,13 @@ namespace INFOEA.Algorithm.Procreation
     {
         private Random random;
         private LocalSearch<T> local_search;
+        private AssignmentTwoResults<T> results;
 
-        public LocalSearchProcreator(ICrossover<T> crossover, LocalSearch<T> _local_search, Random _random) : base(crossover, "LS")
+        public LocalSearchProcreator(ICrossover<T> crossover, LocalSearch<T> _local_search, Random _random, AssignmentTwoResults<T> _results) : base(crossover, "LS")
         {
             random = _random;
             local_search = _local_search;
+            results = _results;
         }
 
         public override List<T> Procreate(List<T> population)
@@ -28,9 +33,15 @@ namespace INFOEA.Algorithm.Procreation
                 T parent_one = population[i];
                 T parent_two = population[i + 1];
 
+                Stopwatch sw = Stopwatch.StartNew();
                 // We verwachten maar 1 kind.
                 T child = crossover_provider.DoCrossover(parent_one, parent_two).Item1;
                 child = local_search.Search(child);
+                sw.Stop();
+
+                results.Add(child, sw.ElapsedTicks);
+
+
                 if (!child.Data.Equals(parent_one.Data) && !child.Data.Equals(parent_two.Data))
                     population.Add(child);
             }

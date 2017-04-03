@@ -46,7 +46,7 @@ namespace INFOEA.Algorithm.Algorithm
         }
 
         // TODO: Write results to InnerResult.
-        public InnerResult start(int population_size, bool silent = false)
+        public InnerResult start(int population_size, int max_generations = int.MaxValue, bool silent = false)
         {
             int last_index = population_size - 1;
             int convergence_hit = -1;
@@ -96,6 +96,10 @@ namespace INFOEA.Algorithm.Algorithm
                     convergence_hit = current_generation;
                     break;
                 }
+
+                if (current_generation >= max_generations)
+                    break;
+
             } while (true);
 
             stopwatch.Stop();

@@ -80,7 +80,7 @@ namespace INFOEA.Algorithm.Genome.Graph
         }
 
         
-        public void ToImage(int width = 1000, int height = 1000)
+        public void ToImage(string filename, int width = 1000, int height = 1000)
         {
             int point_size_width = (int)(width * 0.004);
             int point_size_height = (int)(height * 0.004);
@@ -135,7 +135,7 @@ namespace INFOEA.Algorithm.Genome.Graph
                 gfx.FillRectangle(brush, new Rectangle(v_point, point_size));
             }
 
-             bm.Save("graph.bmp");
+             bm.Save(filename);
         }
 
         public override void Generate(ref Random random)
