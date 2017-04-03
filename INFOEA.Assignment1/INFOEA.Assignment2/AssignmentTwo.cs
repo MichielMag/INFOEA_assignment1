@@ -52,7 +52,7 @@ namespace INFOEA.Assignment2
 
             GraphGenome optimum = null;
 
-            for(int i = 0; i < ExperimentAmount; ++i)
+            for (int i = 0; i < ExperimentAmount; ++i)
             {
                 AssignmentTwoResults<GraphGenome> inner_results = new AssignmentTwoResults<GraphGenome>();
                 for (int j = 0; j < max; j++)
@@ -84,7 +84,7 @@ namespace INFOEA.Assignment2
 
         private bool threadsAreRunning()
         {
-            foreach(Thread T in threads)
+            foreach (Thread T in threads)
             {
                 if (T.ThreadState == System.Threading.ThreadState.Running) return true;
             }
@@ -106,7 +106,7 @@ namespace INFOEA.Assignment2
                 Thread T = new Thread(() => searchThread(k, amount, seed, neighborhood));
                 threads[j] = T;
             }
-            
+
             Stopwatch sw = new Stopwatch();
             sw.Start();
             foreach (Thread T in threads)
@@ -153,12 +153,12 @@ namespace INFOEA.Assignment2
 
             List<AssignmentTwoResults<GraphGenome>> results = new List<AssignmentTwoResults<GraphGenome>>();
 
-            for(int i = 0; i < ExperimentAmount; ++i)
+            for (int i = 0; i < ExperimentAmount; ++i)
             {
                 AssignmentTwoResults<GraphGenome> res = new AssignmentTwoResults<GraphGenome>();
                 for (int j = 0; j < OptimaAmount; j++)
                 {
-                    if(optimum == null)
+                    if (optimum == null)
                     {
                         graph = new GraphGenome(500);
                         graph.Generate(ref main_random_source);
@@ -234,7 +234,7 @@ namespace INFOEA.Assignment2
 
                 results.Add(res);
 
-                if(optimum == null || ir.BestScore < optimum.Fitness)
+                if (optimum == null || ir.BestScore < optimum.Fitness)
                     optimum = new GraphGenome(ir.BestSolution, ir.BestScore);
             }
 
@@ -272,5 +272,28 @@ namespace INFOEA.Assignment2
             List<AssignmentTwoResults<GraphGenome>> fm_gls_results = GeneticLocalSearch(swap_neighborhood);
         }
 
+        private void WriteStatistics(List<AssignmentTwoResults<GraphGenome>> mls_results,
+                                     List<AssignmentTwoResults<GraphGenome>> ils_results,
+                                     List<AssignmentTwoResults<GraphGenome>> gls_results)
+        {
+            double mls_ils_t = t_score(mls_results, ils_results);
+            double mls_gls_t = t_score(mls_results, gls_results);
+            double ils_gls_t = t_score(ils_results, gls_results);
+        }
+
+        private double t_score(List<AssignmentTwoResults<GraphGenome>> first, List<AssignmentTwoResults<GraphGenome>> second)
+        {
+            int n = first.Count;
+            // Eerst van MLS <-> ILS
+            List<long> differences = new List<long>();
+            for (int i = 0; i < n; ++i)
+                differences.Add(first[i].TotalTicks - second[i].TotalTicks);
+
+            double sample_mean = differences.Average();
+            double std_dev = Math.Sqrt(differences.Sum(d => Math.Pow((d - sample_mean), 2)) / (n - 1));
+            double t_score = (sample_mean - 0) / (std_dev / Math.Sqrt(n));
+
+            return t_score;
+        }
     }
 }
