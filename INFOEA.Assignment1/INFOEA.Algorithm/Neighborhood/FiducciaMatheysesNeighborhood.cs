@@ -62,6 +62,155 @@ namespace INFOEA.Algorithm.Neighborhood
         /// <returns></returns>
         /// 
 
+        private const int maxDegree = 17;
+
+        private T DoFMSearch(T Solution)
+        {
+            int size = Solution.DataSize;
+            string data = Solution.Data;
+
+            bool[] locked = new bool[size];  //0-based
+            int[] gains = new int[size];   //0-based
+            int sizeA = 0;
+            int sizeB = 0;
+            char[] bestSolution = data.ToCharArray();
+            char[] currentSolution = data.ToCharArray();
+            float bestFitness = Solution.Fitness;
+            float currentFitness = Solution.Fitness;
+
+            Dictionary<int, List<int>> A = new Dictionary<int, List<int>>(); //gain -> list (idx in list is 1-based)
+            Dictionary<int, List<int>> B = new Dictionary<int, List<int>>();
+
+            for (int i = -maxDegree; i < maxDegree + 1; i++)
+            {
+                A.Add(i, new List<int>());
+                B.Add(i, new List<int>());
+            }
+            
+            for (int i = 0; i < size; i++)
+            {
+                char value = data[i];
+                int idx = i + 1;
+                int gain = calculateGain(idx, currentSolution);
+
+                if (value == '0')
+                {
+                    sizeA++;
+                    A[gain].Add(idx);
+                    gains[i] = gain;
+                }
+                else
+                {
+                    sizeB++;
+                    B[gain].Add(idx);
+                    gains[i] = gain;
+                }
+            }
+
+            while(true)
+            {
+                if (sizeA > sizeB)
+                {
+                    int maxGain = this.getMaxGain(A);
+                    if (maxGain < -1)
+                        break;
+                    int idx = A[maxGain][0];
+                    if (locked[idx - 1])
+                    {
+                        A[maxGain].RemoveAt(0);
+                        continue;
+                    }
+                    locked[idx - 1] = true;
+                    currentSolution[idx - 1] = '1';
+                    A[maxGain].RemoveAt(0);
+                    sizeA--;
+                    sizeB++;
+                    int[] neighbours = GraphGenome.vertices[idx].Connections;
+                    foreach(int other in neighbours)
+                    {
+                        char val = currentSolution[other - 1];
+                        if (val == '0')
+                            this.updateGains(ref gains, ref A, currentSolution, other);
+                        else
+                            this.updateGains(ref gains, ref B, currentSolution, other);
+                    }
+                    currentFitness -= maxGain;
+                }
+                else
+                {
+                    int maxGain = this.getMaxGain(B);
+                    if (maxGain < -1)
+                        break;
+                    int idx = B[maxGain][0];
+                    if (locked[idx - 1])
+                    {
+                        B[maxGain].RemoveAt(0);
+                        continue;
+                    }
+                    locked[idx - 1] = true;
+                    currentSolution[idx - 1] = '0';
+                    B[maxGain].RemoveAt(0);
+                    sizeB--;
+                    sizeA++;
+                    int[] neighbours = GraphGenome.vertices[idx].Connections;
+                    foreach (int other in neighbours)
+                    {
+                        char val = currentSolution[other - 1];
+                        if (val == '1')
+                        {
+                            this.updateGains(ref gains, ref A, currentSolution, other);
+                        }
+                        else
+                        {
+                            this.updateGains(ref gains, ref B, currentSolution, other);
+                        }
+                    }
+                    currentFitness -= maxGain;
+                }
+
+                if (currentFitness < bestFitness)
+                {
+                    bestSolution = currentSolution.ToArray();
+                    bestFitness = currentFitness;
+                }
+            }
+            return (T)Activator.CreateInstance(typeof(T), new string(bestSolution));
+        }
+
+        private void updateGains(ref int[] G, ref Dictionary<int, List<int>> L, char[] data, int idx)
+        {
+            int g = G[idx - 1];
+            L[g].Remove(idx);
+            char otherVal = data[idx - 1];
+            g = calculateGain(idx, data);
+            G[idx - 1] = g;
+            L[g].Add(idx);
+        }
+
+        private int getMaxGain(Dictionary<int, List<int>> dictionary)
+        {
+            int i = maxDegree;
+            while (i > -maxDegree && dictionary[i].Count == 0)
+            {
+                i--;
+            }
+            return i;
+        }
+
+        private int calculateGain(int idx, char[] data)
+        {
+            char value = data[idx - 1];
+            int[] neighbours = GraphGenome.vertices[idx].Connections;
+            int gain = 0;
+            foreach(int other in neighbours)
+            {
+                if (data[other - 1] == value) gain--;
+                else gain++;
+            }
+            return gain;
+        }
+
+
         /*
          * ----------source:
          * https://pdfs.semanticscholar.org/a487/b518d172c43471c8d3236a1855d9b36a2a6a.pdf
@@ -97,6 +246,9 @@ namespace INFOEA.Algorithm.Neighborhood
         }
         public override IEnumerable<T> Neighbors(T solution)
         {
+            yield return DoFMSearch(solution);
+
+            /*
             // Lijst A en B. A bevat alle scores van verplaatsen van 0 -> 1
             // B bevat alle scores van verplaatsen 1 -> 0 
             FiducciaBucket bucketA = new FiducciaBucket(degree);
@@ -235,7 +387,7 @@ namespace INFOEA.Algorithm.Neighborhood
                 yield return solution;
             // Maar wat moeten we nou returnen? Beschrijvingen lijken erop te wijzen dat we het meerdere keren moeten uitvoeren...
             // Maar wanneer? Hoevaak? Dan kunnen we dat gebruiken om een yield return te doen. Voor nu even deze.
-
+            */
         }
     }
 }

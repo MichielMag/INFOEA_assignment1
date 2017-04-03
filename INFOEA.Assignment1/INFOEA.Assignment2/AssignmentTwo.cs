@@ -22,8 +22,8 @@ namespace INFOEA.Assignment2
 {
     class AssignmentTwo
     {
-        public int OptimaAmount { get; set; } = 2500;
-        public int ExperimentAmount { get; set; } = 25;
+        public int OptimaAmount { get; set; } = 1000;
+        public int ExperimentAmount { get; set; } = 1;
 
         //private Random[] random;
 
@@ -100,6 +100,7 @@ namespace INFOEA.Assignment2
 
             for (int j = 0; j < threads.Length; j++)
             {
+                elapsedMilisecondsThreads[j] = new List<AssignmentTwoResults<GraphGenome>>();
                 int k = j;
                 int seed = main_random_source.Next();
                 int amount = OptimaAmount / threads.Length;
@@ -128,7 +129,7 @@ namespace INFOEA.Assignment2
             }
 
             //Console.WriteLine("Best solution found: {0} in an average of {1} ms", optimum.Fitness, cpu_ticks.Average());
-            Console.WriteLine("Best solution found: {0} in an average of {} ms", optimum.Fitness); //, results.Sum() / OptimaAmount);
+            Console.WriteLine("Best solution found: {0} in an average of ... ms", optimum.Fitness); //, results.Sum() / OptimaAmount);
             Console.WriteLine("Total time: {0} sec", sw.ElapsedMilliseconds / 1000f);
 
             optimum.ToImage("Graph.bmp", 3000, 3000);
@@ -261,15 +262,15 @@ namespace INFOEA.Assignment2
             INeighborhood<GraphGenome> swap_neighborhood = new SwapNeighborhood<GraphGenome>(main_random_source);
             INeighborhood<GraphGenome> FM_neigborhood = new FiducciaMatheysesNeighborhood<GraphGenome>(main_random_source, 7);
 
+            // Dan de Fiduccia experimenten:
+            List<AssignmentTwoResults<GraphGenome>> ils_FM_results = IteratedLocalSearch(FM_neigborhood);
+            List<AssignmentTwoResults<GraphGenome>> mls_FM_results = MultiStartLocalSearch(FM_neigborhood);
+            //List<AssignmentTwoResults<GraphGenome>> gls_FM_results = GeneticLocalSearch(FM_neigborhood);
+
             // Eerst de "gewone" experimenten:
             List<AssignmentTwoResults<GraphGenome>> mls_results = MultiStartLocalSearch(swap_neighborhood);
             List<AssignmentTwoResults<GraphGenome>> ils_results = IteratedLocalSearch(swap_neighborhood);
             List<AssignmentTwoResults<GraphGenome>> gls_results = GeneticLocalSearch(swap_neighborhood);
-
-            // Dan de Fiduccia experimenten:
-            List<AssignmentTwoResults<GraphGenome>> fm_mls_results = MultiStartLocalSearch(swap_neighborhood);
-            List<AssignmentTwoResults<GraphGenome>> fm_ils_results = IteratedLocalSearch(swap_neighborhood);
-            List<AssignmentTwoResults<GraphGenome>> fm_gls_results = GeneticLocalSearch(swap_neighborhood);
         }
 
         private void WriteStatistics(List<AssignmentTwoResults<GraphGenome>> mls_results,
