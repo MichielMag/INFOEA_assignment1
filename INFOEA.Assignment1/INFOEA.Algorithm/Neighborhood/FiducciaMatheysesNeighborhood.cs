@@ -155,7 +155,7 @@ namespace INFOEA.Algorithm.Neighborhood
                     foreach (int other in neighbours)
                     {
                         char val = currentSolution[other - 1];
-                        if (val == '1')
+                        if (val == '0')
                             this.updateGains(ref gains, ref A, currentSolution, other);
                         else
                             this.updateGains(ref gains, ref B, currentSolution, other);
