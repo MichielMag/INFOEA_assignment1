@@ -69,6 +69,8 @@ namespace INFOEA.Algorithm.Neighborhood
             int size = Solution.DataSize;
             string data = Solution.Data;
 
+            int stopCondition = -1;
+
             bool[] locked = new bool[size];  //0-based
             int[] gains = new int[size];   //0-based
             int sizeA = 0;
@@ -111,7 +113,7 @@ namespace INFOEA.Algorithm.Neighborhood
                 if (sizeA > sizeB)
                 {
                     int maxGain = this.getMaxGain(A);
-                    if (maxGain < -1)
+                    if (maxGain < stopCondition)
                         break;
                     int idx = A[maxGain][0];
                     if (locked[idx - 1])
@@ -121,7 +123,6 @@ namespace INFOEA.Algorithm.Neighborhood
                     }
                     locked[idx - 1] = true;
                     currentSolution[idx - 1] = '1';
-                    A[maxGain].RemoveAt(0);
                     sizeA--;
                     sizeB++;
                     int[] neighbours = GraphGenome.vertices[idx].Connections;
@@ -129,16 +130,16 @@ namespace INFOEA.Algorithm.Neighborhood
                     {
                         char val = currentSolution[other - 1];
                         if (val == '0')
-                            this.updateGains(ref gains, ref A, currentSolution, other);
+                            this.updateGains(ref gains, ref A, currentSolution, other, idx);
                         else
-                            this.updateGains(ref gains, ref B, currentSolution, other);
+                            this.updateGains(ref gains, ref B, currentSolution, other, idx);
                     }
                     currentFitness -= maxGain;
                 }
                 else
                 {
                     int maxGain = this.getMaxGain(B);
-                    if (maxGain < -1)
+                    if (maxGain < stopCondition)
                         break;
                     int idx = B[maxGain][0];
                     if (locked[idx - 1])
@@ -148,7 +149,6 @@ namespace INFOEA.Algorithm.Neighborhood
                     }
                     locked[idx - 1] = true;
                     currentSolution[idx - 1] = '0';
-                    B[maxGain].RemoveAt(0);
                     sizeB--;
                     sizeA++;
                     int[] neighbours = GraphGenome.vertices[idx].Connections;
@@ -156,9 +156,9 @@ namespace INFOEA.Algorithm.Neighborhood
                     {
                         char val = currentSolution[other - 1];
                         if (val == '0')
-                            this.updateGains(ref gains, ref A, currentSolution, other);
+                            this.updateGains(ref gains, ref A, currentSolution, other, idx);
                         else
-                            this.updateGains(ref gains, ref B, currentSolution, other);
+                            this.updateGains(ref gains, ref B, currentSolution, other, idx);
                     }
                     currentFitness -= maxGain;
                 }
@@ -172,13 +172,13 @@ namespace INFOEA.Algorithm.Neighborhood
             return (T)Activator.CreateInstance(typeof(T), new string(bestSolution), bestFitness);
         }
 
-        private void updateGains(ref int[] IdxToGain, ref Dictionary<int, List<int>> GainToList, char[] Data, int Idx)
+        private void updateGains(ref int[] IdxToGain, ref Dictionary<int, List<int>> GainToList, char[] Data, int IdxOther, int IdxSelf)
         {
-            int g = IdxToGain[Idx - 1];
-            GainToList[g].Remove(Idx);
-            g = calculateGain(Idx, Data);
-            IdxToGain[Idx - 1] = g;
-            GainToList[g].Add(Idx);
+            int g = IdxToGain[IdxOther - 1];
+            GainToList[g].Remove(IdxOther);
+            g = calculateGain(IdxOther, Data);
+            IdxToGain[IdxOther - 1] = g;
+            GainToList[g].Add(IdxOther);
         }
 
         private int getMaxGain(Dictionary<int, List<int>> dictionary)

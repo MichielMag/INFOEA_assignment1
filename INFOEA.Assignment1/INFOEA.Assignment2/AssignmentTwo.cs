@@ -193,6 +193,7 @@ namespace INFOEA.Assignment2
 
             optimum.ToImage(String.Format("ILS-{0}.bmp", optimum.Fitness), 3000, 3000);
 
+            //Console.ReadLine();
             return results;
         }
 
