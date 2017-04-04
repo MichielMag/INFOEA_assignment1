@@ -209,9 +209,11 @@ namespace INFOEA.Assignment2
             for (int i = 0; i < ExperimentAmount; ++i)
             {
                 AssignmentTwoResults<GraphGenome> res = new AssignmentTwoResults<GraphGenome>();
+                int population_size = 50;
+                int data_size = 500;
 
                 LocalSearch<GraphGenome> local_search =
-                    new LocalSearch<GraphGenome>(500,
+                    new LocalSearch<GraphGenome>(data_size,
                             neighborhood,
                             new GraphComparer<GraphGenome>(), main_random_source);
 
@@ -221,9 +223,8 @@ namespace INFOEA.Assignment2
                     main_random_source,
                     res);
 
-                int population_size = 50;
                 GeneticAlgorithm<GraphGenome> ga = new GeneticAlgorithm<GraphGenome>(
-                    population_size,
+                    data_size,
                     lsp,
                     new DefaultSelector<GraphGenome>(
                         new GraphComparer<GraphGenome>()),
@@ -232,7 +233,7 @@ namespace INFOEA.Assignment2
                     main_random_source,
                     "GLS");
 
-                InnerResult ir = ga.start(100, OptimaAmount / (population_size / 2));
+                InnerResult ir = ga.start(population_size, OptimaAmount / (population_size / 2));
 
                 results.Add(res);
 
@@ -266,7 +267,7 @@ namespace INFOEA.Assignment2
             // Dan de Fiduccia experimenten:
             List<AssignmentTwoResults<GraphGenome>> ils_FM_results = IteratedLocalSearch(FM_neigborhood);
             List<AssignmentTwoResults<GraphGenome>> mls_FM_results = MultiStartLocalSearch(FM_neigborhood);
-            //List<AssignmentTwoResults<GraphGenome>> gls_FM_results = GeneticLocalSearch(FM_neigborhood);
+            List<AssignmentTwoResults<GraphGenome>> gls_FM_results = GeneticLocalSearch(FM_neigborhood);
 
             // Eerst de "gewone" experimenten:
             List<AssignmentTwoResults<GraphGenome>> mls_results = MultiStartLocalSearch(swap_neighborhood);
