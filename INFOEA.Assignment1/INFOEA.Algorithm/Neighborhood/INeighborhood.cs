@@ -10,5 +10,6 @@ namespace INFOEA.Algorithm.Neighborhood
     public interface INeighborhood<T> where T:IGenome
     {
         IEnumerable<T> Neighbors(T solution);
+        string Name { get; }
     }
 }

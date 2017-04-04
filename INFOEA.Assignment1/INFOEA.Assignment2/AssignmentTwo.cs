@@ -23,7 +23,7 @@ namespace INFOEA.Assignment2
     class AssignmentTwo
     {
         public int OptimaAmount { get; set; } = 2500;
-        public int ExperimentAmount { get; set; } = 1;
+        public int ExperimentAmount { get; set; } = 2;
 
         //private Random[] random;
 
@@ -91,12 +91,12 @@ namespace INFOEA.Assignment2
             return false;
         }
 
-        private List<AssignmentTwoResults<GraphGenome>> MultiStartLocalSearch(INeighborhood<GraphGenome> neighborhood)
+        private AssignmentTwoResultList<GraphGenome> MultiStartLocalSearch(INeighborhood<GraphGenome> neighborhood)
         {
             //we moeten nog iets met ExperimentAmount doen...
             //for(int i = 0; i < ExperimentAmount; ++i)
 
-            List<AssignmentTwoResults<GraphGenome>> results = new List<AssignmentTwoResults<GraphGenome>>();
+            AssignmentTwoResultList<GraphGenome> results = new AssignmentTwoResultList<GraphGenome>("$MLS_{" + neighborhood.Name + "}$");
 
             for (int j = 0; j < threads.Length; j++)
             {
@@ -137,7 +137,7 @@ namespace INFOEA.Assignment2
             return results;
         }
 
-        private List<AssignmentTwoResults<GraphGenome>> IteratedLocalSearch(INeighborhood<GraphGenome> neighborhood, bool silent = false)
+        private AssignmentTwoResultList<GraphGenome> IteratedLocalSearch(INeighborhood<GraphGenome> neighborhood, bool silent = false)
         {
             LocalSearch<GraphGenome> local_search =
                 new LocalSearch<GraphGenome>(500,
@@ -152,7 +152,7 @@ namespace INFOEA.Assignment2
 
             List<long> elapsedMilisecondsList = new List<long>();
 
-            List<AssignmentTwoResults<GraphGenome>> results = new List<AssignmentTwoResults<GraphGenome>>();
+            AssignmentTwoResultList< GraphGenome> results = new AssignmentTwoResultList<GraphGenome>("$ILS_{" + neighborhood.Name + "}$");
 
             for (int i = 0; i < ExperimentAmount; ++i)
             {
@@ -197,9 +197,9 @@ namespace INFOEA.Assignment2
             return results;
         }
 
-        private List<AssignmentTwoResults<GraphGenome>> GeneticLocalSearch(INeighborhood<GraphGenome> neighborhood)
+        private AssignmentTwoResultList<GraphGenome> GeneticLocalSearch(INeighborhood<GraphGenome> neighborhood)
         {
-            List<AssignmentTwoResults<GraphGenome>> results = new List<AssignmentTwoResults<GraphGenome>>();
+            AssignmentTwoResultList<GraphGenome> results = new AssignmentTwoResultList<GraphGenome>("$GLS_{" + neighborhood.Name + "}$");
 
             GraphGenome graph = new GraphGenome(500);
             graph.CreateGraph("Graph500.txt");
@@ -265,15 +265,45 @@ namespace INFOEA.Assignment2
             INeighborhood<GraphGenome> FM_neigborhood = new FiducciaMatheysesNeighborhood<GraphGenome>(main_random_source, 7);
 
             // Dan de Fiduccia experimenten:
-            List<AssignmentTwoResults<GraphGenome>> ils_FM_results = IteratedLocalSearch(FM_neigborhood);
-            List<AssignmentTwoResults<GraphGenome>> mls_FM_results = MultiStartLocalSearch(FM_neigborhood);
-            List<AssignmentTwoResults<GraphGenome>> gls_FM_results = GeneticLocalSearch(FM_neigborhood);
+            AssignmentTwoResultList<GraphGenome> ils_FM_results = IteratedLocalSearch(FM_neigborhood);
+            AssignmentTwoResultList<GraphGenome> mls_FM_results = MultiStartLocalSearch(FM_neigborhood);
+            AssignmentTwoResultList<GraphGenome> gls_FM_results = GeneticLocalSearch(FM_neigborhood);
 
             // Eerst de "gewone" experimenten:
-            List<AssignmentTwoResults<GraphGenome>> mls_results = MultiStartLocalSearch(swap_neighborhood);
-            List<AssignmentTwoResults<GraphGenome>> ils_results = IteratedLocalSearch(swap_neighborhood);
-            List<AssignmentTwoResults<GraphGenome>> gls_results = GeneticLocalSearch(swap_neighborhood);
+            AssignmentTwoResultList<GraphGenome> mls_results = MultiStartLocalSearch(swap_neighborhood);
+            AssignmentTwoResultList<GraphGenome> ils_results = IteratedLocalSearch(swap_neighborhood);
+            AssignmentTwoResultList<GraphGenome> gls_results = GeneticLocalSearch(swap_neighborhood);
+
+            string tex_results = "";
+
+            tex_results += "\\begin{table}[]\n\\centering\n\\caption{Comparing 2500 local optima}\n\\label{Comparing 2500 local optima}\n\\begin{tabular}{lllllllll}\n";
+            tex_results += "Experiment & Avg. time total & Avg. time 1 optimum & Avg. score & Best score \\\\\n";
+            tex_results += mls_results.OptimaString();
+            tex_results += ils_results.OptimaString();
+            tex_results += gls_results.OptimaString();
+            tex_results += mls_FM_results.OptimaString();
+            tex_results += ils_FM_results.OptimaString();
+            tex_results += gls_FM_results.OptimaString(true);
+            tex_results += "\\end{tabular}\n\\end{table}\n";
+
+            long max_ticks = mls_results.MaxTotalTime;
+            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Comparing max time of " + max_ticks + " ticks}\n\\label{Comparing 2500 local optima}\n\\begin{tabular}{lllllllll}\n";
+            tex_results += "Experiment & Avg. \\# optima & Avg. time 1 optimum & Avg. score & Best score \\\\\n";
+            tex_results += mls_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += ils_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += gls_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += mls_FM_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += ils_FM_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += gls_FM_results.MaxTicksSubList(max_ticks).MaxTimeString(true);
+            tex_results += "\\end{tabular}\n\\end{table}\n";
+
+            string filename = "assignment2results.txt";
+            System.IO.StreamWriter file = new System.IO.StreamWriter(filename);
+            file.WriteLine(tex_results);
+            file.Close();
         }
+
+
 
         private void WriteStatistics(List<AssignmentTwoResults<GraphGenome>> mls_results,
                                      List<AssignmentTwoResults<GraphGenome>> ils_results,
@@ -298,5 +328,7 @@ namespace INFOEA.Assignment2
 
             return t_score;
         }
+
+
     }
 }

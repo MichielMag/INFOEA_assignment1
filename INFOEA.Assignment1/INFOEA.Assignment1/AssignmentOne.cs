@@ -194,7 +194,7 @@ namespace INFOEA.Assignment1
                 res_list.Add(pop_size, new InnerResultList());
                 for (int i = 0; i < runs; ++i)
                 {
-                    res_list[pop_size].Add(alg.start(pop_size, true));
+                    res_list[pop_size].Add(alg.start(pop_size, int.MaxValue, true));
                 }
             }
 

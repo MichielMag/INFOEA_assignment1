@@ -10,7 +10,7 @@ namespace INFOEA.Algorithm.Neighborhood
 {
     public class SwapNeighborhood<T> : AbstractNeighborhood<T> where T:IGenome
     {
-        public SwapNeighborhood(Random random) : base(random, "Swap")
+        public SwapNeighborhood(Random random) : base(random, "SWAP")
         {
         }
         
