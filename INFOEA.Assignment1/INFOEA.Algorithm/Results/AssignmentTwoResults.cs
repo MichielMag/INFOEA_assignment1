@@ -39,9 +39,29 @@ namespace INFOEA.Algoritmh.Results
             }
         }
 
+        public double BestScore
+        {
+            get
+            {
+                double best_score = double.MaxValue;
+                foreach (AssignmentTwoResult<T> inner_rest in this)
+                {
+                    if (best_score > inner_rest.Optimum.Fitness)
+                        best_score = inner_rest.Optimum.Fitness;
+                }
+                return best_score;
+            }
+        }
+
         public void Add(T optimum, long ticks)
         {
             this.Add(new AssignmentTwoResult<T>() { Optimum = optimum, TicksToReach = ticks });
+        }
+
+        public string CSV()
+        {
+            return String.Format("{0};{1};{2};{3};{4}\n",
+                TotalTicks, Count, AverageTicks, AverageOptimum, BestScore);
         }
     }
 
@@ -52,6 +72,14 @@ namespace INFOEA.Algoritmh.Results
         public AssignmentTwoResultList(string _name)
         {
             name = _name;
+        }
+        public string CSV()
+        {
+            string csv = name + ";;;;\n";
+            csv += "Total Ticks;Optima Amount;Avg Ticks;Avg Optimum;Best Score\n";
+            foreach (AssignmentTwoResults<T> res in this)
+                csv += res.CSV();
+            return csv;
         }
         public string MaxTimeString(bool last_line = false)
         {
@@ -176,11 +204,8 @@ namespace INFOEA.Algoritmh.Results
                 double best_score = double.MaxValue;
                 foreach(AssignmentTwoResults<T> res in this)
                 {
-                    foreach(AssignmentTwoResult<T> inner_rest in res)
-                    {
-                        if (best_score > inner_rest.Optimum.Fitness)
-                            best_score = inner_rest.Optimum.Fitness;
-                    }
+                    if (best_score > res.BestScore)
+                        best_score = res.BestScore;
                 }
                 return best_score;
             }

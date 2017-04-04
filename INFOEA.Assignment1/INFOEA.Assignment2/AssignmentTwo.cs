@@ -132,7 +132,7 @@ namespace INFOEA.Assignment2
             Console.WriteLine("Best solution found: {0} in an average of ... ms", optimum.Fitness); //, results.Sum() / OptimaAmount);
             Console.WriteLine("Total time: {0} sec", sw.ElapsedMilliseconds / 1000f);
 
-            optimum.ToImage("Graph.bmp", 3000, 3000);
+            optimum.ToImage(String.Format("results/MLS[{0}]-{1}.bmp", neighborhood.Name, optimum.Fitness), 3000, 3000);
 
             return results;
         }
@@ -191,7 +191,7 @@ namespace INFOEA.Assignment2
             Console.WriteLine("Best solution found: {0} in an average of {1} ms", optimum.Fitness, elapsedMilisecondsList.Sum() / OptimaAmount);
             //Console.WriteLine("Total time: {0} sec", sw.ElapsedMilliseconds / 1000f);
 
-            optimum.ToImage(String.Format("ILS-{0}.bmp", optimum.Fitness), 3000, 3000);
+            optimum.ToImage(String.Format("results/ILS[{0}]-{1}.bmp", neighborhood.Name, optimum.Fitness), 3000, 3000);
 
             //Console.ReadLine();
             return results;
@@ -249,13 +249,14 @@ namespace INFOEA.Assignment2
 
             //IteratedLocalSearch();
 
-            optimum.ToImage(String.Format("GLS-{0}.bmp", optimum.Fitness), 3000, 3000);
+            optimum.ToImage(String.Format("results/GLS[{0}]-{1}.bmp", neighborhood.Name, optimum.Fitness), 3000, 3000);
 
             return results;
         }
 
         public void start(int seed = -1)
         {
+            System.IO.Directory.CreateDirectory("results");
             if (seed > 0)
                 main_random_source = new Random(seed);
             else
@@ -270,36 +271,57 @@ namespace INFOEA.Assignment2
             AssignmentTwoResultList<GraphGenome> gls_FM_results = GeneticLocalSearch(FM_neigborhood);
 
             // Eerst de "gewone" experimenten:
-            AssignmentTwoResultList<GraphGenome> mls_results = MultiStartLocalSearch(swap_neighborhood);
-            AssignmentTwoResultList<GraphGenome> ils_results = IteratedLocalSearch(swap_neighborhood);
-            AssignmentTwoResultList<GraphGenome> gls_results = GeneticLocalSearch(swap_neighborhood);
+            //AssignmentTwoResultList<GraphGenome> mls_results = MultiStartLocalSearch(swap_neighborhood);
+            //AssignmentTwoResultList<GraphGenome> ils_results = IteratedLocalSearch(swap_neighborhood);
+            //AssignmentTwoResultList<GraphGenome> gls_results = GeneticLocalSearch(swap_neighborhood);
 
             string tex_results = "";
 
             tex_results += "\\begin{table}[]\n\\centering\n\\caption{Comparing 2500 local optima}\n\\label{Comparing 2500 local optima}\n\\begin{tabular}{lllllllll}\n";
             tex_results += "Experiment & Avg. time total & Avg. time 1 optimum & Avg. score & Best score \\\\\n";
-            tex_results += mls_results.OptimaString();
-            tex_results += ils_results.OptimaString();
-            tex_results += gls_results.OptimaString();
+            //tex_results += mls_results.OptimaString();
+            //tex_results += ils_results.OptimaString();
+            //tex_results += gls_results.OptimaString();
             tex_results += mls_FM_results.OptimaString();
             tex_results += ils_FM_results.OptimaString();
             tex_results += gls_FM_results.OptimaString(true);
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
-            long max_ticks = mls_results.MaxTotalTime;
+            long max_ticks = mls_FM_results.MaxTotalTime; // mls_results.MaxTotalTime;
             tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Comparing max time of " + max_ticks + " ticks}\n\\label{Comparing 2500 local optima}\n\\begin{tabular}{lllllllll}\n";
             tex_results += "Experiment & Avg. \\# optima & Avg. time 1 optimum & Avg. score & Best score \\\\\n";
-            tex_results += mls_results.MaxTicksSubList(max_ticks).MaxTimeString();
-            tex_results += ils_results.MaxTicksSubList(max_ticks).MaxTimeString();
-            tex_results += gls_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            //tex_results += mls_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            //tex_results += ils_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            //tex_results += gls_results.MaxTicksSubList(max_ticks).MaxTimeString();
             tex_results += mls_FM_results.MaxTicksSubList(max_ticks).MaxTimeString();
             tex_results += ils_FM_results.MaxTicksSubList(max_ticks).MaxTimeString();
             tex_results += gls_FM_results.MaxTicksSubList(max_ticks).MaxTimeString(true);
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
-            string filename = "assignment2results.txt";
+            string filename = "results/assignment2results.txt";
             System.IO.StreamWriter file = new System.IO.StreamWriter(filename);
             file.WriteLine(tex_results);
+            file.Close();
+
+            file = new System.IO.StreamWriter("results/mls_swap.csv");
+            //file.WriteLine(mls_results.CSV());
+            //file.Close();
+            file = new System.IO.StreamWriter("results/mls_fm_swap.csv");
+            file.WriteLine(mls_FM_results.CSV());
+            file.Close();
+
+            file = new System.IO.StreamWriter("results/ils_swap.csv");
+            //file.WriteLine(ils_results.CSV());
+            //file.Close();
+            file = new System.IO.StreamWriter("results/ils_fm_swap.csv");
+            file.WriteLine(ils_FM_results.CSV());
+            file.Close();
+
+            file = new System.IO.StreamWriter("results/gls_swap.csv");
+            //file.WriteLine(mls_results.CSV());
+            //file.Close();
+            file = new System.IO.StreamWriter("results/gls_fm_swap.csv");
+            file.WriteLine(gls_FM_results.CSV());
             file.Close();
         }
 
