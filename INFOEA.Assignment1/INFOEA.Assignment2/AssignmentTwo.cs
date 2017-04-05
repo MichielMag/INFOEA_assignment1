@@ -271,57 +271,90 @@ namespace INFOEA.Assignment2
             AssignmentTwoResultList<GraphGenome> gls_FM_results = GeneticLocalSearch(FM_neigborhood);
 
             // Eerst de "gewone" experimenten:
-            //AssignmentTwoResultList<GraphGenome> mls_results = MultiStartLocalSearch(swap_neighborhood);
-            //AssignmentTwoResultList<GraphGenome> ils_results = IteratedLocalSearch(swap_neighborhood);
-            //AssignmentTwoResultList<GraphGenome> gls_results = GeneticLocalSearch(swap_neighborhood);
+            AssignmentTwoResultList<GraphGenome> mls_results = MultiStartLocalSearch(swap_neighborhood);
+            AssignmentTwoResultList<GraphGenome> ils_results = IteratedLocalSearch(swap_neighborhood);
+            AssignmentTwoResultList<GraphGenome> gls_results = GeneticLocalSearch(swap_neighborhood);
 
             string tex_results = "";
 
             tex_results += "\\begin{table}[]\n\\centering\n\\caption{Comparing 2500 local optima}\n\\label{Comparing 2500 local optima}\n\\begin{tabular}{lllllllll}\n";
             tex_results += "Experiment & Avg. time total & Avg. time 1 optimum & Avg. score & Best score \\\\\n";
-            //tex_results += mls_results.OptimaString();
-            //tex_results += ils_results.OptimaString();
-            //tex_results += gls_results.OptimaString();
+            tex_results += mls_results.OptimaString();
+            tex_results += ils_results.OptimaString();
+            tex_results += gls_results.OptimaString();
             tex_results += mls_FM_results.OptimaString();
             tex_results += ils_FM_results.OptimaString();
             tex_results += gls_FM_results.OptimaString(true);
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
-            long max_ticks = mls_FM_results.MaxTotalTime; // mls_results.MaxTotalTime;
-            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Comparing max time of " + max_ticks + " ticks}\n\\label{Comparing 2500 local optima}\n\\begin{tabular}{lllllllll}\n";
+            long max_ticks = mls_results.MaxTotalTime;
+            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Comparing max time of " + max_ticks + " ticks}\n\\label{Comparing max time of " + max_ticks + " ticks}\n\\begin{tabular}{lllllllll}\n";
             tex_results += "Experiment & Avg. \\# optima & Avg. time 1 optimum & Avg. score & Best score \\\\\n";
-            //tex_results += mls_results.MaxTicksSubList(max_ticks).MaxTimeString();
-            //tex_results += ils_results.MaxTicksSubList(max_ticks).MaxTimeString();
-            //tex_results += gls_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += mls_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += ils_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += gls_results.MaxTicksSubList(max_ticks).MaxTimeString();
             tex_results += mls_FM_results.MaxTicksSubList(max_ticks).MaxTimeString();
             tex_results += ils_FM_results.MaxTicksSubList(max_ticks).MaxTimeString();
             tex_results += gls_FM_results.MaxTicksSubList(max_ticks).MaxTimeString(true);
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
-            string filename = "results/assignment2results.txt";
-            System.IO.StreamWriter file = new System.IO.StreamWriter(filename);
-            file.WriteLine(tex_results);
+            System.IO.StreamWriter file = new System.IO.StreamWriter("results/mls_swap.csv");
+            file.WriteLine(mls_results.CSV());
             file.Close();
-
-            file = new System.IO.StreamWriter("results/mls_swap.csv");
-            //file.WriteLine(mls_results.CSV());
-            //file.Close();
             file = new System.IO.StreamWriter("results/mls_fm_swap.csv");
             file.WriteLine(mls_FM_results.CSV());
             file.Close();
 
             file = new System.IO.StreamWriter("results/ils_swap.csv");
-            //file.WriteLine(ils_results.CSV());
-            //file.Close();
+            file.WriteLine(ils_results.CSV());
+            file.Close();
             file = new System.IO.StreamWriter("results/ils_fm_swap.csv");
             file.WriteLine(ils_FM_results.CSV());
             file.Close();
 
             file = new System.IO.StreamWriter("results/gls_swap.csv");
-            //file.WriteLine(mls_results.CSV());
-            //file.Close();
+            file.WriteLine(mls_results.CSV());
+            file.Close();
             file = new System.IO.StreamWriter("results/gls_fm_swap.csv");
             file.WriteLine(gls_FM_results.CSV());
+            file.Close();
+
+            double mls_ils_t = t_score(mls_results, ils_results);
+            double mls_gls_t = t_score(mls_results, gls_results);
+            double ils_gls_t = t_score(ils_results, gls_results);
+
+            double mls_fm_ils_t = t_score(mls_FM_results, ils_FM_results);
+            double mls_fm_gls_t = t_score(mls_FM_results, gls_FM_results);
+            double ils_fm_gls_t = t_score(ils_FM_results, gls_FM_results);
+
+            double mls_mls_t = t_score(mls_results, mls_FM_results);
+            double ils_ils_t = t_score(ils_results, ils_FM_results);
+            double gls_gls_t = t_score(gls_results, gls_FM_results);
+
+            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Significance of difference between experiments of swap-neighborhood}\n\\label{Significance of difference between experiments of swap-neighborhood}\n\\begin{tabular}{lllllllll}\n";
+            tex_results += "Experiment 1 & Experiment 2 & DF & t-score & p-score & significant? \\\\\n";
+            tex_results += "$MLS_{SWAP}$ & $ILS_{SWAP}$ & " + (ExperimentAmount - 1) + " & " + mls_ils_t.ToString() + " & p & x \\\\\n";
+            tex_results += "$MLS_{SWAP}$ & $GLS_{SWAP}$ & " + (ExperimentAmount - 1) + " & " + mls_gls_t.ToString() + " & p & x \\\\\n";
+            tex_results += "$ILS_{SWAP}$ & $GLS_{SWAP}$ & " + (ExperimentAmount - 1) + " & " + ils_gls_t.ToString() + " & p & x \n";
+            tex_results += "\\end{tabular}\n\\end{table}\n";
+
+            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Significance of difference between experiments of FM-neighborhood}\n\\label{Significance of difference between experiments of FM-neighborhood}\n\\begin{tabular}{lllllllll}\n";
+            tex_results += "Experiment 1 & Experiment 2 & t-score & p-score & significant? \\\\\n";
+            tex_results += "$MLS_{FM}$ & $ILS_{FM}$ & " + (ExperimentAmount - 1) + " & " + mls_fm_ils_t.ToString() + " & p & x \\\\\n";
+            tex_results += "$MLS_{FM}$ & $GLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + mls_fm_gls_t.ToString() + " & p & x \\\\\n";
+            tex_results += "$ILS_{FM}$ & $GLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + ils_fm_gls_t.ToString() + " & p & x \n";
+            tex_results += "\\end{tabular}\n\\end{table}\n";
+
+            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Significance of difference between neighborhoods}\n\\label{Significance of difference between neighborhoods}\n\\begin{tabular}{lllllllll}\n";
+            tex_results += "Experiment 1 & Experiment 2 & t-score & p-score & significant? \\\\\n";
+            tex_results += "$MLS_{SWAP}$ & $MLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + mls_mls_t.ToString() + " & p & x \\\\\n";
+            tex_results += "$ILS_{SWAP}$ & $ILS_{FM}$ & " + (ExperimentAmount - 1) + " & " + ils_ils_t.ToString() + " & p & x \\\\\n";
+            tex_results += "$GLS_{SWAP}$ & $GLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + gls_gls_t.ToString() + " & p & x \n";
+            tex_results += "\\end{tabular}\n\\end{table}\n";
+
+            string filename = "results/assignment2results.txt";
+            file = new System.IO.StreamWriter(filename);
+            file.WriteLine(tex_results);
             file.Close();
         }
 
