@@ -22,8 +22,8 @@ namespace INFOEA.Assignment2
 {
     class AssignmentTwo
     {
-        public int OptimaAmount { get; set; } = 2500;
-        public int ExperimentAmount { get; set; } = 2;
+        public int OptimaAmount { get; set; } = 100;
+        public int ExperimentAmount { get; set; } = 3;
 
         //private Random[] random;
 
@@ -277,25 +277,33 @@ namespace INFOEA.Assignment2
 
             string tex_results = "";
 
-            tex_results += "\\begin{table}[]\n\\centering\n\\caption{Comparing 2500 local optima}\n\\label{Comparing 2500 local optima}\n\\begin{tabular}{lllllllll}\n";
+            tex_results += "\\begin{table}[H]\n\\centering\n\\caption{Comparing 2500 local optima}\n\\label{Comparing 2500 local optima}\n\\begin{tabular}{|l|l|l|l|l|l|l|l|l|}\n";
+            tex_results += "\\hline\n";
             tex_results += "Experiment & Avg. time total & Avg. time 1 optimum & Avg. score & Best score \\\\\n";
+            tex_results += "\\hline\n";
             tex_results += mls_results.OptimaString();
             tex_results += ils_results.OptimaString();
             tex_results += gls_results.OptimaString();
+            tex_results += "\\hline\n";
             tex_results += mls_FM_results.OptimaString();
             tex_results += ils_FM_results.OptimaString();
-            tex_results += gls_FM_results.OptimaString(true);
+            tex_results += gls_FM_results.OptimaString();
+            tex_results += "\\hline\n";
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
             long max_ticks = mls_results.MaxTotalTime;
-            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Comparing max time of " + max_ticks + " ticks}\n\\label{Comparing max time of " + max_ticks + " ticks}\n\\begin{tabular}{lllllllll}\n";
+            tex_results += "\n\n\\begin{table}[H]\n\\centering\n\\caption{Comparing max time of " + max_ticks + " ticks}\n\\label{Comparing max time of " + max_ticks + " ticks}\n\\begin{tabular}{|l|l|l|l|l|l|l|l|l|}\n";
+            tex_results += "\\hline\n";
             tex_results += "Experiment & Avg. \\# optima & Avg. time 1 optimum & Avg. score & Best score \\\\\n";
+            tex_results += "\\hline\n";
             tex_results += mls_results.MaxTicksSubList(max_ticks).MaxTimeString();
             tex_results += ils_results.MaxTicksSubList(max_ticks).MaxTimeString();
             tex_results += gls_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += "\\hline\n";
             tex_results += mls_FM_results.MaxTicksSubList(max_ticks).MaxTimeString();
             tex_results += ils_FM_results.MaxTicksSubList(max_ticks).MaxTimeString();
-            tex_results += gls_FM_results.MaxTicksSubList(max_ticks).MaxTimeString(true);
+            tex_results += gls_FM_results.MaxTicksSubList(max_ticks).MaxTimeString();
+            tex_results += "\\hline\n";
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
             System.IO.StreamWriter file = new System.IO.StreamWriter("results/mls_swap.csv");
@@ -331,25 +339,34 @@ namespace INFOEA.Assignment2
             double ils_ils_t = t_score(ils_results, ils_FM_results);
             double gls_gls_t = t_score(gls_results, gls_FM_results);
 
-            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Significance of difference between experiments of swap-neighborhood}\n\\label{Significance of difference between experiments of swap-neighborhood}\n\\begin{tabular}{lllllllll}\n";
+            tex_results += "\n\n\\begin{table}[H]\n\\centering\n\\caption{Significance of difference between experiments of swap-neighborhood}\n\\label{Significance of difference between experiments of swap-neighborhood}\n\\begin{tabular}{|l|l|l|l|l|l|l|l|l|}\n";
+            tex_results += "\\hline\n";
             tex_results += "Experiment 1 & Experiment 2 & DF & t-score & p-score & significant? \\\\\n";
+            tex_results += "\\hline\n";
             tex_results += "$MLS_{SWAP}$ & $ILS_{SWAP}$ & " + (ExperimentAmount - 1) + " & " + mls_ils_t.ToString() + " & p & x \\\\\n";
             tex_results += "$MLS_{SWAP}$ & $GLS_{SWAP}$ & " + (ExperimentAmount - 1) + " & " + mls_gls_t.ToString() + " & p & x \\\\\n";
-            tex_results += "$ILS_{SWAP}$ & $GLS_{SWAP}$ & " + (ExperimentAmount - 1) + " & " + ils_gls_t.ToString() + " & p & x \n";
+            tex_results += "$ILS_{SWAP}$ & $GLS_{SWAP}$ & " + (ExperimentAmount - 1) + " & " + ils_gls_t.ToString() + " & p & x \\\\\n";
+            tex_results += "\\hline\n";
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
-            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Significance of difference between experiments of FM-neighborhood}\n\\label{Significance of difference between experiments of FM-neighborhood}\n\\begin{tabular}{lllllllll}\n";
-            tex_results += "Experiment 1 & Experiment 2 & t-score & p-score & significant? \\\\\n";
+            tex_results += "\n\n\\begin{table}[H]\n\\centering\n\\caption{Significance of difference between experiments of FM-neighborhood}\n\\label{Significance of difference between experiments of FM-neighborhood}\n\\begin{tabular}{|l|l|l|l|l|l|l|l|l|}\n";
+            tex_results += "\\hline\n";
+            tex_results += "Experiment 1 & Experiment 2 & DF & t-score & p-score & significant? \\\\\n";
+            tex_results += "\\hline\n";
             tex_results += "$MLS_{FM}$ & $ILS_{FM}$ & " + (ExperimentAmount - 1) + " & " + mls_fm_ils_t.ToString() + " & p & x \\\\\n";
             tex_results += "$MLS_{FM}$ & $GLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + mls_fm_gls_t.ToString() + " & p & x \\\\\n";
-            tex_results += "$ILS_{FM}$ & $GLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + ils_fm_gls_t.ToString() + " & p & x \n";
+            tex_results += "$ILS_{FM}$ & $GLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + ils_fm_gls_t.ToString() + " & p & x \\\\\n";
+            tex_results += "\\hline\n";
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
-            tex_results += "\n\n\\begin{table}[]\n\\centering\n\\caption{Significance of difference between neighborhoods}\n\\label{Significance of difference between neighborhoods}\n\\begin{tabular}{lllllllll}\n";
-            tex_results += "Experiment 1 & Experiment 2 & t-score & p-score & significant? \\\\\n";
+            tex_results += "\n\n\\begin{table}[H]\n\\centering\n\\caption{Significance of difference between neighborhoods}\n\\label{Significance of difference between neighborhoods}\n\\begin{tabular}{|l|l|l|l|l|l|l|l|l|}\n";
+            tex_results += "\\hline\n";
+            tex_results += "Experiment 1 & Experiment 2 & DF & t-score & p-score & significant? \\\\\n";
+            tex_results += "\\hline\n";
             tex_results += "$MLS_{SWAP}$ & $MLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + mls_mls_t.ToString() + " & p & x \\\\\n";
             tex_results += "$ILS_{SWAP}$ & $ILS_{FM}$ & " + (ExperimentAmount - 1) + " & " + ils_ils_t.ToString() + " & p & x \\\\\n";
-            tex_results += "$GLS_{SWAP}$ & $GLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + gls_gls_t.ToString() + " & p & x \n";
+            tex_results += "$GLS_{SWAP}$ & $GLS_{FM}$ & " + (ExperimentAmount - 1) + " & " + gls_gls_t.ToString() + " & p & x \\\\\n";
+            tex_results += "\\hline\n";
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
             string filename = "results/assignment2results.txt";
@@ -371,7 +388,7 @@ namespace INFOEA.Assignment2
 
         private double t_score(List<AssignmentTwoResults<GraphGenome>> first, List<AssignmentTwoResults<GraphGenome>> second)
         {
-            int n = first.Count;
+            int n = ExperimentAmount;
             // Eerst van MLS <-> ILS
             List<long> differences = new List<long>();
             for (int i = 0; i < n; ++i)

@@ -85,9 +85,9 @@ namespace INFOEA.Algoritmh.Results
         {
             return String.Format("{0} & {1} ({2}) & {3} ({4}) & {5} ({6}) & {7} {8}\n",
                 name,
-                OptimaAmountAverage, OptimaAmountStdDev,
-                SingleOptimumTimeAverage, SingleOptimumTimeStdDev,
-                ScoreAverage, ScoreStdDev,
+                Math.Round(OptimaAmountAverage,3), Math.Round(OptimaAmountStdDev, 3),
+                Math.Round(SingleOptimumTimeAverage, 3), Math.Round(SingleOptimumTimeStdDev, 3),
+                Math.Round(ScoreAverage, 3), Math.Round(ScoreStdDev,3),
                 BestScore, 
                 !last_line ? "\\\\" : "");
         }
@@ -95,9 +95,9 @@ namespace INFOEA.Algoritmh.Results
         {
             return String.Format("{0} & {1} ({2}) & {3} ({4}) & {5} ({6}) & {7} {8}\n",
                 name,
-                TotalTimeAverage, TotalTimeStdDev,
-                SingleOptimumTimeAverage, SingleOptimumTimeStdDev,
-                ScoreAverage, ScoreStdDev,
+                Math.Round(TotalTimeAverage,3), Math.Round(TotalTimeStdDev, 3),
+                Math.Round(SingleOptimumTimeAverage, 3), Math.Round(SingleOptimumTimeStdDev, 3),
+                Math.Round(ScoreAverage, 3), Math.Round(ScoreStdDev, 3),
                 BestScore,
                 !last_line ? "\\\\" : "");
         }
