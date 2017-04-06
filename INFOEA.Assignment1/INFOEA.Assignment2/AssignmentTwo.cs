@@ -22,7 +22,7 @@ namespace INFOEA.Assignment2
 {
     class AssignmentTwo
     {
-        public int OptimaAmount { get; set; } = 100;
+        public int OptimaAmount { get; set; } = 250;
         public int ExperimentAmount { get; set; } = 3;
 
         //private Random[] random;
@@ -233,12 +233,18 @@ namespace INFOEA.Assignment2
                     main_random_source,
                     "GLS");
 
-                InnerResult ir = ga.start(population_size, OptimaAmount / (population_size / 2));
+                InnerResult ir = ga.start(population_size, OptimaAmount / (population_size / 2)); 
+                // Eventueel nog een keer uitvoeren om tot 2500 optima te komen.
+                while (res.Count < OptimaAmount)
+                    ir = ga.start(population_size, OptimaAmount / (population_size / 2));
 
+                // Als we er teveel hebben gekregen door de GLS run meerdere keren uit te voeren,
+                // pak enkel hoeveel we nodig hebben.
+                res = res.TakeFirstN(OptimaAmount);
                 results.Add(res);
 
-                if (optimum == null || ir.BestScore < optimum.Fitness)
-                    optimum = new GraphGenome(ir.BestSolution, ir.BestScore);
+                if (optimum == null || res.BestResult.Optimum.Fitness < optimum.Fitness)
+                    optimum = new GraphGenome(res.BestResult.Optimum.Data, res.BestResult.Optimum.Fitness);
             }
 
 

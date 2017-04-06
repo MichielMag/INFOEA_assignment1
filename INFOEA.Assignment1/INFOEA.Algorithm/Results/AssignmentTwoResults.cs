@@ -16,6 +16,17 @@ namespace INFOEA.Algoritmh.Results
     }
     public class AssignmentTwoResults<T> : List<AssignmentTwoResult<T>> where T:IGenome
     {
+        public AssignmentTwoResults<T> TakeFirstN(int n)
+        {
+            if (n == Count)
+                return this;
+
+            AssignmentTwoResults<T> to_return = new AssignmentTwoResults<T>();
+            for (int i = 0; i < n; ++i)
+                to_return.Add(this[i]);
+            return to_return;
+        }
+
         public double AverageOptimum
         {
             get
@@ -39,6 +50,19 @@ namespace INFOEA.Algoritmh.Results
             }
         }
 
+        public AssignmentTwoResult<T> BestResult
+        {
+            get
+            {
+                AssignmentTwoResult<T> best_score = null;
+                foreach (AssignmentTwoResult<T> inner_rest in this)
+                {
+                    if (best_score == null || best_score.Optimum.Fitness > inner_rest.Optimum.Fitness)
+                        best_score = inner_rest;
+                }
+                return best_score;
+            }
+        }
         public double BestScore
         {
             get
