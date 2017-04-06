@@ -56,7 +56,7 @@
     <Compile Include="Genome\DTRGenome.cs" />
     <Compile Include="Genome\DTTGenome.cs" />
     <Compile Include="Genome\Graph\GraphGenome.cs" />
-    <Compile Include="Genome\Vertex.cs" />
+    <Compile Include="Genome\Graph\Vertex.cs" />
     <Compile Include="Genome\IGenome.cs" />
     <Compile Include="Genome\LCOGenome.cs" />
     <Compile Include="Genome\NDTRGenome.cs" />
@@ -87,7 +87,9 @@
     <Compile Include="Selector\DefaultSelector.cs" />
     <Compile Include="Selector\ISelector.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

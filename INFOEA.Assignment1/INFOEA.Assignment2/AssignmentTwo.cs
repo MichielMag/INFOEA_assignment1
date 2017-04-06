@@ -321,7 +321,7 @@ namespace INFOEA.Assignment2
             file.Close();
 
             file = new System.IO.StreamWriter("results/gls_swap.csv");
-            file.WriteLine(mls_results.CSV());
+            file.WriteLine(gls_results.CSV());
             file.Close();
             file = new System.IO.StreamWriter("results/gls_fm_swap.csv");
             file.WriteLine(gls_FM_results.CSV());
