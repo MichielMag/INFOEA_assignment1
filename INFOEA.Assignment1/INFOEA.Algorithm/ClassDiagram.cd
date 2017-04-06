@@ -1,11 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="INFOEA.Algorithm.Algorithm.GeneticAlgorithm&lt;T&gt;" Collapsed="true">
-    <Position X="20.75" Y="1.5" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Algorithm.GeneticAlgorithm&lt;T&gt;">
+    <Position X="21.5" Y="8" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAIAQBGCAAgAAAIgQAAAAAAAAABERAgAAAQBAAAAAgA=</HashCode>
       <FileName>Algorithm\GeneticAlgorithm.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="generator" />
+      <Field Name="procreator" />
+      <Field Name="selector" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="INFOEA.Algorithm.Algorithm.Goal" Collapsed="true">
     <Position X="22.5" Y="1.5" Width="1.5" />
@@ -14,53 +19,53 @@
       <FileName>Algorithm\Goal.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="INFOEA.Algorithm.Algorithm.LocalSearch&lt;T&gt;" Collapsed="true">
-    <Position X="22.5" Y="2.5" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Algorithm.LocalSearch&lt;T&gt;">
+    <Position X="14.25" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAQBAAAgAAA=</HashCode>
       <FileName>Algorithm\LocalSearch.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="INFOEA.Algorithm.Comparer.DefaultComparer&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="24.25" Y="0.5" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Comparer.DefaultComparer&lt;T&gt;" BaseTypeListCollapsed="true">
+    <Position X="24.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Comparer\DefaultComparer.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="INFOEA.Algorithm.Comparer.GraphComparer&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="24.25" Y="1.5" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Comparer.GraphComparer&lt;T&gt;" BaseTypeListCollapsed="true">
+    <Position X="26.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Comparer\GraphComparer.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="INFOEA.Algorithm.Crossover.AbstractCrossover&lt;T&gt;" Collapsed="true">
-    <Position X="5" Y="4.5" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Crossover.AbstractCrossover&lt;T&gt;">
+    <Position X="6.5" Y="14.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAQAAAAAAAAAQAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Crossover\AbstractCrossover.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="INFOEA.Algorithm.Crossover.TwoPointCrossover&lt;T&gt;" Collapsed="true">
-    <Position X="7.25" Y="5.75" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Crossover.TwoPointCrossover&lt;T&gt;">
+    <Position X="8.75" Y="14.5" Width="2" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Crossover\TwoPointCrossover.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="INFOEA.Algorithm.Crossover.UniformCrossover&lt;T&gt;" Collapsed="true">
-    <Position X="2.75" Y="5.75" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Crossover.UniformCrossover&lt;T&gt;">
+    <Position X="9" Y="14.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Crossover\UniformCrossover.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="INFOEA.Algorithm.Crossover.UniformSymmetricCrossover&lt;T&gt;" Collapsed="true">
-    <Position X="5" Y="5.75" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Crossover.UniformSymmetricCrossover&lt;T&gt;">
+    <Position X="3.75" Y="13.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>CAAgAAAAAAAIAAAAAAEAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Crossover\UniformSymmetricCrossover.cs</FileName>
@@ -145,7 +150,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="INFOEA.Algorithm.Mutation.AbstractMutation&lt;T&gt;" Collapsed="true">
-    <Position X="8.5" Y="11.75" Width="1.5" />
+    <Position X="11.25" Y="13.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAAQAAAAEAAAACAAAAAAAAAA=</HashCode>
       <FileName>Mutation\AbstractMutation.cs</FileName>
@@ -153,29 +158,29 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="INFOEA.Algorithm.Mutation.ILSPertubation&lt;T&gt;" Collapsed="true">
-    <Position X="5.5" Y="11.75" Width="1.5" />
+    <Position X="12" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAEAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>Mutation\ILSPertubation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="INFOEA.Algorithm.Neighborhood.AbstractNeighborhood&lt;T&gt;" Collapsed="true">
-    <Position X="12.75" Y="4.5" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Neighborhood.AbstractNeighborhood&lt;T&gt;">
+    <Position X="12.25" Y="4.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAAQAAAAEAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Neighborhood\AbstractNeighborhood.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="INFOEA.Algorithm.Neighborhood.FiducciaMatheysesNeighborhood&lt;T&gt;" Collapsed="true">
-    <Position X="11.5" Y="5.75" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Neighborhood.FiducciaMatheysesNeighborhood&lt;T&gt;">
+    <Position X="8.75" Y="4.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAAAAAICAAAAAEAAAAAAAEAQAIIAAAAAAAAA=</HashCode>
       <FileName>Neighborhood\FiducciaMatheysesNeighborhood.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="INFOEA.Algorithm.Neighborhood.SwapNeighborhood&lt;T&gt;" Collapsed="true">
-    <Position X="13.75" Y="5.75" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Neighborhood.SwapNeighborhood&lt;T&gt;">
+    <Position X="14.75" Y="4.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Neighborhood\SwapNeighborhood.cs</FileName>
@@ -195,27 +200,30 @@
       <FileName>Neighborhood\Fiduccia\FiducciaBucket.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="INFOEA.Algorithm.PopulationGeneration.AbstractPopulationGenerator&lt;T&gt;" Collapsed="true">
-    <Position X="11.25" Y="7.5" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.PopulationGeneration.AbstractPopulationGenerator&lt;T&gt;">
+    <Position X="11.25" Y="9.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAAQAAAAEAAAAAAAAAEAAAAA=</HashCode>
       <FileName>PopulationGeneration\AbstractPopulationGenerator.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.1" />
   </Class>
-  <Class Name="INFOEA.Algorithm.PopulationGeneration.DefaultPopulationGenerator&lt;T&gt;" Collapsed="true">
-    <Position X="10" Y="8.75" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.PopulationGeneration.DefaultPopulationGenerator&lt;T&gt;">
+    <Position X="8.5" Y="8.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>PopulationGeneration\DefaultPopulationGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="INFOEA.Algorithm.PopulationGeneration.LocalSearchPopulationGenerator&lt;T&gt;" Collapsed="true">
-    <Position X="12.25" Y="8.75" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.PopulationGeneration.LocalSearchPopulationGenerator&lt;T&gt;">
+    <Position X="14" Y="9.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEACAAA=</HashCode>
       <FileName>PopulationGeneration\LocalSearchPopulationGenerator.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="local_search" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="INFOEA.Algorithm.Procreation.AbstractProcreator&lt;T&gt;">
     <Position X="3.25" Y="7.25" Width="1.75" />
@@ -249,14 +257,14 @@
   <Class Name="INFOEA.Algoritmh.Results.AssignmentTwoResults&lt;T&gt;" Collapsed="true">
     <Position X="22.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAAgAAoAAAAAAAAAAAAAAEgA=</HashCode>
+      <HashCode>AAIAAAAAAAAAAAAgAAAAAAgAAoAAAAAAAAAAAAAAEgA=</HashCode>
       <FileName>Results\AssignmentTwoResults.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="INFOEA.Algoritmh.Results.AssignmentTwoResultList&lt;T&gt;" Collapsed="true">
     <Position X="20.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CEEBIAAAQBgAAAAEAAAABAAAAIAEAACAAAAAAAAEEAA=</HashCode>
+      <HashCode>CEEBIAAAQBgAAAAEAAAABAAAAIAEAACgAAAAAAAEEAA=</HashCode>
       <FileName>Results\AssignmentTwoResults.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -288,16 +296,19 @@
       <FileName>Results\Result.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="INFOEA.Algorithm.Selector.AbstractSelector&lt;T&gt;" Collapsed="true">
-    <Position X="0.5" Y="10.75" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Selector.AbstractSelector&lt;T&gt;">
+    <Position X="5" Y="11" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>Selector\AbstractSelector.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="comparer" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="INFOEA.Algorithm.Selector.DefaultSelector&lt;T&gt;" Collapsed="true">
-    <Position X="2.5" Y="11.75" Width="1.5" />
+  <Class Name="INFOEA.Algorithm.Selector.DefaultSelector&lt;T&gt;">
+    <Position X="2.75" Y="11" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Selector\DefaultSelector.cs</FileName>
@@ -324,33 +335,37 @@
       <FileName>Mutation\IMutation.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="INFOEA.Algorithm.Neighborhood.INeighborhood&lt;T&gt;" Collapsed="true">
-    <Position X="24.25" Y="4.75" Width="1.5" />
+  <Interface Name="INFOEA.Algorithm.Neighborhood.INeighborhood&lt;T&gt;">
+    <Position X="29.5" Y="8" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Neighborhood\INeighborhood.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="INFOEA.Algorithm.PopulationGeneration.IPopulationGenerator&lt;T&gt;" Collapsed="true">
-    <Position X="19" Y="5.5" Width="1.5" />
+  <Interface Name="INFOEA.Algorithm.PopulationGeneration.IPopulationGenerator&lt;T&gt;">
+    <Position X="24.75" Y="10.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>PopulationGeneration\IPopulationGenerator.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="INFOEA.Algorithm.Procreation.IProcreator&lt;T&gt;" Collapsed="true">
-    <Position X="20.75" Y="5.5" Width="1.5" />
+  <Interface Name="INFOEA.Algorithm.Procreation.IProcreator&lt;T&gt;">
+    <Position X="24.75" Y="9.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Procreation\IProcreator.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="INFOEA.Algorithm.Selector.ISelector&lt;T&gt;" Collapsed="true">
-    <Position X="22.5" Y="5.5" Width="1.5" />
+  <Interface Name="INFOEA.Algorithm.Selector.ISelector&lt;T&gt;">
+    <Position X="24.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Selector\ISelector.cs</FileName>
     </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.Collections.Generic.IComparer&lt;T&gt;" Collapsed="true">
+    <Position X="7.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier />
   </Interface>
   <Enum Name="INFOEA.Algorithm.Genome.Graph.Partition" Collapsed="true">
     <Position X="19" Y="6.5" Width="1.5" />

@@ -175,6 +175,20 @@ namespace INFOEA.Algoritmh.Results
                 return max_ticks;
             }
         }
+
+        public long MinTotalTicks
+        {
+            get
+            {
+                long min_ticks = long.MaxValue;
+                foreach (AssignmentTwoResults<T> res in this)
+                {
+                    if (min_ticks > res.TotalTicks)
+                        min_ticks = res.TotalTicks;
+                }
+                return min_ticks;
+            }
+        }
         public double TotalTimeAverage
         {
             get

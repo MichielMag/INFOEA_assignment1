@@ -297,7 +297,7 @@ namespace INFOEA.Assignment2
             tex_results += "\\hline\n";
             tex_results += "\\end{tabular}\n\\end{table}\n";
 
-            long max_ticks = mls_results.MaxTotalTime;
+            long max_ticks = gls_results.MinTotalTicks;
             tex_results += "\n\n\\begin{table}[H]\n\\centering\n\\caption{Comparing max time of " + max_ticks + " ticks}\n\\label{Comparing max time of " + max_ticks + " ticks}\n\\begin{tabular}{|l|l|l|l|l|l|l|l|l|}\n";
             tex_results += "\\hline\n";
             tex_results += "Experiment & Avg. \\# optima & Avg. time 1 optimum & Avg. score & Best score \\\\\n";
